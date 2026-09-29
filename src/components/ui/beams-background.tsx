@@ -70,12 +70,16 @@ export function BeamsBackground({
 
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+        // Size the canvas to its container (not the window) so it can back a single section.
         const updateCanvasSize = () => {
             const dpr = window.devicePixelRatio || 1;
-            canvas.width = window.innerWidth * dpr;
-            canvas.height = window.innerHeight * dpr;
-            canvas.style.width = `${window.innerWidth}px`;
-            canvas.style.height = `${window.innerHeight}px`;
+            const parent = canvas.parentElement;
+            const w = parent?.clientWidth || window.innerWidth;
+            const h = parent?.clientHeight || window.innerHeight;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
             ctx.scale(dpr, dpr);
 
             const totalBeams = MINIMUM_BEAMS * 1.5;
@@ -85,7 +89,8 @@ export function BeamsBackground({
         };
 
         updateCanvasSize();
-        window.addEventListener("resize", updateCanvasSize);
+        const resizeObserver = new ResizeObserver(updateCanvasSize);
+        if (canvas.parentElement) resizeObserver.observe(canvas.parentElement);
 
         function resetBeam(beam: Beam, index: number, totalBeams: number) {
             if (!canvas) return beam;
@@ -176,7 +181,7 @@ export function BeamsBackground({
         animate();
 
         return () => {
-            window.removeEventListener("resize", updateCanvasSize);
+            resizeObserver.disconnect();
             document.removeEventListener("visibilitychange", onVisibility);
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);

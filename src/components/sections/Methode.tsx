@@ -31,7 +31,7 @@ const steps = [
 
 export function Methode() {
   return (
-    <section className="w-full py-24 bg-[#0a0a0c]/35 border-y border-white/[0.06]" id="methode">
+    <section className="w-full py-24 bg-[#0a0a0c] border-y border-white/[0.06]" id="methode">
       <Container>
         <div className="flex flex-col items-start max-w-3xl mb-16">
           <Eyebrow>Processus de travail</Eyebrow>

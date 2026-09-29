@@ -10,7 +10,7 @@ const values = [
 
 export function Studio() {
   return (
-    <section className="w-full py-24 bg-transparent relative overflow-hidden">
+    <section className="w-full py-24 bg-background relative overflow-hidden">
       <Container>
         <div className="p-8 md:p-12 rounded-3xl bg-surface-container-low border border-white/[0.08] grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-6 relative rounded-2xl overflow-hidden aspect-[4/3] border border-white/10 group">

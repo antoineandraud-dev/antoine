@@ -33,7 +33,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="w-full py-24 bg-[#0a0a0c]/35 border-t border-white/[0.06]" id="faq">
+    <section className="w-full py-24 bg-[#0a0a0c] border-t border-white/[0.06]" id="faq">
       <Container>
         <div className="flex flex-col items-start max-w-3xl mb-16">
           <Eyebrow>Questions fréquentes</Eyebrow>

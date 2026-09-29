@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BeamsBackground } from "@/components/ui/beams-background";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
@@ -29,7 +30,14 @@ export function Hero() {
 
   return (
     <section className="relative w-full pt-10 md:pt-16 pb-20 md:pb-28 overflow-hidden">
-      <Container>
+      {/* Animated orange beams, scoped to the hero and faded out toward the bottom */}
+      <BeamsBackground
+        intensity="strong"
+        hueBase={8}
+        hueSpread={32}
+        className="pointer-events-none absolute inset-0 z-0 h-full min-h-0 bg-transparent [mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)]"
+      />
+      <Container className="relative z-10">
         <div className="flex items-center justify-center mb-6">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-container-high/70 border border-white/10 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#ff5722]" />
