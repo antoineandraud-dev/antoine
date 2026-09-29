@@ -12,7 +12,7 @@ const card = "p-8 rounded-3xl bg-surface-container-low border border-white/[0.08
 
 export function Approche() {
   return (
-    <section className="w-full py-24 bg-background relative overflow-hidden" id="approche">
+    <section className="w-full py-24 bg-transparent relative overflow-hidden" id="approche">
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Eyebrow>Excellence méthodologique</Eyebrow>

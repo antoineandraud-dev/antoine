@@ -8,6 +8,10 @@ interface AnimatedGradientBackgroundProps {
     className?: string;
     children?: React.ReactNode;
     intensity?: "subtle" | "medium" | "strong";
+    /** Starting hue (0-360) of the beams. Default 190 (blue). */
+    hueBase?: number;
+    /** Hue range added on top of `hueBase`. Default 70 (blue → violet). */
+    hueSpread?: number;
 }
 
 interface Beam {
@@ -23,7 +27,7 @@ interface Beam {
     pulseSpeed: number;
 }
 
-function createBeam(width: number, height: number): Beam {
+function createBeam(width: number, height: number, hueBase: number, hueSpread: number): Beam {
     const angle = -35 + Math.random() * 10;
     return {
         x: Math.random() * width * 1.5 - width * 0.25,
@@ -33,7 +37,7 @@ function createBeam(width: number, height: number): Beam {
         angle: angle,
         speed: 0.6 + Math.random() * 1.2,
         opacity: 0.12 + Math.random() * 0.16,
-        hue: 190 + Math.random() * 70,
+        hue: hueBase + Math.random() * hueSpread,
         pulse: Math.random() * Math.PI * 2,
         pulseSpeed: 0.02 + Math.random() * 0.03,
     };
@@ -41,7 +45,10 @@ function createBeam(width: number, height: number): Beam {
 
 export function BeamsBackground({
     className,
+    children,
     intensity = "strong",
+    hueBase = 190,
+    hueSpread = 70,
 }: AnimatedGradientBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const beamsRef = useRef<Beam[]>([]);
@@ -61,6 +68,8 @@ export function BeamsBackground({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
         const updateCanvasSize = () => {
             const dpr = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth * dpr;
@@ -71,7 +80,7 @@ export function BeamsBackground({
 
             const totalBeams = MINIMUM_BEAMS * 1.5;
             beamsRef.current = Array.from({ length: totalBeams }, () =>
-                createBeam(canvas.width, canvas.height)
+                createBeam(canvas.width, canvas.height, hueBase, hueSpread)
             );
         };
 
@@ -91,7 +100,7 @@ export function BeamsBackground({
                 (Math.random() - 0.5) * spacing * 0.5;
             beam.width = 100 + Math.random() * 100;
             beam.speed = 0.5 + Math.random() * 0.4;
-            beam.hue = 190 + (index * 70) / totalBeams;
+            beam.hue = hueBase + (index * hueSpread) / totalBeams;
             beam.opacity = 0.2 + Math.random() * 0.1;
             return beam;
         }
@@ -153,18 +162,28 @@ export function BeamsBackground({
                 drawBeam(ctx, beam);
             });
 
+            if (reduceMotion || document.hidden) return;
             animationFrameRef.current = requestAnimationFrame(animate);
         }
+
+        const onVisibility = () => {
+            if (!document.hidden && !reduceMotion && !animationFrameRef.current) {
+                animationFrameRef.current = requestAnimationFrame(animate);
+            }
+        };
+        document.addEventListener("visibilitychange", onVisibility);
 
         animate();
 
         return () => {
             window.removeEventListener("resize", updateCanvasSize);
+            document.removeEventListener("visibilitychange", onVisibility);
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = 0;
             }
         };
-    }, [intensity]);
+    }, [intensity, hueBase, hueSpread]);
 
     return (
         <div
@@ -194,28 +213,7 @@ export function BeamsBackground({
                 }}
             />
 
-            <div className="relative z-10 flex h-screen w-full items-center justify-center">
-                <div className="flex flex-col items-center justify-center gap-6 px-4 text-center">
-                    <motion.h1
-                        className="text-6xl md:text-7xl lg:text-8xl font-semibold text-white tracking-tighter"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        Beams
-                        <br />
-                        Background
-                    </motion.h1>
-                    <motion.p
-                        className="text-lg md:text-2xl lg:text-3xl text-white/70 tracking-tighter"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        For your pleasure
-                    </motion.p>
-                </div>
-            </div>
+            {children}
         </div>
     );
 }

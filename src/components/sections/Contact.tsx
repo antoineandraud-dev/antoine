@@ -14,7 +14,7 @@ const labelClass = "font-display text-xs uppercase tracking-wider text-on-surfac
 
 export function Contact() {
   return (
-    <section className="w-full py-24 bg-background relative overflow-hidden" id="contact">
+    <section className="w-full py-24 bg-transparent relative overflow-hidden" id="contact">
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[300px] bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">

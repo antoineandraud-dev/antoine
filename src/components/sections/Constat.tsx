@@ -26,7 +26,7 @@ const metrics = [
 
 export function Constat() {
   return (
-    <section className="w-full py-24 bg-[#0a0a0c] border-y border-white/[0.06] relative" id="constat">
+    <section className="w-full py-24 bg-[#0a0a0c]/35 border-y border-white/[0.06] relative" id="constat">
       <div className="absolute -top-32 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
       <Container>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
