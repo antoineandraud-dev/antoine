@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
+import { HeroVisual } from "./HeroVisual";
 
 const partners = ["SHOPIFY PLUS", "WORDPRESS HEADLESS", "TAILWIND CSS", "FIGMA BESPOKE", "CLOUDFLARE EDGE"];
 const bars = [
@@ -92,16 +92,7 @@ export function Hero() {
         <div className="relative mt-12 md:mt-16 w-full max-w-6xl mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-surface-container-lowest">
           <div className="absolute inset-0 bg-gradient-to-t from-[#070708] via-transparent to-transparent z-10 pointer-events-none" />
           <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-3/4 h-80 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-          <div className="relative w-full h-[360px] sm:h-[480px] md:h-[580px] overflow-hidden">
-            <Image
-              src="/images/hero-visor.jpg"
-              alt="Naga Studio Visual — Futuristic Neon Amber Visor"
-              fill
-              priority
-              sizes="(min-width: 1152px) 1152px, 100vw"
-              className="object-cover object-center filter saturate-[1.1] contrast-[1.05]"
-            />
-          </div>
+          <HeroVisual />
 
           <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20 p-5 md:p-6 rounded-2xl bg-surface-container/85 border border-white/15 backdrop-blur-xl max-w-[210px] box-glow-amber">
             <span className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight block">150+</span>
