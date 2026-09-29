@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="180" height="40" fill="none">
+  <g>
+    <rect width="36" height="36" rx="10" fill="#171412" stroke="#ff5722" stroke-width="1.2" stroke-opacity="0.6"/>
+    <path d="M12 25V13L24 25V13" stroke="#ff5722" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="24" cy="13" r="2.2" fill="#ff9500"/>
+    <circle cx="12" cy="25" r="1.5" fill="#ff5722" opacity="0.6"/>
+  </g>
+  <text x="46" y="24" fill="#ffffff" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="17" letter-spacing="-0.02em">NAGA</text>
+  <text x="100" y="24" fill="#a39d96" font-family="'Space Grotesk', sans-serif" font-weight="400" font-size="13" letter-spacing="0.08em">STUDIO</text>
+</svg>
