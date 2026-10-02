@@ -1,0 +1,35 @@
+/* Design tokens reconstructed from the variables referenced by LinkeCash.dc.html */
+.lc-root {
+  --lc-blue-50: #e8f1fb;
+  --lc-blue-100: #b9d4f1;
+  --lc-blue-600: #0a66c2;
+  --lc-blue-700: #08539f;
+  --lc-gray-50: #f8f8f7;
+  --lc-gray-100: #f0efec;
+  --lc-gray-200: #e0dfdc;
+  --lc-gray-400: #a8a8a6;
+  --color-primary: #0a66c2;
+  --color-primary-hover: #08539f;
+  --color-accent: #c0392b;
+  --color-success: #1d7a3e;
+  --text-primary: rgba(0, 0, 0, 0.9);
+  --text-muted: #666666;
+  --text-disabled: #9a9a9a;
+  --surface-muted: #f4f2ee;
+  --surface-card: #ffffff;
+  --border-default: #e0dfdc;
+  --ring-default: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  --ring-primary: inset 0 0 0 1px #0a66c2;
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --text-body: 400 14px/1.4 var(--font-sans);
+  --text-body-regular: 400 14px/1.4 var(--font-sans);
+  --text-caption: 400 12px/1.4 var(--font-sans);
+  --text-title: 600 18px/1.3 var(--font-sans);
+  font-family: var(--font-sans);
+}
+.lc-root * { box-sizing: border-box; }
+.lc-root button, .lc-root input, .lc-root select, .lc-root textarea { font: inherit; color: inherit; }
+.lc-root button { cursor: pointer; }
+.lc-root h1, .lc-root h2, .lc-root h3, .lc-root p { margin: 0; }
+.lc-root a { color: var(--color-primary); }

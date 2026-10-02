@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/colors.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/typography.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/radius.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/motion.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/tokens/base.css">
+<link rel="stylesheet" href="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/styles.css">
+<script src="_ds/linkecash-design-system-4dea19ea-027b-4a85-808d-b8c7727ff173/_ds_bundle.js"></script>
+<style>*{box-sizing:border-box}button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}h1,h2,h3,p{margin:0}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;background:var(--surface-muted);color:var(--text-primary);font:var(--text-body-regular)">
+<header style="position:sticky;top:0;z-index:20;height:52px;flex:none;background:#fff;box-shadow:0 1px 0 var(--border-default);display:flex;align-items:center;gap:16px;padding:0 16px">
+<button type="button" onClick="{{ goHome }}" style="background:none;border:0;padding:0;color:var(--color-primary);font:600 22px/1 var(--font-sans)">Linkecash</button>
+<label style="flex:1;max-width:360px;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:var(--lc-gray-100);border-radius:8px;color:var(--text-muted)"><dc-import name="Ic" i="search" hint-size="16px,16px"></dc-import><input aria-label="Rechercher un prospect" placeholder="Rechercher un prospect" onKeyDown="{{ onSearchKey }}" style="flex:1;min-width:0;border:0;background:transparent;outline:none;font:var(--text-body-regular)"></label>
+<div style="flex:1"></div>
+<div aria-label="Compte" style="width:32px;height:32px;border-radius:9999px;background:var(--lc-blue-50);color:var(--lc-blue-700);display:flex;align-items:center;justify-content:center"><dc-import name="Ic" i="user" hint-size="16px,16px"></dc-import></div>
+</header>
+<div style="flex:1;display:flex;min-height:0">
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<aside style="width:232px;flex:none;background:#fff;box-shadow:1px 0 0 var(--border-default);position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:12px 0">
+<nav aria-label="Navigation principale">
+<sc-for list="{{ nav }}" as="g" hint-placeholder-count="4">
+<div style="padding:8px 0">
+<sc-if value="{{ g.hasTitle }}"><div style="padding:4px 16px 8px;font:600 12px/1 var(--font-sans);color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase">{{ g.title }}</div></sc-if>
+<sc-for list="{{ g.items }}" as="n" hint-placeholder-count="2">
+<button type="button" onClick="{{ n.go }}" aria-current="{{ n.current }}" style="width:100%;display:flex;align-items:center;gap:12px;height:40px;padding:0 16px;border:0;text-align:left;font:var(--text-body);background:{{ n.bg }};color:{{ n.fg }};box-shadow:{{ n.bar }}" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="{{ n.icon }}" size="18" hint-size="18px,18px"></dc-import><span style="flex:1">{{ n.label }}</span><sc-if value="{{ n.hasCount }}"><span style="min-width:20px;height:20px;border-radius:10px;background:var(--color-accent);color:#fff;font:600 12px/20px var(--font-sans);text-align:center;padding:0 6px">{{ n.count }}</span></sc-if></button>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+</aside>
+</sc-if>
+<main style="flex:1;min-width:0;padding:{{ pagePad }}">
+
+<sc-if value="{{ isDash }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:24px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-end">
+<div><div style="font:var(--text-caption);color:var(--text-muted)">{{ todayLabel }}</div><h1 style="margin-top:4px;font:400 28px/1.25 var(--font-sans)">Aujourd'hui</h1></div>
+<div style="display:flex;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="secondary" onClick="{{ newPost }}" hint-size="auto,40px">Nouveau post</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ goActivity }}" hint-size="auto,40px">Saisir l'activité</x-import></div>
+</div>
+<div style="display:grid;grid-template-columns:{{ tileCols }};gap:12px">
+<sc-for list="{{ tiles }}" as="t" hint-placeholder-count="6">
+<div style="background:var(--surface-card);box-shadow:var(--ring-default);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;color:var(--text-muted);font:var(--text-body)"><dc-import name="Ic" i="{{ t.icon }}" hint-size="16px,16px"></dc-import><span>{{ t.label }}</span></div>
+<button type="button" aria-label="{{ t.incLabel }}" onClick="{{ t.inc }}" style="width:{{ btnSz }}px;height:{{ btnSz }}px;border:0;border-radius:9999px;background:#fff;color:var(--color-primary);box-shadow:var(--ring-primary);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-blue-50)"><dc-import name="Ic" i="plus" hint-size="16px,16px"></dc-import></button>
+</div>
+<div style="display:flex;align-items:baseline;gap:6px"><span style="font:400 32px/1 var(--font-sans)">{{ t.value }}</span><span style="color:var(--text-muted)">{{ t.goalTxt }}</span></div>
+<sc-if value="{{ t.hasGoal }}"><div style="height:6px;border-radius:4px;background:var(--lc-gray-100);overflow:hidden"><div style="height:100%;width:{{ t.pct }}%;background:{{ t.color }}"></div></div></sc-if>
+<div style="display:flex;align-items:center;gap:6px;font:var(--text-caption);color:{{ t.color }}"><dc-import name="Ic" i="{{ t.sIcon }}" size="14" hint-size="14px,14px"></dc-import><span>{{ t.status }}</span></div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:{{ mainCols }};gap:16px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+<div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><h2 style="font:var(--text-title);font-size:16px">Performance</h2><span style="font:var(--text-caption);color:var(--text-muted)">7 derniers jours vs 7 précédents</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;background:#fff;border-radius:8px;overflow:hidden;box-shadow:var(--ring-default)">
+<sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+<div style="background:#fff;padding:16px;display:flex;flex-direction:column;gap:6px;box-shadow:inset -1px -1px 0 var(--border-default)"><div style="font:var(--text-caption);color:var(--text-muted)">{{ k.label }}</div><div style="font:400 28px/1 var(--font-sans)">{{ k.value }}</div><div style="display:flex;align-items:center;gap:4px;font:var(--text-caption);color:{{ k.color }}"><dc-import name="Ic" i="{{ k.icon }}" size="12" hint-size="12px,12px"></dc-import><span>{{ k.delta }}</span></div></div>
+</sc-for>
+</div>
+</div>
+<div style="background:var(--surface-card);box-shadow:var(--ring-default);border-radius:8px;padding:16px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center">
+<h2 style="font:var(--text-title);font-size:16px">Évolution</h2>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Métrique" value="{{ dashMetric }}" options="{{ metricOpts }}" onChange="{{ setDashMetric }}" hint-size="160px,40px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tag" selected="{{ dashIsWeek }}" onClick="{{ dashWeek }}" hint-size="auto,32px">Semaine</x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tag" selected="{{ dashIsMonth }}" onClick="{{ dashMonth }}" hint-size="auto,32px">Mois</x-import>
+</div>
+</div>
+<div style="display:flex;gap:16px;margin-top:12px;font:var(--text-caption);color:var(--text-muted)"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:var(--lc-blue-600);border-radius:2px"></span>Période actuelle</span><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:2px;background:var(--lc-gray-400)"></span>Période précédente</span><sc-if value="{{ dChart.hasGoal }}"><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;border-top:1px dashed var(--lc-gray-400)"></span>Objectif</span></sc-if></div>
+<div style="position:relative;height:176px;margin-top:24px">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none"><div style="border-top:1px solid var(--lc-gray-100)"></div><div style="border-top:1px solid var(--lc-gray-100)"></div><div style="border-top:1px solid var(--lc-gray-200)"></div></div>
+<sc-if value="{{ dChart.hasGoal }}"><div style="position:absolute;left:0;right:0;bottom:{{ dChart.goalPct }}%;border-top:1px dashed var(--lc-gray-400);pointer-events:none"></div></sc-if>
+<div style="position:absolute;inset:0;display:flex;gap:{{ dChart.gap }}px">
+<sc-for list="{{ dChart.bars }}" as="b" hint-placeholder-count="7">
+<div title="{{ b.tip }}" style="flex:1;min-width:0;position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center">
+<sc-if value="{{ b.hasG }}"><div style="position:absolute;left:8%;right:8%;bottom:{{ b.g }}%;height:2px;background:var(--lc-gray-400)"></div></sc-if>
+<div style="width:68%;height:{{ b.h }}%;min-height:2px;background:{{ b.color }};border-radius:2px 2px 0 0"></div>
+<sc-if value="{{ b.showV }}"><span style="position:absolute;bottom:{{ b.h }}%;margin-bottom:3px;font:var(--text-caption)">{{ b.v }}</span></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;gap:{{ dChart.gap }}px;margin-top:6px"><sc-for list="{{ dChart.bars }}" as="b2" hint-placeholder-count="7"><div style="flex:1;min-width:0;text-align:center;font:var(--text-caption);color:var(--text-muted);white-space:nowrap">{{ b2.lab }}</div></sc-for></div>
+</div>
+</div>
+<div style="background:var(--surface-card);box-shadow:var(--ring-default);border-radius:8px;min-width:0">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:16px"><h2 style="font:var(--text-title);font-size:16px">À faire</h2><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="neutral" hint-size="auto,20px">{{ todoTotal }}</x-import></div>
+<sc-for list="{{ todo }}" as="g" hint-placeholder-count="3">
+<div style="padding:12px 16px;border-top:1px solid var(--lc-gray-100)">
+<div style="font:600 12px/1 var(--font-sans);color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px">{{ g.title }}</div>
+<sc-if value="{{ g.empty }}"><div style="font:var(--text-caption);color:var(--text-muted);padding:4px 0">{{ g.emptyTxt }}</div></sc-if>
+<sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
+<button type="button" onClick="{{ it.open }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:8px;margin:0 -8px;border:0;background:transparent;text-align:left;border-radius:8px" style-hover="background:var(--lc-gray-50)"><span style="color:var(--text-muted)"><dc-import name="Ic" i="{{ it.icon }}" hint-size="16px,16px"></dc-import></span><span style="flex:1;min-width:0"><span style="display:block;font:var(--text-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ it.title }}</span><span style="display:block;font:var(--text-caption);color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ it.sub }}</span></span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ it.tone }}" hint-size="auto,20px">{{ it.tag }}</x-import></button>
+</sc-for>
+<sc-if value="{{ g.more }}"><a href="#" onClick="{{ g.goAll }}" style="display:inline-block;margin-top:4px;font:var(--text-caption)">{{ g.moreTxt }}</a></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProsp }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:{{ prospMax }}">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Prospects</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ openAddP }}" hint-size="auto,40px">Ajouter un prospect</x-import></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end">
+<div style="display:flex;gap:8px"><button type="button" onClick="{{ setKanban }}" aria-pressed="{{ isKanban }}" style="height:40px;padding:0 16px;border:0;border-radius:24px;display:flex;align-items:center;gap:8px;font:var(--text-body);background:{{ kbBg }};color:{{ kbFg }};box-shadow:var(--ring-default)"><dc-import name="Ic" i="kanban" hint-size="16px,16px"></dc-import>Kanban</button><button type="button" onClick="{{ setTable }}" aria-pressed="{{ isTable }}" style="height:40px;padding:0 16px;border:0;border-radius:24px;display:flex;align-items:center;gap:8px;font:var(--text-body);background:{{ tbBg }};color:{{ tbFg }};box-shadow:var(--ring-default)"><dc-import name="Ic" i="table" hint-size="16px,16px"></dc-import>Tableau</button></div>
+<label style="flex:1;min-width:180px;max-width:320px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:#fff;border-radius:8px;box-shadow:var(--ring-default);color:var(--text-muted)"><dc-import name="Ic" i="search" hint-size="16px,16px"></dc-import><input aria-label="Rechercher" placeholder="Nom, entreprise, poste" value="{{ pQuery }}" onChange="{{ setPQuery }}" style="flex:1;min-width:0;border:0;background:transparent;outline:none"></label>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Campagne" value="{{ pCamp }}" options="{{ campOpts }}" onChange="{{ setPCamp }}" hint-size="190px,40px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Tri" value="{{ pSort }}" options="{{ sortOpts }}" onChange="{{ setPSort }}" hint-size="190px,40px"></x-import>
+<span style="font:var(--text-caption);color:var(--text-muted);padding-bottom:12px">{{ pCount }}</span>
+</div>
+<sc-if value="{{ pEmpty }}"><div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center"><div style="width:48px;height:48px;border-radius:9999px;background:var(--lc-blue-50);color:var(--color-primary);display:flex;align-items:center;justify-content:center"><dc-import name="Ic" i="users" size="22" hint-size="22px,22px"></dc-import></div><h2 style="font:var(--text-title)">{{ pEmptyTitle }}</h2><p style="color:var(--text-muted);max-width:360px">{{ pEmptyText }}</p><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ openAddP }}" hint-size="auto,40px">Ajouter mon premier prospect</x-import></div></sc-if>
+<sc-if value="{{ showKanban }}">
+<div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;align-items:flex-start;margin:0 -2px;padding:2px">
+<sc-for list="{{ cols }}" as="col" hint-placeholder-count="9">
+<section aria-label="{{ col.name }}" onDragOver="{{ col.over }}" onDrop="{{ col.drop }}" style="width:264px;flex:none;background:var(--lc-gray-100);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:8px;min-height:120px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0"><span style="font:var(--text-body);display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:9999px;background:{{ col.dot }}"></span>{{ col.name }}</span><span style="font:var(--text-caption);color:var(--text-muted)">{{ col.count }}</span></div>
+<sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+<div draggable="true" onDragStart="{{ c.drag }}" onClick="{{ c.open }}" role="button" tabindex="0" style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;cursor:grab" style-hover="box-shadow:inset 0 0 0 1px var(--lc-gray-400)">
+<div style="display:flex;align-items:center;gap:8px"><span style="width:32px;height:32px;flex:none;border-radius:9999px;background:var(--lc-blue-50);color:var(--lc-blue-700);font:600 12px/32px var(--font-sans);text-align:center">{{ c.ini }}</span><span style="flex:1;min-width:0"><span style="display:block;font:var(--text-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.name }}</span><span style="display:block;font:var(--text-caption);color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.sub }}</span></span>
+<sc-if value="{{ c.canAdv }}"><button type="button" aria-label="Passer à l'étape suivante" title="Étape suivante" onClick="{{ c.adv }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--color-primary);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-blue-50)"><dc-import name="Ic" i="right" hint-size="16px,16px"></dc-import></button></sc-if></div>
+<div style="display:flex;align-items:center;gap:6px;font:var(--text-caption);color:{{ c.nextColor }}"><dc-import name="Ic" i="{{ c.nextIcon }}" size="14" hint-size="14px,14px"></dc-import><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.next }}</span></div>
+<div style="font:var(--text-caption);color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.meta }}</div>
+</div>
+</sc-for>
+</section>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showTable }}">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow-x:auto">
+<div style="display:grid;grid-template-columns:{{ tGrid }};gap:12px;align-items:center;padding:10px 16px;background:var(--lc-gray-50);font:var(--text-caption);color:var(--text-muted);min-width:{{ tMin }}"><span>Prospect</span><span style="display:{{ dW }}">Entreprise</span><span>Statut</span><span style="display:{{ dW }}">Campagne</span><span style="display:{{ dW }}">Dernière interaction</span><span style="display:{{ dW }}">Prochaine action</span><span style="text-align:right">Actions</span></div>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+<div role="button" tabindex="0" onClick="{{ r.open }}" style="display:grid;grid-template-columns:{{ tGrid }};gap:12px;align-items:center;padding:8px 16px;border-top:1px solid var(--lc-gray-100);cursor:pointer;min-width:{{ tMin }}" style-hover="background:var(--lc-gray-50)">
+<span style="display:flex;align-items:center;gap:8px;min-width:0"><span style="width:32px;height:32px;flex:none;border-radius:9999px;background:var(--lc-blue-50);color:var(--lc-blue-700);font:600 12px/32px var(--font-sans);text-align:center">{{ r.ini }}</span><span style="min-width:0"><span style="display:block;font:var(--text-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</span><span style="display:block;font:var(--text-caption);color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.role }}</span></span></span>
+<span style="display:{{ dW }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.company }}</span>
+<span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ r.tone }}" hint-size="auto,20px">{{ r.stage }}</x-import></span>
+<span style="display:{{ dW }};color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.camp }}</span>
+<span style="display:{{ dW }};color:var(--text-muted)">{{ r.last }}</span>
+<span style="display:{{ dW }};color:{{ r.nextColor }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.next }}</span>
+<span style="display:flex;justify-content:flex-end;gap:2px"><sc-if value="{{ r.canAdv }}"><button type="button" aria-label="Étape suivante" title="Étape suivante" onClick="{{ r.adv }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--color-primary);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-blue-50)"><dc-import name="Ic" i="right" hint-size="16px,16px"></dc-import></button></sc-if><button type="button" aria-label="Supprimer" title="Supprimer" onClick="{{ r.del }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="trash" hint-size="16px,16px"></dc-import></button></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAct }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1100px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Activité</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="secondary" onClick="{{ openAddM }}" hint-size="auto,40px">Nouvelle métrique</x-import></div>
+<div style="display:flex;align-items:center;gap:8px"><button type="button" aria-label="Jour précédent" onClick="{{ actPrev }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:#fff;box-shadow:var(--ring-default);display:inline-flex;align-items:center;justify-content:center;padding:0"><dc-import name="Ic" i="left" hint-size="16px,16px"></dc-import></button><div style="min-width:200px;text-align:center;font:var(--text-body);font-size:16px">{{ actLabel }}</div><button type="button" aria-label="Jour suivant" onClick="{{ actNext }}" disabled="{{ actAtToday }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:#fff;box-shadow:var(--ring-default);display:inline-flex;align-items:center;justify-content:center;padding:0;opacity:{{ actNextOp }}"><dc-import name="Ic" i="right" hint-size="16px,16px"></dc-import></button><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ actToday }}" hint-size="auto,40px">Aujourd'hui</x-import></div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px">
+<sc-for list="{{ actRows }}" as="m" hint-placeholder-count="8">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--lc-gray-100)">
+<span style="width:32px;height:32px;flex:none;border-radius:9999px;background:var(--lc-gray-100);color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center"><dc-import name="Ic" i="{{ m.icon }}" hint-size="16px,16px"></dc-import></span>
+<span style="flex:1;min-width:140px"><span style="display:block;font:var(--text-body)">{{ m.label }}</span><span style="display:block;font:var(--text-caption);color:var(--text-muted)">{{ m.type }} · {{ m.goalTxt }}</span></span>
+<span style="width:120px;max-width:30%;min-width:80px"><sc-if value="{{ m.hasGoal }}"><span style="display:block;height:6px;border-radius:4px;background:var(--lc-gray-100);overflow:hidden"><span style="display:block;height:100%;width:{{ m.pct }}%;background:{{ m.color }}"></span></span></sc-if></span>
+<span style="display:flex;align-items:center;gap:4px"><button type="button" aria-label="Retirer 1 {{ m.label }}" onClick="{{ m.dec }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:#fff;box-shadow:var(--ring-default);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="minus" hint-size="16px,16px"></dc-import></button><input type="number" min="0" aria-label="{{ m.label }}" value="{{ m.value }}" onChange="{{ m.set }}" style="width:64px;height:40px;text-align:center;border:0;border-radius:8px;box-shadow:var(--ring-default);font:600 16px/1 var(--font-sans);background:#fff" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"><button type="button" aria-label="Ajouter 1 {{ m.label }}" onClick="{{ m.inc }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:var(--color-primary);color:#fff;display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--color-primary-hover)"><dc-import name="Ic" i="plus" hint-size="16px,16px"></dc-import></button></span>
+</div>
+</sc-for>
+</div>
+<h2 style="font:var(--text-title);font-size:16px;margin-top:8px">7 derniers jours</h2>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow-x:auto">
+<div style="display:grid;grid-template-columns:{{ histGrid }};gap:8px;padding:10px 16px;background:var(--lc-gray-50);font:var(--text-caption);color:var(--text-muted);min-width:{{ histMin }}"><span>Jour</span><sc-for list="{{ histHead }}" as="h" hint-placeholder-count="8"><span style="text-align:right">{{ h.label }}</span></sc-for></div>
+<sc-for list="{{ hist }}" as="d" hint-placeholder-count="7">
+<div style="display:grid;grid-template-columns:{{ histGrid }};gap:8px;padding:10px 16px;border-top:1px solid var(--lc-gray-100);min-width:{{ histMin }};background:{{ d.bg }}"><span style="font:var(--text-body)">{{ d.label }}</span><sc-for list="{{ d.cells }}" as="cl" hint-placeholder-count="8"><span style="text-align:right;color:{{ cl.color }}">{{ cl.v }}</span></sc-for></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStats }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-end"><div><h1 style="font:400 28px/1.25 var(--font-sans)">Statistiques</h1><div style="font:var(--text-caption);color:var(--text-muted);margin-top:4px">{{ sLabel }}</div></div>
+<div style="background:#fff;border-radius:8px;box-shadow:var(--ring-default);padding:0 16px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tabs" items="{{ periodItems }}" value="{{ statPeriod }}" onChange="{{ setStatPeriod }}" hint-size="260px,48px"></x-import></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;background:#fff;border-radius:8px;overflow:hidden;box-shadow:var(--ring-default)">
+<sc-for list="{{ sKpis }}" as="k" hint-placeholder-count="5">
+<div style="background:#fff;padding:16px;display:flex;flex-direction:column;gap:6px;box-shadow:inset -1px -1px 0 var(--border-default)"><div style="font:var(--text-caption);color:var(--text-muted)">{{ k.label }}</div><div style="font:400 28px/1 var(--font-sans)">{{ k.value }}</div><div style="display:flex;align-items:center;gap:4px;font:var(--text-caption);color:{{ k.color }}"><dc-import name="Ic" i="{{ k.icon }}" size="12" hint-size="12px,12px"></dc-import><span>{{ k.delta }}</span></div><div style="font:var(--text-caption);color:var(--text-muted)">{{ k.formula }}</div></div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:{{ mainCols }};gap:16px;align-items:start">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h2 style="font:var(--text-title);font-size:16px">Volume par jour</h2><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Métrique" value="{{ statMetric }}" options="{{ metricOpts }}" onChange="{{ setStatMetric }}" hint-size="160px,40px"></x-import></div>
+<div style="display:flex;gap:16px;margin-top:12px;font:var(--text-caption);color:var(--text-muted)"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:var(--lc-blue-600);border-radius:2px"></span>Période actuelle</span><sc-if value="{{ sChart.ghost }}"><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:2px;background:var(--lc-gray-400)"></span>Période précédente</span></sc-if><sc-if value="{{ sChart.hasGoal }}"><span style="display:flex;align-items:center;gap:6px"><span style="width:12px;border-top:1px dashed var(--lc-gray-400)"></span>Objectif</span></sc-if></div>
+<div style="position:relative;height:176px;margin-top:24px">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none"><div style="border-top:1px solid var(--lc-gray-100)"></div><div style="border-top:1px solid var(--lc-gray-100)"></div><div style="border-top:1px solid var(--lc-gray-200)"></div></div>
+<sc-if value="{{ sChart.hasGoal }}"><div style="position:absolute;left:0;right:0;bottom:{{ sChart.goalPct }}%;border-top:1px dashed var(--lc-gray-400);pointer-events:none"></div></sc-if>
+<div style="position:absolute;inset:0;display:flex;gap:{{ sChart.gap }}px">
+<sc-for list="{{ sChart.bars }}" as="b" hint-placeholder-count="7">
+<div title="{{ b.tip }}" style="flex:1;min-width:0;position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center"><sc-if value="{{ b.hasG }}"><div style="position:absolute;left:8%;right:8%;bottom:{{ b.g }}%;height:2px;background:var(--lc-gray-400)"></div></sc-if><div style="width:68%;height:{{ b.h }}%;min-height:2px;background:{{ b.color }};border-radius:2px 2px 0 0"></div><sc-if value="{{ b.showV }}"><span style="position:absolute;bottom:{{ b.h }}%;margin-bottom:3px;font:var(--text-caption)">{{ b.v }}</span></sc-if></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;gap:{{ sChart.gap }}px;margin-top:6px"><sc-for list="{{ sChart.bars }}" as="b2" hint-placeholder-count="7"><div style="flex:1;min-width:0;text-align:center;font:var(--text-caption);color:var(--text-muted);white-space:nowrap">{{ b2.lab }}</div></sc-for></div>
+</div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;min-width:0">
+<h2 style="font:var(--text-title);font-size:16px;margin-bottom:12px">Conversion sur la période</h2>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ funnel }}" as="f" hint-placeholder-count="6">
+<div><div style="display:flex;justify-content:space-between;gap:8px;font:var(--text-body);margin-bottom:4px"><span>{{ f.label }}</span><span>{{ f.v }}</span></div><div style="height:8px;border-radius:4px;background:var(--lc-gray-100);overflow:hidden"><div style="height:100%;width:{{ f.w }}%;background:var(--lc-blue-600)"></div></div><div style="font:var(--text-caption);color:var(--text-muted);margin-top:2px;min-height:14px">{{ f.rate }}</div></div>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(140px,1.5fr) repeat(4,minmax(90px,1fr));gap:8px;padding:10px 16px;background:var(--lc-gray-50);font:var(--text-caption);color:var(--text-muted);min-width:560px"><span>Métrique</span><span style="text-align:right">Volume</span><span style="text-align:right">Moyenne / jour ouvré</span><span style="text-align:right">Période précédente</span><span style="text-align:right">Évolution</span></div>
+<sc-for list="{{ sRows }}" as="r" hint-placeholder-count="8">
+<div style="display:grid;grid-template-columns:minmax(140px,1.5fr) repeat(4,minmax(90px,1fr));gap:8px;padding:10px 16px;border-top:1px solid var(--lc-gray-100);min-width:560px"><span style="font:var(--text-body)">{{ r.label }}</span><span style="text-align:right">{{ r.total }}</span><span style="text-align:right;color:var(--text-muted)">{{ r.avg }}</span><span style="text-align:right;color:var(--text-muted)">{{ r.prev }}</span><span style="text-align:right;color:{{ r.color }}">{{ r.delta }}</span></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPosts }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Mes posts</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ newPost }}" hint-size="auto,40px">Nouveau post</x-import></div>
+<div style="background:#fff;border-radius:8px;box-shadow:var(--ring-default);padding:0 16px;overflow-x:auto"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tabs" items="{{ statusItems }}" value="{{ postStatus }}" onChange="{{ setPostStatus }}" hint-size="100%,48px"></x-import></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<label style="flex:1;min-width:180px;max-width:320px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:#fff;border-radius:8px;box-shadow:var(--ring-default);color:var(--text-muted)"><dc-import name="Ic" i="search" hint-size="16px,16px"></dc-import><input aria-label="Rechercher un post" placeholder="Titre, contenu, tag" value="{{ postQuery }}" onChange="{{ setPostQuery }}" style="flex:1;min-width:0;border:0;background:transparent;outline:none"></label>
+<div style="flex:1"></div>
+<sc-for list="{{ postViews }}" as="v" hint-placeholder-count="3"><button type="button" onClick="{{ v.set }}" aria-pressed="{{ v.on }}" style="height:40px;padding:0 16px;border:0;border-radius:24px;display:flex;align-items:center;gap:8px;font:var(--text-body);background:{{ v.bg }};color:{{ v.fg }};box-shadow:var(--ring-default)"><dc-import name="Ic" i="{{ v.icon }}" hint-size="16px,16px"></dc-import>{{ v.label }}</button></sc-for>
+</div>
+<sc-if value="{{ postsEmpty }}"><div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center"><div style="width:48px;height:48px;border-radius:9999px;background:var(--lc-blue-50);color:var(--color-primary);display:flex;align-items:center;justify-content:center"><dc-import name="Ic" i="posts" size="22" hint-size="22px,22px"></dc-import></div><h2 style="font:var(--text-title)">Aucun post pour le moment</h2><p style="color:var(--text-muted)">Enregistrez une idée ou commencez un brouillon.</p><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ newPost }}" hint-size="auto,40px">Écrire mon premier post</x-import></div></sc-if>
+<sc-if value="{{ postList }}">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow:hidden">
+<sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+<div role="button" tabindex="0" onClick="{{ p.open }}" style="display:flex;align-items:center;gap:16px;padding:12px 16px;border-top:1px solid var(--lc-gray-100);cursor:pointer" style-hover="background:var(--lc-gray-50)">
+<span style="width:8px;height:8px;border-radius:9999px;flex:none;background:{{ p.dot }}"></span>
+<span style="flex:1;min-width:0"><span style="display:block;font:var(--text-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.title }}</span><span style="display:block;font:var(--text-caption);color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.excerpt }}</span></span>
+<span style="display:{{ dW }};width:110px;color:var(--text-muted)">{{ p.type }}</span>
+<span style="width:96px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ p.tone }}" hint-size="auto,20px">{{ p.status }}</x-import></span>
+<span style="display:{{ dW }};width:130px;color:var(--text-muted)">{{ p.dateTxt }}</span>
+<span style="display:{{ dW }};gap:2px"><button type="button" aria-label="Dupliquer" title="Dupliquer" onClick="{{ p.dup }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="copy" hint-size="16px,16px"></dc-import></button><button type="button" aria-label="Supprimer" title="Supprimer" onClick="{{ p.del }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="trash" hint-size="16px,16px"></dc-import></button></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ postCards }}">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px">
+<sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+<div role="button" tabindex="0" onClick="{{ p.open }}" style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer" style-hover="box-shadow:inset 0 0 0 1px var(--lc-gray-400)">
+<div style="display:flex;justify-content:space-between;align-items:center"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ p.tone }}" hint-size="auto,20px">{{ p.status }}</x-import><span style="font:var(--text-caption);color:var(--text-muted)">{{ p.dateTxt }}</span></div>
+<div style="font:var(--text-body);font-size:16px">{{ p.title }}</div>
+<div style="color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4">{{ p.excerpt }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:auto"><span style="font:var(--text-caption);color:var(--text-muted)">{{ p.type }}</span><sc-for list="{{ p.tagList }}" as="t" hint-placeholder-count="2"><span style="font:var(--text-caption);color:var(--lc-blue-700);background:var(--lc-blue-50);border-radius:4px;padding:2px 6px">{{ t }}</span></sc-for></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ postCal }}">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow:hidden">
+<div style="display:flex;align-items:center;gap:8px;padding:12px 16px"><button type="button" aria-label="Mois précédent" onClick="{{ calPrev }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:transparent;display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="left" hint-size="16px,16px"></dc-import></button><h2 style="font:var(--text-title);min-width:150px;text-align:center">{{ calLabel }}</h2><button type="button" aria-label="Mois suivant" onClick="{{ calNext }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:transparent;display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="right" hint-size="16px,16px"></dc-import></button><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ calToday }}" hint-size="auto,40px">Aujourd'hui</x-import></div>
+<div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--lc-gray-200)">
+<sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7"><div style="padding:8px;font:var(--text-caption);color:var(--text-muted);background:var(--lc-gray-50);text-align:center">{{ w }}</div></sc-for>
+<sc-for list="{{ cells }}" as="c" hint-placeholder-count="35">
+<div role="button" tabindex="0" onClick="{{ c.add }}" aria-label="{{ c.aria }}" style="min-height:{{ cellH }}px;padding:6px;border-top:1px solid var(--lc-gray-100);border-left:1px solid var(--lc-gray-100);background:{{ c.bg }};display:flex;flex-direction:column;gap:4px;cursor:pointer;min-width:0" style-hover="background:var(--lc-blue-50)">
+<span style="align-self:flex-start;min-width:24px;height:24px;border-radius:12px;padding:0 6px;font:var(--text-body);line-height:24px;text-align:center;background:{{ c.numBg }};color:{{ c.numFg }}">{{ c.n }}</span>
+<sc-for list="{{ c.posts }}" as="cp" hint-placeholder-count="1"><button type="button" title="{{ cp.title }}" onClick="{{ cp.open }}" style="display:flex;align-items:center;gap:6px;min-width:0;border:0;border-radius:4px;background:#fff;box-shadow:var(--ring-default);padding:3px 6px;text-align:left;font:var(--text-caption)"><span style="width:6px;height:6px;border-radius:9999px;flex:none;background:{{ cp.dot }}"></span><span style="display:{{ dW }};overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ cp.title }}</span></button></sc-for>
+<sc-if value="{{ c.missed }}"><span style="font:var(--text-caption);color:var(--text-disabled);display:{{ dW }}">Aucun post</span></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;padding:12px 16px;border-top:1px solid var(--lc-gray-200);font:var(--text-caption);color:var(--text-muted)"><sc-for list="{{ legend }}" as="l" hint-placeholder-count="5"><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:9999px;background:{{ l.dot }}"></span>{{ l.label }}</span></sc-for></div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1100px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center">
+<div style="display:flex;align-items:center;gap:12px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ backToPosts }}" hint-size="auto,40px">‹ Mes posts</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ edTone }}" hint-size="auto,20px">{{ ed.status }}</x-import><sc-if value="{{ dirty }}"><span style="font:var(--text-caption);color:var(--text-muted)">Modifications non enregistrées</span></sc-if></div>
+<div style="display:flex;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ edDelete }}" hint-size="auto,40px">Supprimer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="secondary" onClick="{{ edDup }}" hint-size="auto,40px">Dupliquer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ edSave }}" hint-size="auto,40px">Enregistrer</x-import></div>
+</div>
+<div style="display:grid;grid-template-columns:{{ edCols }};gap:16px;align-items:start">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Titre interne" placeholder="Ex. Le Loom de 90 secondes" value="{{ ed.title }}" onChange="{{ edTitle }}" hint-size="100%,64px"></x-import>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font:var(--text-body)">Contenu du post</span><textarea placeholder="Écrivez votre post. La première ligne est votre hook." value="{{ ed.content }}" onChange="{{ edContent }}" style="min-height:380px;resize:vertical;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:16px;font:400 16px/1.6 var(--font-sans);background:#fff" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"></textarea></label>
+<div style="display:flex;justify-content:space-between;font:var(--text-caption);color:var(--text-muted)"><span>Hook : les 210 premiers caractères restent visibles avant « voir plus »</span><span style="color:{{ edCountColor }}">{{ edCount }} / 3 000</span></div>
+<div style="background:var(--lc-gray-50);border-radius:8px;padding:12px 16px"><div style="font:var(--text-caption);color:var(--text-muted);margin-bottom:4px">Aperçu du hook</div><div style="white-space:pre-wrap;line-height:1.4">{{ edHook }}</div></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Appel à l'action (CTA)" placeholder="Ex. Commentez « LOOM » pour recevoir le modèle" value="{{ ed.cta }}" onChange="{{ edCta }}" hint-size="100%,64px"></x-import>
+</div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:16px;min-width:0">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Statut" value="{{ ed.status }}" options="{{ statusOpts }}" onChange="{{ edStatus }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:1fr 110px;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Date de publication" type="date" value="{{ ed.date }}" onChange="{{ edDate }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Heure" type="time" value="{{ ed.time }}" onChange="{{ edTime }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Type de contenu" value="{{ ed.type }}" options="{{ typeOpts }}" onChange="{{ edType }}" hint-size="100%,64px"></x-import>
+<div><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Tags" hint="Séparés par des virgules" value="{{ ed.tags }}" onChange="{{ edTags }}" hint-size="100%,64px"></x-import><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><sc-for list="{{ edTagList }}" as="t" hint-placeholder-count="2"><span style="font:var(--text-caption);color:var(--lc-blue-700);background:var(--lc-blue-50);border-radius:4px;padding:2px 6px">{{ t }}</span></sc-for></div></div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font:var(--text-body)">Notes</span><textarea placeholder="Angle, références, à vérifier…" value="{{ ed.notes }}" onChange="{{ edNotes }}" style="min-height:96px;resize:vertical;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:12px;font:var(--text-body-regular);background:#fff" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"></textarea></label>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInsp }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Inspirations</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ openAddI }}" hint-size="auto,40px">Ajouter une inspiration</x-import></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<label style="flex:1;min-width:180px;max-width:320px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:#fff;border-radius:8px;box-shadow:var(--ring-default);color:var(--text-muted)"><dc-import name="Ic" i="search" hint-size="16px,16px"></dc-import><input aria-label="Rechercher" placeholder="Auteur, contenu, tag" value="{{ inspQ }}" onChange="{{ setInspQ }}" style="flex:1;min-width:0;border:0;background:transparent;outline:none"></label>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Tri" value="{{ inspSort }}" options="{{ inspSortOpts }}" onChange="{{ setInspSort }}" hint-size="190px,40px"></x-import>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ catChips }}" as="c" hint-placeholder-count="8"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tag" selected="{{ c.on }}" onClick="{{ c.set }}" hint-size="auto,32px">{{ c.label }}</x-import></sc-for></div>
+<sc-if value="{{ inspEmpty }}"><div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:48px 24px;text-align:center"><h2 style="font:var(--text-title)">Aucune inspiration trouvée</h2><p style="color:var(--text-muted);margin-top:8px">Modifiez la recherche ou la catégorie.</p></div></sc-if>
+<div style="columns:300px;column-gap:12px">
+<sc-for list="{{ inspCards }}" as="c" hint-placeholder-count="6">
+<div role="button" tabindex="0" onClick="{{ c.open }}" style="break-inside:avoid;margin-bottom:12px;background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;cursor:pointer" style-hover="box-shadow:inset 0 0 0 1px var(--lc-gray-400)">
+<div style="display:flex;align-items:center;gap:8px"><span style="width:32px;height:32px;flex:none;border-radius:9999px;background:var(--lc-blue-50);color:var(--lc-blue-700);font:600 12px/32px var(--font-sans);text-align:center">{{ c.ini }}</span><span style="flex:1;font:var(--text-body)">{{ c.author }}</span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="brand" hint-size="auto,20px">{{ c.cat }}</x-import></div>
+<div style="display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4;white-space:pre-wrap">{{ c.excerpt }}</div>
+<div style="background:var(--lc-gray-50);border-radius:8px;padding:8px 12px"><div style="font:var(--text-caption);color:var(--text-muted)">Pourquoi je le garde</div><div style="margin-top:2px">{{ c.why }}</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><sc-for list="{{ c.tags }}" as="t" hint-placeholder-count="2"><span style="font:var(--text-caption);color:var(--lc-blue-700);background:var(--lc-blue-50);border-radius:4px;padding:2px 6px">{{ t }}</span></sc-for><span style="flex:1"></span><span style="font:var(--text-caption);color:var(--text-muted)">{{ c.saved }}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isScripts }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Scripts</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ newScript }}" hint-size="auto,40px">Nouveau script</x-import></div>
+<div style="background:#fff;border-radius:8px;box-shadow:var(--ring-default);padding:0 16px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tabs" items="{{ scriptTabs }}" value="{{ scriptTab }}" onChange="{{ setScriptTab }}" hint-size="320px,48px"></x-import></div>
+<sc-if value="{{ scLib }}">
+<div style="display:grid;grid-template-columns:{{ scCols }};gap:16px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+<label style="display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:#fff;border-radius:8px;box-shadow:var(--ring-default);color:var(--text-muted)"><dc-import name="Ic" i="search" hint-size="16px,16px"></dc-import><input aria-label="Rechercher un script" placeholder="Nom, contenu, tag" value="{{ sQ }}" onChange="{{ setSQ }}" style="flex:1;min-width:0;border:0;background:transparent;outline:none"></label>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ sCatChips }}" as="c" hint-placeholder-count="5"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Tag" selected="{{ c.on }}" onClick="{{ c.set }}" hint-size="auto,32px">{{ c.label }}</x-import></sc-for></div>
+<sc-for list="{{ scList }}" as="s" hint-placeholder-count="5">
+<div role="button" tabindex="0" onClick="{{ s.open }}" style="background:{{ s.bg }};box-shadow:{{ s.ring }};border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:6px;cursor:pointer"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span style="font:var(--text-body)">{{ s.name }}</span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="neutral" hint-size="auto,20px">{{ s.cat }}</x-import></div><div style="font:var(--text-caption);color:var(--text-muted)">{{ s.uses }} utilisations · {{ s.tr }} de réponses · {{ s.tc }} de clients</div></div>
+</sc-for>
+</div>
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}"><div style="display:none"></div></sc-if>
+<sc-if value="{{ hasScript }}">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Nom du script" value="{{ scr.name }}" onChange="{{ scName }}" hint-size="100%,64px"></x-import>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font:var(--text-body)">Contenu</span><textarea value="{{ scr.content }}" onChange="{{ scContent }}" style="min-height:180px;resize:vertical;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:16px;font:400 16px/1.5 var(--font-sans)" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"></textarea></label>
+<div style="font:var(--text-caption);color:var(--text-muted)">Variables disponibles : {prénom}, {entreprise}, {lien_loom}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Catégorie" value="{{ scr.cat }}" options="{{ scCatOpts }}" onChange="{{ scCat }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Tags" value="{{ scr.tags }}" onChange="{{ scTags }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Notes" value="{{ scr.notes }}" onChange="{{ scNotes }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0;background:var(--lc-gray-50);border-radius:8px;overflow:hidden;box-shadow:var(--ring-default)"><sc-for list="{{ scStats }}" as="x" hint-placeholder-count="4"><div style="background:var(--lc-gray-50);padding:12px;box-shadow:inset -1px -1px 0 var(--border-default)"><div style="font:var(--text-caption);color:var(--text-muted)">{{ x.label }}</div><div style="font:400 24px/1.2 var(--font-sans)">{{ x.v }}</div><div style="font:var(--text-caption);color:var(--text-muted)">{{ x.sub }}</div></div></sc-for></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center"><span style="font:var(--text-caption);color:var(--text-muted)">{{ scr.created }}</span><div style="display:flex;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ scDelete }}" hint-size="auto,40px">Supprimer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="secondary" onClick="{{ scDup }}" hint-size="auto,40px">Dupliquer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ scCopy }}" hint-size="auto,40px">Copier le script</x-import></div></div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ scPerf }}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between"><span style="font:var(--text-caption);color:var(--text-muted)">Taux de réponse = réponses / utilisations · Taux R1 = R1 / réponses · Taux client = clients / R1</span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" aria-label="Tri" value="{{ sSort }}" options="{{ scSortOpts }}" onChange="{{ setSSort }}" hint-size="220px,40px"></x-import></div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow-x:auto">
+<div style="display:grid;grid-template-columns:minmax(180px,2fr) repeat(4,64px) repeat(3,minmax(90px,1fr));gap:8px;padding:10px 16px;background:var(--lc-gray-50);font:var(--text-caption);color:var(--text-muted);min-width:760px"><span>Script</span><span style="text-align:right">Utilisations</span><span style="text-align:right">Réponses</span><span style="text-align:right">R1</span><span style="text-align:right">Clients</span><span style="text-align:right">Taux réponse</span><span style="text-align:right">Taux R1</span><span style="text-align:right">Taux client</span></div>
+<sc-for list="{{ perfRows }}" as="r" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:minmax(180px,2fr) repeat(4,64px) repeat(3,minmax(90px,1fr));gap:8px;align-items:center;padding:12px 16px;border-top:1px solid var(--lc-gray-100);min-width:760px"><span style="min-width:0"><span style="display:block;font:var(--text-body)">{{ r.name }}</span><span style="display:flex;gap:6px;margin-top:2px;font:var(--text-caption);color:var(--text-muted)">{{ r.cat }}<sc-if value="{{ r.low }}"><span>· échantillon faible</span></sc-if></span></span><span style="text-align:right">{{ r.uses }}</span><span style="text-align:right">{{ r.rep }}</span><span style="text-align:right">{{ r.r1 }}</span><span style="text-align:right">{{ r.cl }}</span><span style="text-align:right;font-weight:{{ r.wR }};color:{{ r.cR }}">{{ r.tr }}</span><span style="text-align:right;font-weight:{{ r.w1 }};color:{{ r.c1 }}">{{ r.t1 }}</span><span style="text-align:right;font-weight:{{ r.wC }};color:{{ r.cC }}">{{ r.tc }}</span></div>
+</sc-for>
+</div>
+<div style="font:var(--text-caption);color:var(--text-muted)">Les meilleurs taux (scripts utilisés au moins 30 fois) sont en vert.</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCamp }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:1280px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Campagnes</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ openAddC }}" hint-size="auto,40px">Nouvelle campagne</x-import></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px">
+<sc-for list="{{ campCards }}" as="c" hint-placeholder-count="3">
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div><div style="font:var(--text-body);font-size:16px">{{ c.name }}</div><div style="font:var(--text-caption);color:var(--text-muted);margin-top:2px">{{ c.period }} · {{ c.script }}</div></div><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="{{ c.tone }}" hint-size="auto,20px">{{ c.status }}</x-import></div>
+<div><div style="display:flex;justify-content:space-between;font:var(--text-caption);color:var(--text-muted);margin-bottom:4px"><span>Prospects ajoutés</span><span>{{ c.progress }}</span></div><div style="height:8px;border-radius:4px;background:var(--lc-gray-100);overflow:hidden"><div style="height:100%;width:{{ c.pct }}%;background:var(--lc-blue-600)"></div></div></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"><sc-for list="{{ c.rates }}" as="r" hint-placeholder-count="4"><div><div style="font:400 20px/1.2 var(--font-sans)">{{ r.v }}</div><div style="font:var(--text-caption);color:var(--text-muted)">{{ r.label }}</div></div></sc-for></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font:var(--text-caption);color:var(--text-muted)"><span>{{ c.clients }}</span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="secondary" size="sm" onClick="{{ c.view }}" hint-size="auto,32px">Voir les prospects</x-import></div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSet }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:960px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center"><h1 style="font:400 28px/1.25 var(--font-sans)">Paramètres</h1><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ openAddM }}" hint-size="auto,40px">Nouvelle métrique</x-import></div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;overflow-x:auto">
+<div style="padding:16px"><h2 style="font:var(--text-title);font-size:16px">Métriques et objectifs quotidiens</h2><p style="color:var(--text-muted);margin-top:4px">Chaque métrique apparaît dans l'activité, les statistiques et, si activée, sur le dashboard.</p></div>
+<div style="display:grid;grid-template-columns:32px minmax(140px,1.5fr) 90px 110px 140px 40px;gap:12px;padding:10px 16px;background:var(--lc-gray-50);font:var(--text-caption);color:var(--text-muted);min-width:620px"><span></span><span>Nom</span><span>Type</span><span>Objectif / jour</span><span>Sur le dashboard</span><span></span></div>
+<sc-for list="{{ setRows }}" as="m" hint-placeholder-count="8">
+<div style="display:grid;grid-template-columns:32px minmax(140px,1.5fr) 90px 110px 140px 40px;gap:12px;align-items:center;padding:8px 16px;border-top:1px solid var(--lc-gray-100);min-width:620px"><span style="color:var(--text-muted)"><dc-import name="Ic" i="{{ m.icon }}" hint-size="16px,16px"></dc-import></span><input aria-label="Nom de la métrique" value="{{ m.label }}" onChange="{{ m.setLabel }}" style="height:36px;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:0 12px;min-width:0" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"><span style="color:var(--text-muted)">{{ m.type }}</span><input type="number" min="0" aria-label="Objectif quotidien" placeholder="Aucun" value="{{ m.goal }}" onChange="{{ m.setGoal }}" style="height:36px;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:0 12px;width:100%" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"><span><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Switch" checked="{{ m.pin }}" onChange="{{ m.setPin }}" hint-size="40px,24px"></x-import></span><span><sc-if value="{{ m.custom }}"><button type="button" aria-label="Supprimer la métrique" onClick="{{ m.del }}" style="width:32px;height:32px;border:0;border-radius:9999px;background:transparent;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="trash" hint-size="16px,16px"></dc-import></button></sc-if></span></div>
+</sc-for>
+</div>
+<div style="background:#fff;box-shadow:var(--ring-default);border-radius:8px;padding:16px"><h2 style="font:var(--text-title);font-size:16px">Taux calculés</h2><p style="color:var(--text-muted);margin-top:4px">Ces formules s'appliquent automatiquement à vos données.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-top:12px"><sc-for list="{{ formulas }}" as="f" hint-placeholder-count="5"><div style="background:var(--lc-gray-50);border-radius:8px;padding:12px"><div style="font:var(--text-body)">{{ f.label }}</div><div style="font:var(--text-caption);color:var(--text-muted);margin-top:2px">{{ f.formula }}</div></div></sc-for></div></div>
+</div>
+</sc-if>
+
+</main>
+</div>
+<sc-if value="{{ compact }}" hint-placeholder-val="{{ false }}">
+<nav aria-label="Navigation mobile" style="position:fixed;left:0;right:0;bottom:0;z-index:30;height:60px;background:#fff;box-shadow:0 -1px 0 var(--border-default);display:flex">
+<sc-for list="{{ bnav }}" as="n" hint-placeholder-count="5"><button type="button" onClick="{{ n.go }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:{{ n.fg }};font:600 11px/1.2 var(--font-sans)"><dc-import name="Ic" i="{{ n.icon }}" size="20" hint-size="20px,20px"></dc-import>{{ n.label }}</button></sc-for>
+</nav>
+</sc-if>
+<sc-if value="{{ moreOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeMore }}" style="position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6)"><div style="position:absolute;left:0;right:0;bottom:60px;background:#fff;padding:8px 0"><sc-for list="{{ moreItems }}" as="n" hint-placeholder-count="5"><button type="button" onClick="{{ n.go }}" style="width:100%;display:flex;align-items:center;gap:12px;height:48px;padding:0 16px;border:0;background:transparent;text-align:left;font:var(--text-body)"><dc-import name="Ic" i="{{ n.icon }}" hint-size="16px,16px"></dc-import>{{ n.label }}</button></sc-for></div></div>
+</sc-if>
+
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:50;display:flex;justify-content:flex-end">
+<div onClick="{{ closeP }}" style="position:absolute;inset:0;background:rgba(0,0,0,.6)"></div>
+<aside role="dialog" aria-label="Fiche prospect" style="position:relative;width:{{ drawerW }};max-width:100%;height:100%;background:#fff;display:flex;flex-direction:column;box-shadow:var(--shadow-elevated)">
+<div style="display:flex;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid var(--lc-gray-200)"><span style="width:40px;height:40px;flex:none;border-radius:9999px;background:var(--lc-blue-50);color:var(--lc-blue-700);font:600 14px/40px var(--font-sans);text-align:center">{{ sel.ini }}</span><span style="flex:1;min-width:0"><span style="display:block;font:var(--text-title)">{{ sel.name }}</span><span style="display:block;color:var(--text-muted)">{{ sel.role }} · {{ sel.company }}</span></span><button type="button" aria-label="Fermer" onClick="{{ closeP }}" style="width:40px;height:40px;border:0;border-radius:9999px;background:transparent;display:inline-flex;align-items:center;justify-content:center;padding:0" style-hover="background:var(--lc-gray-100)"><dc-import name="Ic" i="x" hint-size="16px,16px"></dc-import></button></div>
+<div style="flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Statut" value="{{ sel.stageName }}" options="{{ stageOpts }}" onChange="{{ selStage }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:1fr 150px;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Prochaine action" value="{{ sel.next }}" onChange="{{ selNext }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Date" type="date" value="{{ sel.nextDate }}" onChange="{{ selNextDate }}" hint-size="100%,64px"></x-import></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Campagne" value="{{ sel.camp }}" options="{{ campOptsRaw }}" onChange="{{ selCamp }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Script utilisé" value="{{ sel.script }}" options="{{ scriptOptsRaw }}" onChange="{{ selScript }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="URL LinkedIn" value="{{ sel.url }}" onChange="{{ selUrl }}" hint-size="100%,64px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Site web" value="{{ sel.site }}" onChange="{{ selSite }}" placeholder="https://" hint-size="100%,64px"></x-import>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font:var(--text-body)">Notes</span><textarea value="{{ sel.notes }}" onChange="{{ selNotes }}" style="min-height:88px;resize:vertical;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:12px;font:var(--text-body-regular)" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"></textarea></label>
+<div><div style="font:var(--text-body);margin-bottom:8px">Historique</div><div style="display:flex;flex-direction:column;gap:8px"><sc-for list="{{ timeline }}" as="e" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:baseline"><span style="width:8px;height:8px;border-radius:9999px;background:var(--lc-blue-600);flex:none"></span><span style="flex:1">{{ e.txt }}</span><span style="font:var(--text-caption);color:var(--text-muted)">{{ e.when }}</span></div></sc-for></div></div>
+</div>
+<div style="display:flex;gap:8px;justify-content:space-between;padding:16px 24px;border-top:1px solid var(--lc-gray-200)"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ selDelete }}" hint-size="auto,40px">Supprimer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" disabled="{{ selIsClient }}" onClick="{{ selAdvance }}" hint-size="auto,40px">{{ selAdvLabel }}</x-import></div>
+</aside>
+</div>
+</sc-if>
+
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Dialog" open="{{ addM }}" title="Nouvelle métrique" onClose="{{ closeM }}" width="480" hint-size="0px,0px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Nom" placeholder="Appels" value="{{ newM.label }}" error="{{ mErr }}" onChange="{{ setMLabel }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Type" value="{{ newM.type }}" options="{{ mTypeOpts }}" onChange="{{ setMType }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Icône" value="{{ newM.icon }}" options="{{ mIconOpts }}" onChange="{{ setMIcon }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Objectif quotidien (facultatif)" type="number" placeholder="Ex. 5" value="{{ newM.goal }}" onChange="{{ setMGoal }}" hint-size="100%,64px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Switch" label="Afficher sur le dashboard" checked="{{ newM.pin }}" onChange="{{ setMPin }}" hint-size="100%,24px"></x-import>
+<div style="display:flex;justify-content:flex-end;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ closeM }}" hint-size="auto,40px">Annuler</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ createM }}" hint-size="auto,40px">Créer la métrique</x-import></div>
+</div>
+</x-import>
+
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Dialog" open="{{ addP }}" title="Ajouter un prospect" onClose="{{ closeAddP }}" width="520" hint-size="0px,0px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Prénom" value="{{ newP.first }}" error="{{ pErr }}" onChange="{{ setNP_first }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Nom" value="{{ newP.last }}" onChange="{{ setNP_last }}" hint-size="100%,64px"></x-import></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Entreprise" value="{{ newP.company }}" onChange="{{ setNP_company }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Poste" value="{{ newP.role }}" onChange="{{ setNP_role }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="URL LinkedIn" placeholder="https://www.linkedin.com/in/" value="{{ newP.url }}" onChange="{{ setNP_url }}" hint-size="100%,64px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Campagne" value="{{ newP.camp }}" options="{{ campOptsRaw }}" onChange="{{ setNP_camp }}" hint-size="100%,64px"></x-import>
+<div style="display:flex;justify-content:flex-end;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ closeAddP }}" hint-size="auto,40px">Annuler</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ createP }}" hint-size="auto,40px">Ajouter</x-import></div>
+</div>
+</x-import>
+
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Dialog" open="{{ addI }}" title="Ajouter une inspiration" onClose="{{ closeAddI }}" width="560" hint-size="0px,0px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="URL LinkedIn" placeholder="https://www.linkedin.com/posts/" value="{{ newI.url }}" onChange="{{ setNI_url }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Auteur" value="{{ newI.author }}" error="{{ iErr }}" onChange="{{ setNI_author }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Catégorie" value="{{ newI.cat }}" options="{{ inspCatOpts }}" onChange="{{ setNI_cat }}" hint-size="100%,64px"></x-import></div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font:var(--text-body)">Contenu du post</span><textarea value="{{ newI.content }}" onChange="{{ setNI_content }}" style="min-height:120px;resize:vertical;border:0;border-radius:8px;box-shadow:var(--ring-default);padding:12px;font:var(--text-body-regular)" style-focus="box-shadow:inset 0 0 0 2px var(--color-primary);outline:none"></textarea></label>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Pourquoi je le garde" value="{{ newI.why }}" onChange="{{ setNI_why }}" hint-size="100%,64px"></x-import>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Tags" hint="Séparés par des virgules" value="{{ newI.tags }}" onChange="{{ setNI_tags }}" hint-size="100%,64px"></x-import>
+<div style="display:flex;justify-content:flex-end;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ closeAddI }}" hint-size="auto,40px">Annuler</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ createI }}" hint-size="auto,40px">Enregistrer</x-import></div>
+</div>
+</x-import>
+
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Dialog" open="{{ hasInspOpen }}" title="{{ inspOpen.author }}" onClose="{{ closeInsp }}" width="600" hint-size="0px,0px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:8px;align-items:center"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Badge" tone="brand" hint-size="auto,20px">{{ inspOpen.cat }}</x-import><a href="{{ inspOpen.url }}" target="_blank" style="font:var(--text-caption)">Voir sur LinkedIn</a></div>
+<div style="white-space:pre-wrap;line-height:1.5">{{ inspOpen.content }}</div>
+<div style="background:var(--lc-gray-50);border-radius:8px;padding:12px 16px"><div style="font:var(--text-caption);color:var(--text-muted)">Pourquoi je le garde</div><div style="margin-top:2px">{{ inspOpen.why }}</div></div>
+<div><div style="font:var(--text-caption);color:var(--text-muted);margin-bottom:4px">Éléments intéressants</div><ul style="margin:0;padding-left:20px"><sc-for list="{{ inspOpen.points }}" as="pt" hint-placeholder-count="2"><li>{{ pt }}</li></sc-for></ul></div>
+<div style="display:flex;justify-content:flex-end;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ closeInsp }}" hint-size="auto,40px">Fermer</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ inspToIdea }}" hint-size="auto,40px">Créer une idée de post</x-import></div>
+</div>
+</x-import>
+
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Dialog" open="{{ addC }}" title="Nouvelle campagne" onClose="{{ closeAddC }}" width="480" hint-size="0px,0px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Nom" placeholder="BTP Saint-Étienne" value="{{ newC.name }}" error="{{ cErr }}" onChange="{{ setNC_name }}" hint-size="100%,64px"></x-import>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Période" placeholder="Octobre 2026" value="{{ newC.period }}" onChange="{{ setNC_period }}" hint-size="100%,64px"></x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Input" label="Objectif (prospects)" type="number" value="{{ newC.goal }}" onChange="{{ setNC_goal }}" hint-size="100%,64px"></x-import></div>
+<x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Select" label="Script principal" value="{{ newC.script }}" options="{{ scriptOptsRaw }}" onChange="{{ setNC_script }}" hint-size="100%,64px"></x-import>
+<div style="display:flex;justify-content:flex-end;gap:8px"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="tertiary" onClick="{{ closeAddC }}" hint-size="auto,40px">Annuler</x-import><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Button" variant="primary" onClick="{{ createC }}" hint-size="auto,40px">Créer la campagne</x-import></div>
+</div>
+</x-import>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}"><div style="position:fixed;left:16px;bottom:{{ toastBottom }}px;z-index:70"><x-import component-from-global-scope="LinkecashDesignSystem_4dea19.Toast" message="{{ toast.msg }}" tone="{{ toast.tone }}" action="{{ toast.action }}" onAction="{{ toastAction }}" onClose="{{ closeToast }}" hint-size="320px,48px"></x-import></div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = this.init();
+  dk(o){const d=new Date(2026,9,2+o);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  init(){
+    let s=11;const r=()=>{s=(s*16807)%2147483647;return s/2147483647};
+    const log={};
+    for(let o=-70;o<=0;o++){
+      const w=new Date(2026,9,2+o).getDay(),k=this.dk(o);
+      if(w===0||w===6){log[k]={};continue}
+      const inv=Math.round(25+r()*9),acc=Math.round(inv*(.42+r()*.2)),msg=Math.round(acc*(.9+r()*.45)),rep=Math.round(msg*(.2+r()*.14));
+      log[k]={invitations:inv,acceptations:acc,messages:msg,loom:Math.round(2+r()*4),reponses:rep,r1:Math.round(rep*(.2+r()*.3)),r2:r()<.35?1:0,clients:r()<.1?1:0};
+    }
+    log[this.dk(0)]={invitations:32,acceptations:18,messages:20,loom:4,reponses:6,r1:2,r2:0,clients:0};
+    const metrics=[
+      {key:'invitations',label:'Invitations',type:'Action',icon:'userplus',goal:30,pin:true},
+      {key:'acceptations',label:'Acceptations',type:'Résultat',icon:'usercheck',goal:0,pin:true},
+      {key:'messages',label:'Messages',type:'Action',icon:'send',goal:20,pin:true},
+      {key:'loom',label:'Loom',type:'Action',icon:'video',goal:5,pin:true},
+      {key:'reponses',label:'Réponses',type:'Résultat',icon:'reply',goal:0,pin:true},
+      {key:'r1',label:'R1',type:'Résultat',icon:'calendar',goal:0,pin:true},
+      {key:'r2',label:'R2',type:'Résultat',icon:'calendar',goal:0,pin:false},
+      {key:'clients',label:'Clients',type:'Résultat',icon:'flag',goal:0,pin:false}];
+    const NX=["Envoyer l'invitation","Attendre l'acceptation","Envoyer le message","Relancer le prospect","Envoyer le Loom","Relancer après le Loom","Préparer le R2","Envoyer le devis","—"];
+    const P=[["Julien","Bernard","Bâti Loire","Gérant",0,0,0,"c1","s1"],["Sophie","Martin","Martin Construction","Dirigeante",1,3,-1,"c1","s1"],["Thomas","Dufour","SARL Dufour TP","Directeur",1,2,1,"c1","s1"],["Karim","Roche","Roche & Fils","Gérant",2,1,0,"c1","s2"],["Élodie","Gaillard","Gaillard Rénovation","Fondatrice",3,4,-2,"c1","s2"],["Paul","Chavanne","Chavanne Façades","Gérant",4,2,0,"c1","s5"],["Nicolas","Forest","Forez Charpente","Dirigeant",5,3,1,"c1","s3"],["Marc","Bonnet","Bonnet Maçonnerie","Gérant",6,1,2,"c1","s3"],["Laura","Perrin","Atelier Perrin","Fondatrice",0,0,0,"c2","s1"],["David","Colin","Lumière Électricité","Gérant",1,5,-3,"c2","s1"],["Hugo","Rey","Rhône Plomberie","Dirigeant",2,1,0,"c2","s2"],["Inès","Girard","Cuisines Girard","Directrice",3,6,-1,"c2","s4"],["Antoine","Vidal","Menuiserie Vidal","Gérant",4,2,1,"c2","s5"],["Sarah","Morel","Loire Immobilier","Directrice d'agence",0,0,2,"c3",""],["Pierre","Faure","Agence du Pilat","Gérant",1,1,3,"c3",""],["Camille","Blanc","Forez Habitat","Responsable",2,2,0,"c3",""],["Yann","Reynaud","Cabinet Reynaud","Associé",3,3,1,"c3","s4"],["Lucie","Garnier","Garnier Toiture","Dirigeante",7,2,2,"c1","s3"],["Olivier","Mercier","Mercier Terrassement","Gérant",8,12,99,"c1","s2"],["Nadia","Benali","Benali Rénovation","Fondatrice",8,20,99,"c2","s3"],["Romain","Lopez","Lopez Isolation","Gérant",0,0,0,"c1","s1"],["Claire","Dumas","Dumas Paysage","Dirigeante",2,3,-1,"c2","s2"],["Eric","Chabert","Chabert BTP","Directeur",1,4,-2,"c1","s1"],["Manon","Roux","Roux Décoration","Gérante",5,2,0,"c2","s3"]]
+    .map((a,i)=>({id:'p'+i,first:a[0],last:a[1],company:a[2],role:a[3],stage:a[4],lastAgo:a[5],nextOff:a[6],camp:a[7],script:a[8],next:NX[a[4]],url:'https://www.linkedin.com/in/'+a[0].toLowerCase()+'-'+a[1].toLowerCase(),site:'',notes:''}));
+    const d=(o)=>this.dk(o);
+    const posts=[
+      {id:'a1',title:"Pourquoi je ne parle plus de prix en premier",status:'Publié',type:'Conseil',date:d(-1),time:'08:30',tags:'vente, discovery',cta:"Et vous, vous parlez de prix à quel moment ?",notes:'',content:"Pendant 2 ans, j'ai ouvert chaque appel avec mon tarif.\n\nRésultat : 1 prospect sur 10 restait au bout de 5 minutes.\n\nAujourd'hui je commence par une question : « Qu'est-ce qui vous coûte le plus cher en ce moment ? »\n\nLe prix devient une réponse, plus un obstacle."},
+      {id:'a2',title:"Mon premier client BTP en 11 jours",status:'Publié',type:'Storytelling',date:d(-3),time:'08:30',tags:'btp, client',cta:'Commentez « BTP » pour recevoir la séquence',notes:'',content:"Il y a 11 jours, je ne connaissais personne dans le BTP.\n\nAujourd'hui, un terrassier de la Loire est devenu mon client.\n\nVoici les 3 messages qui ont tout déclenché."},
+      {id:'a3',title:"3 messages LinkedIn qui obtiennent des réponses",status:'Publié',type:'Conseil',date:d(-6),time:'12:00',tags:'scripts, messages',cta:'',notes:'',content:"1. Une question, pas une présentation.\n2. Une phrase sur eux, pas sur vous.\n3. Une sortie facile : « Dites-moi si ça ne vous concerne pas »."},
+      {id:'a4',title:"Ce que j'ai appris en envoyant 600 invitations",status:'Publié',type:'Coulisses',date:d(-8),time:'08:00',tags:'prospection',cta:'',notes:'',content:"600 invitations, 41 % d'acceptation.\n\nCe qui a compté : le poste dans le profil, pas la note dans l'invitation."},
+      {id:'a5',title:"Le Loom de 90 secondes qui ouvre des R1",status:'Prêt',type:'Conseil',date:d(0),time:'08:30',tags:'loom, r1',cta:'Commentez « LOOM » pour recevoir le modèle',notes:'Ajouter une capture du Loom',content:"Un Loom de 90 secondes vaut mieux que 3 relances.\n\nMa structure :\n→ 10 s : leur nom et leur entreprise\n→ 50 s : un constat sur leur profil\n→ 30 s : une idée concrète\n\nPas de pitch, pas de logo."},
+      {id:'a6',title:"Pourquoi les artisans ignorent vos messages",status:'Programmé',type:'Opinion',date:d(3),time:'08:00',tags:'btp, opinion',cta:'',notes:'',content:"Un artisan reçoit 20 messages par semaine qui commencent par « J'espère que vous allez bien »."},
+      {id:'a7',title:"Étude de cas : Mercier Terrassement",status:'Brouillon',type:'Preuve sociale',date:d(6),time:'08:30',tags:'client, résultats',cta:'',notes:'Demander validation au client',content:"Situation de départ :\nActions menées :\nRésultat :"},
+      {id:'a8',title:"Mon process de prospection en 4 étapes",status:'Brouillon',type:'Conseil',date:d(8),time:'12:00',tags:'process',cta:'',notes:'',content:"Invitation → message → Loom → R1."},
+      {id:'a9',title:"Idée : le mythe des 30 invitations par jour",status:'Idée',type:'Opinion',date:'',time:'08:30',tags:'invitations',cta:'',notes:'',content:''},
+      {id:'a10',title:"Idée : bilan de 30 jours de prospection",status:'Idée',type:'Coulisses',date:'',time:'08:30',tags:'bilan',cta:'',notes:'',content:''}];
+    const insp=[
+      {id:'i1',author:'Claire Vasseur',cat:'Hook',url:'https://www.linkedin.com/posts/exemple-1',content:"J'ai perdu un client à 40 000 €.\n\nVoici la phrase que j'aurais dû dire au premier appel.",why:"Ouverture qui crée une perte concrète et une promesse immédiate.",points:['Chiffre précis dès la première ligne','Promesse en deux temps'],tags:['hook','vente'],savedOff:-2},
+      {id:'i2',author:'Mehdi Aouad',cat:'Storytelling',url:'https://www.linkedin.com/posts/exemple-2',content:"Mardi, 6 h 40. Mon associé m'appelle.\n\n« On a perdu le contrat. »\n\nJ'ai raccroché, fait un café, puis écrit le message qui nous a sauvés.",why:"Scène datée, dialogue court, tension avant la leçon.",points:['Heure précise','Dialogue de deux mots','Chute en fin de post'],tags:['récit','tension'],savedOff:-5},
+      {id:'i3',author:'Julie Lambert',cat:'CTA',url:'https://www.linkedin.com/posts/exemple-3',content:"Si ce post vous a servi, écrivez « MODÈLE » en commentaire.\n\nJe l'envoie en message privé dans l'heure.",why:"Commentaire déclencheur, délai de livraison clair.",points:['Mot-clé unique','Délai annoncé'],tags:['cta','lead magnet'],savedOff:-6},
+      {id:'i4',author:'Romain Tessier',cat:'Structure',url:'https://www.linkedin.com/posts/exemple-4',content:"5 erreurs de prospection :\n\n1. Pitcher trop tôt\n2. Écrire trop long\n3. Relancer sans valeur\n4. Copier-coller\n5. Ne rien mesurer",why:"Liste courte, chaque ligne tient sur une ligne de mobile.",points:['Chiffre dans le titre','Une idée par ligne'],tags:['liste','format'],savedOff:-9},
+      {id:'i5',author:'Anaïs Colin',cat:'Preuve sociale',url:'https://www.linkedin.com/posts/exemple-5',content:"Avant : 2 rendez-vous par mois.\nAprès 90 jours : 14.\n\nCe qui a changé : un seul paramètre dans leur message.",why:"Avant / après chiffré, suspense sur le paramètre.",points:['Avant / après','Suspense maintenu'],tags:['résultats'],savedOff:-12},
+      {id:'i6',author:'Bruno Hamel',cat:'Controverse',url:'https://www.linkedin.com/posts/exemple-6',content:"Arrêtez de personnaliser vos messages.\n\nPersonnalisez votre offre.",why:"Inversion en deux lignes, facile à débattre en commentaire.",points:['Position tranchée','Format très court'],tags:['opinion'],savedOff:-14}];
+    const scripts=[
+      {id:'s1',name:'Invitation courte',cat:'Invitation',content:"Bonjour {prénom}, je vois que vous dirigez {entreprise}. J'échange avec plusieurs dirigeants du secteur, je serais ravi de vous compter dans mon réseau.",tags:'sans note, btp',notes:'',createdOff:-60,uses:140,rep:14,r1:4,cl:1},
+      {id:'s2',name:'Question sur le chantier',cat:"Message d'accroche",content:"Merci d'avoir accepté, {prénom}. Question rapide : comment trouvez-vous aujourd'hui vos nouveaux chantiers ? Je pose la question car j'aide des entreprises comme {entreprise} à remplir leur carnet de commandes sans passer par les plateformes.",tags:'question, btp',notes:'Meilleur taux de réponse sur BTP',createdOff:-45,uses:96,rep:17,r1:7,cl:2},
+      {id:'s3',name:'Loom audit 90 s',cat:'Loom',content:"{prénom}, j'ai regardé votre présence LinkedIn et préparé une courte vidéo de 90 secondes avec 3 pistes concrètes pour {entreprise}. Voici le lien : {lien_loom}",tags:'loom, audit',notes:'',createdOff:-30,uses:38,rep:12,r1:6,cl:2},
+      {id:'s4',name:'Relance douce J+3',cat:'Relance',content:"Bonjour {prénom}, je me permets de revenir vers vous au cas où mon message se serait perdu. Souhaitez-vous que je vous envoie l'exemple en vidéo ?",tags:'relance',notes:'',createdOff:-28,uses:85,rep:9,r1:2,cl:0},
+      {id:'s5',name:'Preuve sociale BTP',cat:"Message d'accroche",content:"{prénom}, nous venons d'aider Mercier Terrassement à décrocher 3 chantiers en un mois via LinkedIn. Je peux vous montrer comment, en 15 minutes ?",tags:'preuve, btp',notes:'',createdOff:-10,uses:22,rep:5,r1:3,cl:1}];
+    const campaigns=[
+      {id:'c1',name:'BTP Saint-Étienne',period:'Octobre 2026',goal:100,added:62,acc:31,msg:30,rep:9,r1:4,cl:1,status:'En cours',script:'s2'},
+      {id:'c2',name:'Artisans Lyon',period:'Sept.–oct. 2026',goal:80,added:48,acc:22,msg:21,rep:6,r1:2,cl:1,status:'En cours',script:'s3'},
+      {id:'c3',name:'Agences immo Loire',period:'Novembre 2026',goal:60,added:6,acc:2,msg:2,rep:0,r1:0,cl:0,status:'Planifiée',script:''},
+      {id:'c4',name:'Cabinets comptables 42',period:'Août 2026',goal:50,added:50,acc:21,msg:20,rep:4,r1:1,cl:0,status:'Terminée',script:'s1'}];
+    return {w:1280,view:'dashboard',moreOpen:false,toast:null,log,metrics,
+      dashPeriod:'semaine',dashMetric:'invitations',statPeriod:'semaine',statMetric:'invitations',
+      prospects:P,pView:'kanban',pQuery:'',pCamp:'all',pSort:'next',selP:null,addP:false,pErr:'',newP:{first:'',last:'',company:'',role:'',url:'',camp:'c1'},
+      posts,postView:'list',postStatus:'all',postQuery:'',draft:null,dirty:false,calMonth:0,
+      insp,inspQ:'',inspCat:'all',inspSort:'recent',inspOpen:null,addI:false,iErr:'',newI:{url:'',author:'',content:'',cat:'Hook',why:'',tags:''},
+      scripts,scriptTab:'lib',selS:'s2',sQ:'',sCat:'all',sSort:'client',
+      campaigns,addC:false,cErr:'',newC:{name:'',period:'',goal:'100',script:'s2'},
+      actOff:0,addM:false,mErr:'',newM:{label:'',type:'Action',icon:'phone',goal:'',pin:true}};
+  }
+  componentDidMount(){this.rs=()=>this.setState({w:window.innerWidth});window.addEventListener('resize',this.rs);this.rs()}
+  componentWillUnmount(){window.removeEventListener('resize',this.rs)}
+  say(msg,tone,action,undo){this.setState({toast:{msg,tone:tone||'success',action:action||'',undo:undo||null}});clearTimeout(this.tt);this.tt=setTimeout(()=>this.setState({toast:null}),4500)}
+  bump(key,off,dl){const k=this.dk(off),l={...this.state.log};l[k]={...(l[k]||{})};l[k][key]=Math.max(0,(l[k][key]||0)+dl);this.setState({log:l})}
+  setLog(key,off,v){const k=this.dk(off),l={...this.state.log};l[k]={...(l[k]||{})};l[k][key]=Math.max(0,parseInt(v)||0);this.setState({log:l})}
+  updP(id,patch){this.setState(s=>({prospects:s.prospects.map(p=>p.id===id?{...p,...patch}:p)}))}
+  advance(p){
+    const S=this.state,st=Math.min(8,p.stage+1),NX=["Envoyer l'invitation","Attendre l'acceptation","Envoyer le message","Relancer le prospect","Envoyer le Loom","Relancer après le Loom","Préparer le R2","Envoyer le devis","—"],OF=[0,3,0,3,2,3,3,7,99];
+    this.updP(p.id,{stage:st,lastAgo:0,next:NX[st],nextOff:OF[st]});
+    this.say(p.first+' '+p.last+' : '+['À contacter','Invitation envoyée','Accepté','Message envoyé','Réponse','Loom envoyé','R1','R2','Client'][st]);
+  }
+  saveDraft(){
+    const S=this.state,dr=S.draft;if(!dr)return null;
+    let id=dr.id;
+    if(id==='new'){id='a'+Date.now();this.setState({posts:[{...dr,id},...S.posts],draft:{...dr,id},dirty:false})}
+    else this.setState({posts:S.posts.map(p=>p.id===id?{...dr}:p),dirty:false});
+    return id;
+  }
+  openNewPost(date){this.setState({view:'editor',draft:{id:'new',title:'',content:'',status:'Idée',type:'Conseil',date:date||'',time:'08:30',tags:'',cta:'',notes:''},dirty:false})}
+  renderVals(){
+    const S=this.state,cx=S.w<860,dk=o=>this.dk(o),today=dk(0);
+    const MON=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],MS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'],DOW=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+    const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+    const dt=o=>new Date(2026,9,2+o);
+    const f1=x=>x.toFixed(1).replace('.',',');
+    const STAGES=['À contacter','Invitation envoyée','Accepté','Message envoyé','Réponse','Loom envoyé','R1','R2','Client'];
+    const stTone=i=>i<=1?'neutral':i<=5?'brand':i<=7?'solid':'success';
+    const stDot=i=>i===8?'#1d7a3e':i>=6?'#08539f':i>=2?'#0a66c2':'#8c8c8c';
+    const val=(k,o)=>(S.log[dk(o)]||{})[k]||0;
+    const sum=(k,end,len)=>{let t=0;for(let i=0;i<len;i++)t+=val(k,end-i);return t};
+    const wd=(end,len)=>{let n=0;for(let i=0;i<len;i++){const g=dt(end-i).getDay();if(g>0&&g<6)n++}return Math.max(1,n)};
+    const PER={jour:{len:1,chart:14,ghost:false,label:"Aujourd'hui comparé à hier"},semaine:{len:7,chart:7,ghost:true,label:'7 derniers jours comparés aux 7 précédents'},mois:{len:30,chart:30,ghost:true,label:'30 derniers jours comparés aux 30 précédents'}};
+    const RATES=[["Taux d'acceptation",'acceptations','invitations','Acceptations / invitations'],['Taux de réponse','reponses','messages','Réponses / messages'],['Taux R1','r1','reponses','R1 / réponses'],['Taux client','clients','r1','Clients / R1']];
+    const rate=(n,dd,end,len)=>{const q=sum(dd,end,len);return q?sum(n,end,len)/q*100:0};
+    const dlt=(df,unit)=>({delta:(df>=0?'+':'−')+f1(Math.abs(df))+' '+unit+' vs préc.',icon:df>=0?'up':'dn',color:df>=0?'var(--color-success)':'var(--color-accent)'});
+    const kpisFor=p=>RATES.map(r=>{const c=PER[p],cur=rate(r[1],r[2],0,c.len),pv=rate(r[1],r[2],-c.len,c.len);return {label:r[0],value:f1(cur)+' %',formula:r[3],...dlt(cur-pv,'pt')}});
+    const mLabel=k=>(S.metrics.find(m=>m.key===k)||{}).label||k;
+    const mGoal=k=>(S.metrics.find(m=>m.key===k)||{}).goal||0;
+    const chart=(k,p)=>{
+      const c=PER[p],raw=[],g=mGoal(k);
+      for(let i=0;i<c.chart;i++){const o=-(c.chart-1-i);raw.push({v:val(k,o),g:c.ghost?val(k,o-c.len):0,o})}
+      const max=Math.max(1,g,...raw.map(x=>Math.max(x.v,x.g)));
+      return {ghost:c.ghost,hasGoal:g>0,goalPct:g/max*100,gap:c.chart>14?3:8,bars:raw.map((x,i)=>({h:x.v/max*100,g:x.g/max*100,hasG:c.ghost,v:x.v,showV:c.chart<=14,
+        lab:c.chart>14?((c.chart-1-i)%5===0?String(dt(x.o).getDate()):''):String(dt(x.o).getDate()),
+        tip:dt(x.o).getDate()+' '+MS[dt(x.o).getMonth()]+' : '+x.v+(c.ghost?' (préc. '+x.g+')':''),
+        color:p==='jour'&&x.o!==0?'var(--lc-blue-100)':'var(--lc-blue-600)'}))};
+    };
+    const set=o=>()=>this.setState(o);
+    const nm=p=>p.first+' '+p.last;
+    const ini=p=>(p.first[0]||'')+(p.last[0]||'');
+    const campName=id=>(S.campaigns.find(c=>c.id===id)||{}).name||'—';
+    const scriptName=id=>(S.scripts.find(c=>c.id===id)||{}).name||'Aucun';
+    const go=v=>()=>this.setState({view:v,moreOpen:false});
+    // nav
+    const NAV=[['dashboard','Dashboard','dashboard',''],['posts','Mes posts','posts','Posts'],['insp','Inspirations','bulb','Posts'],['prospects','Prospects','users','Prospection'],['activity','Activité','activity','Prospection'],['stats','Statistiques','chart','Prospection'],['camp','Campagnes','target','Prospection'],['scripts','Scripts','message','Scripts'],['settings','Paramètres','sliders','']];
+    const cur=S.view==='editor'?'posts':S.view;
+    const late=S.prospects.filter(p=>p.stage<8&&p.nextOff<0).length;
+    const mkNav=(a)=>({go:go(a[0]),icon:a[2],label:a[1],current:cur===a[0]?'page':'false',bg:cur===a[0]?'var(--lc-blue-50)':'transparent',fg:cur===a[0]?'var(--color-primary)':'var(--text-primary)',bar:cur===a[0]?'inset 3px 0 0 var(--color-primary)':'none',hasCount:a[0]==='prospects'&&late>0,count:late});
+    const order=['','Posts','Prospection','Scripts'];
+    const nav=[['',[NAV[0]]],['Posts',[NAV[1],NAV[2]]],['Prospection',NAV.slice(3,7)],['Scripts',[NAV[7]]],['',[NAV[8]]]].map(g=>({title:g[0],hasTitle:!!g[0],items:g[1].map(mkNav)}));
+    const bn=[NAV[0],NAV[1],NAV[3],NAV[4]].map(a=>({go:go(a[0]),icon:a[2],label:a[1],fg:cur===a[0]?'var(--color-primary)':'var(--text-muted)'}));
+    bn.push({go:()=>this.setState({moreOpen:!S.moreOpen}),icon:'menu',label:'Plus',fg:S.moreOpen?'var(--color-primary)':'var(--text-muted)'});
+    const moreItems=[NAV[2],NAV[5],NAV[6],NAV[7],NAV[8]].map(a=>({go:go(a[0]),icon:a[2],label:a[1]}));
+    const out={cx,compact:cx,wide:!cx,nav,bnav:bn,moreItems,moreOpen:cx&&S.moreOpen,closeMore:set({moreOpen:false}),
+      pagePad:cx?'16px 16px 80px':'24px 32px',dW:cx?'none':'flex',btnSz:cx?44:32,
+      mainCols:cx?'minmax(0,1fr)':'minmax(0,2fr) minmax(300px,1fr)',tileCols:cx?'repeat(2,minmax(0,1fr))':'repeat(auto-fill,minmax(190px,1fr))',
+      goHome:go('dashboard'),goActivity:go('activity'),
+      onSearchKey:e=>{if(e.key==='Enter'){this.setState({view:'prospects',pQuery:e.target.value})}},
+      todayLabel:cap(DOW[dt(0).getDay()])+' '+dt(0).getDate()+' '+MON[dt(0).getMonth()]+' '+dt(0).getFullYear(),
+      isDash:S.view==='dashboard',isProsp:S.view==='prospects',isAct:S.view==='activity',isStats:S.view==='stats',isPosts:S.view==='posts',isEditor:S.view==='editor',isInsp:S.view==='insp',isScripts:S.view==='scripts',isCamp:S.view==='camp',isSet:S.view==='settings',
+      hasToast:!!S.toast,toast:S.toast||{msg:'',tone:'success',action:''},toastBottom:cx?72:16,closeToast:set({toast:null}),
+      toastAction:()=>{const u=S.toast&&S.toast.undo;if(u)u();this.setState({toast:null})},
+      newPost:()=>this.openNewPost('')};
+    // dashboard
+    const pace=0.6;
+    out.tiles=S.metrics.filter(m=>m.pin).map(m=>{
+      const v=val(m.key,0),g=m.goal,y=val(m.key,-1);let status,color,sIcon,pct=0;
+      if(g>0){pct=Math.min(100,v/g*100);
+        if(v>=g){status=v>g?'Objectif atteint · +'+(v-g):'Objectif atteint';color='var(--color-success)';sIcon='check'}
+        else if(v>=Math.ceil(g*pace)){status='Dans le rythme · reste '+(g-v);color='var(--color-primary)';sIcon='clock'}
+        else{status='En retard · reste '+(g-v);color='var(--color-accent)';sIcon='alert'}
+      }else{const df=v-y;status='Hier : '+y+' ('+(df>=0?'+':'−')+Math.abs(df)+')';color='var(--text-muted)';sIcon=df>=0?'up':'dn'}
+      return {icon:m.icon,label:m.label,value:v,goalTxt:g>0?'/ '+g:'',hasGoal:g>0,pct,color,status,sIcon,incLabel:'Ajouter 1 '+m.label,inc:()=>this.bump(m.key,0,1)};
+    });
+    out.kpis=kpisFor('semaine');
+    out.metricOpts=S.metrics.map(m=>({value:m.key,label:m.label}));
+    out.dashMetric=S.dashMetric;out.setDashMetric=e=>this.setState({dashMetric:e.target.value});
+    out.dashIsWeek=S.dashPeriod==='semaine';out.dashIsMonth=S.dashPeriod==='mois';out.dashWeek=set({dashPeriod:'semaine'});out.dashMonth=set({dashPeriod:'mois'});
+    out.dChart=chart(S.dashMetric,S.dashPeriod);
+    const rel=S.prospects.filter(p=>p.stage<8&&p.nextOff<=0).sort((a,b)=>a.nextOff-b.nextOff);
+    const plan=S.prospects.filter(p=>p.stage<8&&p.nextOff>0&&p.nextOff<=3).sort((a,b)=>a.nextOff-b.nextOff);
+    const dayTxt=o=>o===1?'Demain':dt(o).getDate()+' '+MS[dt(o).getMonth()];
+    const toPros=(p,plan)=>({icon:'users',title:nm(p),sub:p.company+' · '+p.next,tag:plan?dayTxt(p.nextOff):(p.nextOff<0?(-p.nextOff)+' j de retard':"Aujourd'hui"),tone:(!plan&&p.nextOff<0)?'accent':'neutral',open:set({selP:p.id})});
+    const dueP=S.posts.filter(p=>p.date===today&&p.status!=='Publié');
+    const nextP=S.posts.filter(p=>p.date>today&&p.status!=='Idée').sort((a,b)=>a.date<b.date?-1:1).slice(0,2);
+    const toPost=(p,pl)=>({icon:'posts',title:p.title,sub:p.type+' · '+p.status+(p.time?' · '+p.time:''),tag:pl?dayTxt(Math.round((new Date(p.date)-new Date('2026-10-02'))/864e5)):p.time,tone:'neutral',open:()=>this.setState({view:'editor',draft:{...p},dirty:false})});
+    out.todo=[
+      {title:'Prospects à relancer',items:rel.slice(0,5).map(p=>toPros(p,false)),empty:rel.length===0,emptyTxt:'Aucune relance en attente',more:rel.length>5,moreTxt:'Voir les '+rel.length+' relances',goAll:e=>{e.preventDefault();this.setState({view:'prospects',pSort:'next'})}},
+      {title:'Post à publier',items:dueP.map(p=>toPost(p,false)),empty:dueP.length===0,emptyTxt:'Aucun post prévu aujourd\'hui',more:false,moreTxt:'',goAll:()=>{}},
+      {title:'Actions prévues',items:[...plan.slice(0,3).map(p=>toPros(p,true)),...nextP.map(p=>toPost(p,true))],empty:plan.length+nextP.length===0,emptyTxt:'Rien de prévu',more:false,moreTxt:'',goAll:()=>{}}];
+    out.todoTotal=String(rel.length+dueP.length);
+    // prospects
+    const q=S.pQuery.trim().toLowerCase();
+    let pl=S.prospects.filter(p=>(S.pCamp==='all'||p.camp===S.pCamp)&&(!q||(nm(p)+' '+p.company+' '+p.role).toLowerCase().includes(q)));
+    const srt={next:(a,b)=>a.nextOff-b.nextOff,recent:(a,b)=>a.lastAgo-b.lastAgo,name:(a,b)=>a.last.localeCompare(b.last),company:(a,b)=>a.company.localeCompare(b.company)}[S.pSort];
+    pl=[...pl].sort(srt);
+    out.pQuery=S.pQuery;out.setPQuery=e=>this.setState({pQuery:e.target.value});
+    out.pCamp=S.pCamp;out.setPCamp=e=>this.setState({pCamp:e.target.value});
+    out.campOpts=[{value:'all',label:'Toutes les campagnes'},...S.campaigns.map(c=>({value:c.id,label:c.name}))];
+    out.campOptsRaw=S.campaigns.map(c=>({value:c.id,label:c.name}));
+    out.scriptOptsRaw=[{value:'',label:'Aucun'},...S.scripts.map(c=>({value:c.id,label:c.name}))];
+    out.pSort=S.pSort;out.setPSort=e=>this.setState({pSort:e.target.value});
+    out.sortOpts=[{value:'next',label:'Prochaine action'},{value:'recent',label:'Dernière interaction'},{value:'name',label:'Nom'},{value:'company',label:'Entreprise'}];
+    out.pCount=pl.length+' prospect'+(pl.length>1?'s':'');
+    out.pEmpty=pl.length===0;out.pEmptyTitle=S.prospects.length===0?'Aucun prospect pour le moment':'Aucun prospect ne correspond';out.pEmptyText=S.prospects.length===0?'Ajoutez vos premiers prospects pour suivre votre pipeline.':'Modifiez la recherche ou la campagne sélectionnée.';
+    out.isKanban=S.pView==='kanban';out.isTable=S.pView==='table';
+    out.kbBg=out.isKanban?'var(--lc-blue-50)':'#fff';out.kbFg=out.isKanban?'var(--color-primary)':'var(--text-primary)';out.tbBg=out.isTable?'var(--lc-blue-50)':'#fff';out.tbFg=out.isTable?'var(--color-primary)':'var(--text-primary)';
+    out.setKanban=set({pView:'kanban'});out.setTable=set({pView:'table'});
+    out.showKanban=!out.pEmpty&&out.isKanban;out.showTable=!out.pEmpty&&out.isTable;out.prospMax=out.isKanban?'none':'1280px';
+    const nxt=p=>p.stage===8?'—':(p.nextOff<0?p.next+' ('+(-p.nextOff)+' j de retard)':p.nextOff===0?p.next+" · aujourd'hui":p.next+' · '+dayTxt(p.nextOff));
+    const nxtColor=p=>p.stage<8&&p.nextOff<0?'var(--color-accent)':'var(--text-muted)';
+    const lastTxt=p=>p.lastAgo===0?"Aujourd'hui":'Il y a '+p.lastAgo+' j';
+    const mv=(id,st)=>{const p=S.prospects.find(x=>x.id===id);if(!p||p.stage===st)return;this.updP(id,{stage:st,lastAgo:0,next:["Envoyer l'invitation","Attendre l'acceptation","Envoyer le message","Relancer le prospect","Envoyer le Loom","Relancer après le Loom","Préparer le R2","Envoyer le devis","—"][st],nextOff:[0,3,0,3,2,3,3,7,99][st]});this.say(nm(p)+' : '+STAGES[st])};
+    out.cols=STAGES.map((n,i)=>{const cs=pl.filter(p=>p.stage===i);return {name:n,count:cs.length,dot:stDot(i),over:e=>e.preventDefault(),drop:e=>{e.preventDefault();mv(this.dragId,i)},
+      cards:cs.map(p=>({name:nm(p),ini:ini(p),sub:p.role+' · '+p.company,next:nxt(p),nextColor:nxtColor(p),nextIcon:p.stage<8&&p.nextOff<0?'alert':'clock',meta:campName(p.camp)+(p.script?' · '+scriptName(p.script):''),canAdv:p.stage<8,
+        drag:()=>{this.dragId=p.id},open:set({selP:p.id}),adv:e=>{e.stopPropagation();this.advance(p)}}))}});
+    out.tGrid=cx?'minmax(0,1fr) auto auto':'minmax(190px,2fr) minmax(130px,1.4fr) 150px minmax(130px,1.2fr) 120px minmax(190px,1.8fr) 80px';out.tMin=cx?'0px':'960px';
+    const del=p=>{const old=S.prospects;this.setState({prospects:S.prospects.filter(x=>x.id!==p.id),selP:null});this.say(nm(p)+' supprimé','neutral','Annuler',()=>this.setState({prospects:old}))};
+    out.rows=pl.map(p=>({name:nm(p),ini:ini(p),role:p.role,company:p.company,stage:STAGES[p.stage],tone:stTone(p.stage),camp:campName(p.camp),last:lastTxt(p),next:nxt(p),nextColor:nxtColor(p),canAdv:p.stage<8,open:set({selP:p.id}),adv:e=>{e.stopPropagation();this.advance(p)},del:e=>{e.stopPropagation();del(p)}}));
+    out.openAddP=set({addP:true,pErr:''});out.closeAddP=set({addP:false});out.addP=S.addP;out.newP=S.newP;out.pErr=S.pErr;
+    ['first','last','company','role','url','camp'].forEach(k=>{out['setNP_'+k]=e=>this.setState({newP:{...S.newP,[k]:e.target.value}})});
+    out.createP=()=>{
+      if(!S.newP.first.trim()){this.setState({pErr:'Le prénom est obligatoire.'});return}
+      const p={id:'p'+Date.now(),first:S.newP.first.trim(),last:S.newP.last.trim(),company:S.newP.company.trim(),role:S.newP.role.trim(),stage:0,lastAgo:0,nextOff:0,camp:S.newP.camp,script:'',next:"Envoyer l'invitation",url:S.newP.url,site:'',notes:''};
+      this.setState({prospects:[p,...S.prospects],addP:false,newP:{first:'',last:'',company:'',role:'',url:'',camp:S.newP.camp}});this.say(nm(p)+' ajouté à '+campName(p.camp));
+    };
+    // drawer
+    const sp=S.prospects.find(p=>p.id===S.selP);
+    out.hasSel=!!sp;out.closeP=set({selP:null});out.drawerW=cx?'100%':'440px';
+    const ns=sp||{first:'',last:'',company:'',role:'',stage:0,next:'',nextOff:0,camp:'c1',script:'',url:'',site:'',notes:'',lastAgo:0};
+    out.sel={ini:ini(ns),name:nm(ns),role:ns.role,company:ns.company,stageName:STAGES[ns.stage],next:ns.next,nextDate:ns.stage===8?'':dk(ns.nextOff),camp:ns.camp,script:ns.script,url:ns.url,site:ns.site,notes:ns.notes};
+    out.stageOpts=STAGES;
+    out.selStage=e=>{const st=STAGES.indexOf(e.target.value);if(sp)mv(sp.id,st)};
+    out.selNext=e=>sp&&this.updP(sp.id,{next:e.target.value});
+    out.selNextDate=e=>{if(!sp||!e.target.value)return;const [y,m,d]=e.target.value.split('-').map(Number);this.updP(sp.id,{nextOff:Math.round((Date.UTC(y,m-1,d)-Date.UTC(2026,9,2))/864e5)})};
+    out.selCamp=e=>sp&&this.updP(sp.id,{camp:e.target.value});out.selScript=e=>sp&&this.updP(sp.id,{script:e.target.value});
+    out.selUrl=e=>sp&&this.updP(sp.id,{url:e.target.value});out.selSite=e=>sp&&this.updP(sp.id,{site:e.target.value});out.selNotes=e=>sp&&this.updP(sp.id,{notes:e.target.value});
+    out.timeline=sp?[...STAGES.slice(1,ns.stage+1).map((n,i)=>({i:i+1,txt:n,when:'Il y a '+(ns.lastAgo+(ns.stage-i-1)*2)+' j'})).reverse(),{txt:'Ajouté à '+campName(ns.camp),when:'Il y a '+(ns.lastAgo+ns.stage*2+2)+' j'}].map(e=>({txt:e.txt,when:e.when})):[];
+    out.selDelete=()=>sp&&del(sp);out.selIsClient=ns.stage===8;out.selAdvLabel=ns.stage===8?'Pipeline terminé':'Passer à : '+STAGES[Math.min(8,ns.stage+1)];out.selAdvance=()=>sp&&this.advance(sp);
+    // activity
+    const ao=S.actOff;
+    out.actLabel=cap(DOW[dt(ao).getDay()])+' '+dt(ao).getDate()+' '+MON[dt(ao).getMonth()]+(ao===0?" · aujourd'hui":'');
+    out.actPrev=set({actOff:ao-1});out.actNext=()=>ao<0&&this.setState({actOff:ao+1});out.actToday=set({actOff:0});out.actAtToday=ao===0;out.actNextOp=ao===0?0.4:1;
+    out.actRows=S.metrics.map(m=>{const v=val(m.key,ao);return {icon:m.icon,label:m.label,type:m.type,goalTxt:m.goal>0?'Objectif '+m.goal:'Sans objectif',hasGoal:m.goal>0,pct:m.goal>0?Math.min(100,v/m.goal*100):0,color:v>=m.goal?'var(--color-success)':'var(--color-primary)',value:v,inc:()=>this.bump(m.key,ao,1),dec:()=>this.bump(m.key,ao,-1),set:e=>this.setLog(m.key,ao,e.target.value)}});
+    out.histGrid='96px repeat('+S.metrics.length+',minmax(64px,1fr))';out.histMin=(96+S.metrics.length*72)+'px';
+    out.histHead=S.metrics.map(m=>({label:m.label}));
+    out.hist=[0,-1,-2,-3,-4,-5,-6].map(o=>{const g=dt(o).getDay(),we=g===0||g===6;return {label:dt(o).getDate()+' '+MS[dt(o).getMonth()],bg:o===0?'var(--lc-blue-50)':'transparent',cells:S.metrics.map(m=>{const v=val(m.key,o);return {v:we?'—':v,color:m.goal>0&&!we&&v<m.goal?'var(--color-accent)':'var(--text-primary)'}})}});
+    // metric dialog
+    out.addM=S.addM;out.newM=S.newM;out.mErr=S.mErr;out.openAddM=set({addM:true,mErr:''});out.closeM=set({addM:false});
+    out.mTypeOpts=['Action','Résultat'];
+    const ICO=[['phone','Téléphone'],['send','Message'],['calendar','Calendrier'],['video','Vidéo'],['user','Utilisateur'],['flag','Drapeau'],['target','Cible'],['star','Étoile'],['link','Lien'],['reply','Réponse']];
+    out.mIconOpts=ICO.map(a=>({value:a[0],label:a[1]}));
+    out.setMLabel=e=>this.setState({newM:{...S.newM,label:e.target.value},mErr:''});out.setMType=e=>this.setState({newM:{...S.newM,type:e.target.value}});out.setMIcon=e=>this.setState({newM:{...S.newM,icon:e.target.value}});out.setMGoal=e=>this.setState({newM:{...S.newM,goal:e.target.value}});out.setMPin=v=>this.setState({newM:{...S.newM,pin:v}});
+    out.createM=()=>{
+      const l=S.newM.label.trim();if(!l){this.setState({mErr:'Donnez un nom à la métrique.'});return}
+      const key=l.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,'');
+      if(S.metrics.some(m=>m.key===key)){this.setState({mErr:'Cette métrique existe déjà.'});return}
+      this.setState({metrics:[...S.metrics,{key,label:l,type:S.newM.type,icon:S.newM.icon,goal:parseInt(S.newM.goal)||0,pin:S.newM.pin,custom:true}],addM:false,newM:{label:'',type:'Action',icon:'phone',goal:'',pin:true}});
+      this.say('Métrique « '+l+' » ajoutée');
+    };
+    // stats
+    const sc=PER[S.statPeriod];
+    out.statPeriod=S.statPeriod;out.periodItems=[{value:'jour',label:'Jour'},{value:'semaine',label:'Semaine'},{value:'mois',label:'Mois'}];out.setStatPeriod=v=>this.setState({statPeriod:v});out.sLabel=sc.label;
+    const gp=S.prospects.length?S.prospects.filter(p=>p.stage===8).length/S.prospects.length*100:0;
+    out.sKpis=[...kpisFor(S.statPeriod),{label:'Conversion globale',value:f1(gp)+' %',formula:'Clients / prospects',delta:'Depuis le début',icon:'check',color:'var(--text-muted)'}];
+    out.statMetric=S.statMetric;out.setStatMetric=e=>this.setState({statMetric:e.target.value});out.sChart=chart(S.statMetric,S.statPeriod);
+    const FK=[['invitations',''],['acceptations',['acceptations','invitations',"des invitations"]],['messages',''],['reponses',['reponses','messages','des messages']],['r1',['r1','reponses','des réponses']],['r2',['r2','r1','des R1']],['clients',['clients','r1','des R1']]].filter(f=>S.metrics.some(m=>m.key===f[0]));
+    const fmax=Math.max(1,...FK.map(f=>sum(f[0],0,sc.len)));
+    out.funnel=FK.map(f=>{const v=sum(f[0],0,sc.len);return {label:mLabel(f[0]),v,w:Math.max(2,v/fmax*100),rate:f[1]?f1(rate(f[1][0],f[1][1],0,sc.len))+' % '+f[1][2]:''}});
+    out.sRows=S.metrics.map(m=>{const t=sum(m.key,0,sc.len),pv=sum(m.key,-sc.len,sc.len),df=pv?(t-pv)/pv*100:null;return {label:m.label,total:t,avg:f1(t/wd(0,sc.len)),prev:pv,delta:df===null?'—':(df>=0?'+':'−')+Math.abs(Math.round(df))+' %',color:df===null?'var(--text-muted)':df>=0?'var(--color-success)':'var(--color-accent)'}});
+    // posts
+    const SI={'Idée':['neutral','#8c8c8c'],'Brouillon':['neutral','#666666'],'Prêt':['brand','#0a66c2'],'Programmé':['solid','#06417c'],'Publié':['success','#1d7a3e']};
+    const SL=Object.keys(SI);
+    const cnt=s=>s==='all'?S.posts.length:S.posts.filter(p=>p.status===s).length;
+    out.postStatus=S.postStatus;out.statusItems=[{value:'all',label:'Tous',count:cnt('all')},...SL.map(s=>({value:s,label:s,count:cnt(s)}))];out.setPostStatus=v=>this.setState({postStatus:v});
+    out.postQuery=S.postQuery;out.setPostQuery=e=>this.setState({postQuery:e.target.value});
+    const pq=S.postQuery.trim().toLowerCase();
+    const fp=S.posts.filter(p=>(S.postStatus==='all'||p.status===S.postStatus)&&(!pq||(p.title+' '+p.content+' '+p.tags).toLowerCase().includes(pq))).sort((a,b)=>(a.date||'9')<(b.date||'9')?1:-1);
+    const dtxt=p=>{if(!p.date)return 'Sans date';const [y,m,d]=p.date.split('-').map(Number);return d+' '+MS[m-1]+(p.time?' · '+p.time:'')};
+    const openPost=p=>()=>this.setState({view:'editor',draft:{...p},dirty:false});
+    const delPost=p=>e=>{e.stopPropagation();const old=S.posts;this.setState({posts:S.posts.filter(x=>x.id!==p.id)});this.say('Post supprimé','neutral','Annuler',()=>this.setState({posts:old}))};
+    const dupPost=p=>e=>{e.stopPropagation();this.setState({posts:[{...p,id:'a'+Date.now(),title:p.title+' (copie)',status:'Brouillon',date:''},...S.posts]});this.say('Post dupliqué en brouillon')};
+    out.posts=fp.map(p=>({title:p.title,excerpt:p.content.replace(/\n+/g,' ')||'Pas encore de contenu',status:p.status,tone:SI[p.status][0],dot:SI[p.status][1],type:p.type,dateTxt:dtxt(p),tagList:p.tags.split(',').map(t=>t.trim()).filter(Boolean),open:openPost(p),dup:dupPost(p),del:delPost(p)}));
+    out.postsEmpty=fp.length===0&&S.postView!=='cal';
+    out.postList=S.postView==='list'&&fp.length>0;out.postCards=S.postView==='cards'&&fp.length>0;out.postCal=S.postView==='cal';
+    out.postViews=[['list','Liste','list'],['cards','Cartes','grid'],['cal','Calendrier','calendar']].map(a=>({label:a[1],icon:a[2],on:S.postView===a[0],bg:S.postView===a[0]?'var(--lc-blue-50)':'#fff',fg:S.postView===a[0]?'var(--color-primary)':'var(--text-primary)',set:set({postView:a[0]})}));
+    const cm=new Date(2026,9+S.calMonth,1),lead=(cm.getDay()+6)%7,dim=new Date(2026,9+S.calMonth+1,0).getDate(),tot=Math.ceil((lead+dim)/7)*7;
+    out.calLabel=cap(MON[cm.getMonth()])+' '+cm.getFullYear();out.calPrev=set({calMonth:S.calMonth-1});out.calNext=set({calMonth:S.calMonth+1});out.calToday=set({calMonth:0});
+    out.weekdays=cx?['L','M','M','J','V','S','D']:['Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.','Dim.'];out.cellH=cx?64:112;
+    out.cells=Array.from({length:tot},(_,i)=>{
+      const c=new Date(2026,9+S.calMonth,1-lead+i),key=c.getFullYear()+'-'+String(c.getMonth()+1).padStart(2,'0')+'-'+String(c.getDate()).padStart(2,'0'),inM=c.getMonth()===cm.getMonth(),isT=key===today,g=c.getDay(),wk=g>0&&g<6;
+      const ps=S.posts.filter(p=>p.date===key);
+      return {n:c.getDate(),bg:inM?'#fff':'var(--lc-gray-50)',numBg:isT?'var(--color-primary)':'transparent',numFg:isT?'#fff':inM?'var(--text-primary)':'var(--text-disabled)',aria:'Créer un post le '+c.getDate()+' '+MON[c.getMonth()],
+        missed:inM&&wk&&key<today&&ps.length===0,add:()=>this.openNewPost(key),
+        posts:ps.map(p=>({title:p.title,dot:SI[p.status][1],open:e=>{e.stopPropagation();this.setState({view:'editor',draft:{...p},dirty:false})}}))};
+    });
+    out.legend=SL.map(s=>({label:s,dot:SI[s][1]}));
+    // editor
+    const ed=S.draft||{id:'',title:'',content:'',status:'Idée',type:'Conseil',date:'',time:'08:30',tags:'',cta:'',notes:''};
+    out.ed=ed;out.edTone=SI[ed.status]?SI[ed.status][0]:'neutral';out.dirty=S.dirty;out.edCols=cx?'minmax(0,1fr)':'minmax(0,1fr) 320px';
+    const fld=k=>e=>this.setState({draft:{...ed,[k]:e.target.value},dirty:true});
+    out.edTitle=fld('title');out.edContent=fld('content');out.edCta=fld('cta');out.edStatus=fld('status');out.edDate=fld('date');out.edTime=fld('time');out.edType=fld('type');out.edTags=fld('tags');out.edNotes=fld('notes');
+    out.statusOpts=SL;out.typeOpts=['Conseil','Storytelling','Opinion','Preuve sociale','Coulisses'];
+    out.edCount=ed.content.length.toLocaleString('fr-FR');out.edCountColor=ed.content.length>3000?'var(--color-accent)':'var(--text-muted)';
+    out.edHook=ed.content.length?(ed.content.length>210?ed.content.slice(0,210)+'… voir plus':ed.content):'Le début de votre post apparaîtra ici.';
+    out.edTagList=ed.tags.split(',').map(t=>t.trim()).filter(Boolean);
+    out.backToPosts=set({view:'posts'});
+    out.edSave=()=>{this.saveDraft();this.say('Post enregistré')};
+    out.edDup=()=>{this.setState({posts:[{...ed,id:'a'+Date.now(),title:(ed.title||'Sans titre')+' (copie)',status:'Brouillon',date:''},...S.posts],view:'posts'});this.say('Post dupliqué en brouillon')};
+    out.edDelete=()=>{const old=S.posts;this.setState({posts:S.posts.filter(p=>p.id!==ed.id),view:'posts'});this.say('Post supprimé','neutral','Annuler',()=>this.setState({posts:old}))};
+    // inspirations
+    const CATS=['Hook','Storytelling','CTA','Structure','Preuve sociale','Angle','Controverse','Format'];
+    out.inspQ=S.inspQ;out.setInspQ=e=>this.setState({inspQ:e.target.value});out.inspSort=S.inspSort;out.setInspSort=e=>this.setState({inspSort:e.target.value});
+    out.inspSortOpts=[{value:'recent',label:'Plus récentes'},{value:'author',label:'Auteur'},{value:'cat',label:'Catégorie'}];out.inspCatOpts=CATS;
+    out.catChips=[['all','Toutes'],...CATS.map(c=>[c,c])].map(a=>({label:a[1],on:S.inspCat===a[0],set:set({inspCat:a[0]})}));
+    const iq=S.inspQ.trim().toLowerCase();
+    let il=S.insp.filter(i=>(S.inspCat==='all'||i.cat===S.inspCat)&&(!iq||(i.author+' '+i.content+' '+i.tags.join(' ')+' '+i.why).toLowerCase().includes(iq)));
+    il=[...il].sort(S.inspSort==='recent'?(a,b)=>b.savedOff-a.savedOff:S.inspSort==='author'?(a,b)=>a.author.localeCompare(b.author):(a,b)=>a.cat.localeCompare(b.cat));
+    out.inspEmpty=il.length===0;
+    out.inspCards=il.map(i=>({author:i.author,ini:i.author.split(' ').map(x=>x[0]).join(''),cat:i.cat,excerpt:i.content,why:i.why,tags:i.tags,saved:i.savedOff===-0?'':'Gardé le '+dt(i.savedOff).getDate()+' '+MS[dt(i.savedOff).getMonth()],open:set({inspOpen:i.id})}));
+    const io=S.insp.find(i=>i.id===S.inspOpen);
+    out.hasInspOpen=!!io;out.inspOpen=io||{author:'',cat:'',url:'#',content:'',why:'',points:[]};out.closeInsp=set({inspOpen:null});
+    out.inspToIdea=()=>{this.setState({posts:[{id:'a'+Date.now(),title:'Idée inspirée de '+io.author,status:'Idée',type:'Conseil',date:'',time:'08:30',tags:io.tags.join(', '),cta:'',notes:io.why,content:''},...S.posts],inspOpen:null});this.say('Idée de post créée')};
+    out.addI=S.addI;out.iErr=S.iErr;out.newI=S.newI;out.openAddI=set({addI:true,iErr:''});out.closeAddI=set({addI:false});
+    ['url','author','content','cat','why','tags'].forEach(k=>{out['setNI_'+k]=e=>this.setState({newI:{...S.newI,[k]:e.target.value}})});
+    out.createI=()=>{if(!S.newI.author.trim()){this.setState({iErr:"Indiquez l'auteur."});return}
+      this.setState({insp:[{id:'i'+Date.now(),author:S.newI.author.trim(),cat:S.newI.cat,url:S.newI.url||'#',content:S.newI.content,why:S.newI.why||'—',points:[],tags:S.newI.tags.split(',').map(t=>t.trim()).filter(Boolean),savedOff:0},...S.insp],addI:false,newI:{url:'',author:'',content:'',cat:'Hook',why:'',tags:''}});this.say('Inspiration enregistrée')};
+    // scripts
+    const rt=(a,b)=>b?a/b*100:0;
+    out.scriptTabs=[{value:'lib',label:'Bibliothèque'},{value:'perf',label:'Performance'}];out.scriptTab=S.scriptTab;out.setScriptTab=v=>this.setState({scriptTab:v});
+    out.scLib=S.scriptTab==='lib';out.scPerf=S.scriptTab==='perf';out.scCols=cx?'minmax(0,1fr)':'340px minmax(0,1fr)';
+    const SC=['Invitation',"Message d'accroche",'Relance','Loom','Closing'];out.scCatOpts=SC;
+    out.sQ=S.sQ;out.setSQ=e=>this.setState({sQ:e.target.value});
+    out.sCatChips=[['all','Tous'],...SC.map(c=>[c,c])].map(a=>({label:a[1],on:S.sCat===a[0],set:set({sCat:a[0]})}));
+    const sq=S.sQ.trim().toLowerCase();
+    const sl=S.scripts.filter(s=>(S.sCat==='all'||s.cat===S.sCat)&&(!sq||(s.name+' '+s.content+' '+s.tags).toLowerCase().includes(sq)));
+    out.scList=sl.map(s=>({name:s.name,cat:s.cat,uses:s.uses,tr:f1(rt(s.rep,s.uses))+' %',tc:f1(rt(s.cl,s.r1))+' %',bg:s.id===S.selS?'var(--lc-blue-50)':'#fff',ring:s.id===S.selS?'var(--ring-primary)':'var(--ring-default)',open:set({selS:s.id})}));
+    const cs=S.scripts.find(s=>s.id===S.selS);out.hasScript=!!cs;
+    const sc0=cs||{name:'',content:'',cat:'Invitation',tags:'',notes:'',createdOff:0,uses:0,rep:0,r1:0,cl:0};out.scr={...sc0,created:'Créé le '+dt(sc0.createdOff).getDate()+' '+MS[dt(sc0.createdOff).getMonth()]+' '+dt(sc0.createdOff).getFullYear()};
+    const us=p=>e=>cs&&this.setState({scripts:S.scripts.map(s=>s.id===cs.id?{...s,[p]:e.target.value}:s)});
+    out.scName=us('name');out.scContent=us('content');out.scCat=us('cat');out.scTags=us('tags');out.scNotes=us('notes');
+    out.scStats=[{label:'Utilisations',v:sc0.uses,sub:''},{label:'Taux de réponse',v:f1(rt(sc0.rep,sc0.uses))+' %',sub:sc0.rep+' réponses'},{label:'Taux R1',v:f1(rt(sc0.r1,sc0.rep))+' %',sub:sc0.r1+' R1'},{label:'Taux client',v:f1(rt(sc0.cl,sc0.r1))+' %',sub:sc0.cl+' clients'}];
+    out.newScript=()=>{const id='s'+Date.now();this.setState({scripts:[{id,name:'Nouveau script',cat:'Invitation',content:'',tags:'',notes:'',createdOff:0,uses:0,rep:0,r1:0,cl:0},...S.scripts],selS:id,scriptTab:'lib'})};
+    out.scDup=()=>{if(!cs)return;const id='s'+Date.now();this.setState({scripts:[{...cs,id,name:cs.name+' (copie)',uses:0,rep:0,r1:0,cl:0,createdOff:0},...S.scripts],selS:id});this.say('Script dupliqué')};
+    out.scDelete=()=>{if(!cs)return;const old=S.scripts;this.setState({scripts:S.scripts.filter(s=>s.id!==cs.id),selS:null});this.say('Script supprimé','neutral','Annuler',()=>this.setState({scripts:old}))};
+    out.scCopy=()=>{try{navigator.clipboard.writeText(sc0.content)}catch(e){}this.say('Script copié')};
+    out.sSort=S.sSort;out.setSSort=e=>this.setState({sSort:e.target.value});out.scSortOpts=[{value:'client',label:'Taux client'},{value:'r1',label:'Taux R1'},{value:'rep',label:'Taux de réponse'},{value:'uses',label:'Utilisations'}];
+    const pr=S.scripts.map(s=>({...s,tr:rt(s.rep,s.uses),t1:rt(s.r1,s.rep),tc:rt(s.cl,s.r1)}));
+    const ok=pr.filter(s=>s.uses>=30);const mx=k=>Math.max(-1,...ok.map(s=>s[k]));const bR=mx('tr'),b1=mx('t1'),bC=mx('tc');
+    const key={client:'tc',r1:'t1',rep:'tr',uses:'uses'}[S.sSort];
+    out.perfRows=[...pr].sort((a,b)=>b[key]-a[key]).map(s=>{const good=(k,b)=>s.uses>=30&&s[k]===b&&b>0;return {name:s.name,cat:s.cat,low:s.uses<30,uses:s.uses,rep:s.rep,r1:s.r1,cl:s.cl,tr:f1(s.tr)+' %',t1:f1(s.t1)+' %',tc:f1(s.tc)+' %',
+      wR:good('tr',bR)?600:400,cR:good('tr',bR)?'var(--color-success)':'var(--text-primary)',w1:good('t1',b1)?600:400,c1:good('t1',b1)?'var(--color-success)':'var(--text-primary)',wC:good('tc',bC)?600:400,cC:good('tc',bC)?'var(--color-success)':'var(--text-primary)'}});
+    // campaigns
+    out.campCards=S.campaigns.map(c=>({name:c.name,period:c.period,script:c.script?scriptName(c.script):'Script à définir',status:c.status,tone:c.status==='En cours'?'brand':c.status==='Terminée'?'success':'neutral',progress:c.added+' / '+c.goal,pct:Math.min(100,c.added/c.goal*100),
+      rates:[{label:'Acceptation',v:f1(rt(c.acc,c.added))+' %'},{label:'Réponse',v:f1(rt(c.rep,c.msg))+' %'},{label:'R1',v:f1(rt(c.r1,c.rep))+' %'},{label:'Client',v:f1(rt(c.cl,c.r1))+' %'}],clients:c.cl+' client'+(c.cl>1?'s':'')+' · '+c.r1+' R1',view:()=>this.setState({view:'prospects',pCamp:c.id,pView:'kanban'})}));
+    out.addC=S.addC;out.cErr=S.cErr;out.newC=S.newC;out.openAddC=set({addC:true,cErr:''});out.closeAddC=set({addC:false});
+    ['name','period','goal','script'].forEach(k=>{out['setNC_'+k]=e=>this.setState({newC:{...S.newC,[k]:e.target.value}})});
+    out.createC=()=>{if(!S.newC.name.trim()){this.setState({cErr:'Donnez un nom à la campagne.'});return}
+      this.setState({campaigns:[{id:'c'+Date.now(),name:S.newC.name.trim(),period:S.newC.period||'À définir',goal:parseInt(S.newC.goal)||100,added:0,acc:0,msg:0,rep:0,r1:0,cl:0,status:'Planifiée',script:S.newC.script},...S.campaigns],addC:false,newC:{name:'',period:'',goal:'100',script:'s2'}});this.say('Campagne créée')};
+    // settings
+    out.setRows=S.metrics.map((m,i)=>({icon:m.icon,label:m.label,type:m.type,goal:m.goal||'',pin:m.pin,custom:!!m.custom,
+      setLabel:e=>this.setState({metrics:S.metrics.map((x,j)=>j===i?{...x,label:e.target.value}:x)}),setGoal:e=>this.setState({metrics:S.metrics.map((x,j)=>j===i?{...x,goal:parseInt(e.target.value)||0}:x)}),setPin:v=>this.setState({metrics:S.metrics.map((x,j)=>j===i?{...x,pin:v}:x)}),
+      del:()=>{const old=S.metrics;this.setState({metrics:S.metrics.filter((x,j)=>j!==i)});this.say('Métrique supprimée','neutral','Annuler',()=>this.setState({metrics:old}))}}));
+    out.formulas=[...RATES.map(r=>({label:r[0],formula:r[3]})),{label:'Conversion globale',formula:'Clients / prospects'}];
+    return out;
+  }
+}
+</script>
+</body>
+</html>
