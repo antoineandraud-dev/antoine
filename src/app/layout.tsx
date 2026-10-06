@@ -1,42 +1,31 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-plus-jakarta",
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
+  weight: ["400", "500", "600"],
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Naga Studio — Sites web de prestige & conversion",
+  title: "Antoine A. — Artisan Web & Domination SEO pour TPE/PME",
   description:
-    "Naga Studio conçoit des sites web sur-mesure à fort magnétisme visuel, combinés à l'ingénierie du CRO.",
+    "Sites web conçus pour apparaître en haut de Google : vitesse, architecture sémantique et copywriting orienté vente pour TPE/PME.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="fr"
-      className={`dark scroll-smooth ${spaceGrotesk.variable} ${plusJakarta.variable} ${instrumentSerif.variable}`}
-    >
-      <body className="bg-background font-body text-on-surface antialiased selection:bg-primary selection:text-white relative overflow-x-hidden">
+    <html lang="fr" className={`light scroll-smooth ${plusJakarta.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-[#ffffff] font-sans text-brand-black antialiased selection:bg-brand-lime selection:text-brand-black">
         {children}
       </body>
     </html>

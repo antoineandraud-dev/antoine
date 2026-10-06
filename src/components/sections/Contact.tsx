@@ -1,100 +1,108 @@
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Icon } from "@/components/ui/Icon";
+"use client";
 
-const reassurance = [
-  { icon: "schedule", title: "Retour garanti sous 24h", text: "Analyse préliminaire offerte sous 1 jour ouvré" },
-  { icon: "security", title: "Confidentialité totale", text: "Pas de relance commerciale agressive, vos données restent privées" },
-];
+import { useState } from "react";
+import { Icon } from "@/components/ui/Icon";
+import { contactPoints } from "@/data/content";
 
 const inputClass =
-  "w-full px-4 py-3 rounded-xl bg-surface border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-primary transition-colors text-sm";
-const labelClass = "font-display text-xs uppercase tracking-wider text-on-surface-variant font-medium";
+  "w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white text-sm placeholder-white focus:bg-white/15 focus:border-brand-lime focus:outline-none transition-all";
+const labelClass = "block text-xs uppercase font-mono tracking-wider text-gray-300 mb-1";
 
 export function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+
   return (
-    <section className="w-full py-24 bg-background relative overflow-hidden" id="contact">
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[300px] bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-5 flex flex-col justify-between">
-            <div>
-              <Eyebrow>Contact direct</Eyebrow>
-              <h2 className="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4">Parlons de votre projet.</h2>
-              <p className="font-body text-sm md:text-base text-on-surface-variant leading-relaxed mb-8">
-                Une réponse concrète sous 24 heures, sans engagement. Décrivez votre ambition et recevez un premier avis stratégique franc.
-              </p>
-              <div className="space-y-4 mb-8">
-                {reassurance.map((r) => (
-                  <div key={r.title} className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-surface-container border border-white/10 flex items-center justify-center text-primary shrink-0">
-                      <Icon name={r.icon} className="text-[20px]" />
-                    </div>
-                    <div>
-                      <span className="block font-display text-sm font-bold text-white">{r.title}</span>
-                      <span className="font-body text-xs text-on-surface-variant">{r.text}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="p-6 rounded-2xl bg-surface-container-low border border-white/[0.08]">
-              <span className="font-display text-[11px] uppercase tracking-wider text-on-surface-variant block mb-1">Email direct</span>
-              <a className="font-display text-lg font-bold text-primary hover:underline" href="mailto:hello@nagastudio.fr">
-                hello@nagastudio.fr
-              </a>
+    <section className="max-w-4xl mx-auto px-6 py-16" id="contact">
+      <div className="bg-brand-black text-white rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-80 h-80 bg-brand-lime/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-5">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider bg-white/10 text-brand-lime mb-4">
+              Session Stratégique Offerte
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-4">
+              Réservez votre audit SEO &amp; conversion (30 min).
+            </h2>
+            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+              Je décortique personnellement votre présence en ligne et vos concurrents directs. Aucun discours
+              commercial agressif : 3 recommandations concrètes applicables dès le lendemain.
+            </p>
+            <div className="space-y-2.5 text-xs text-gray-300">
+              {contactPoints.map((point) => (
+                <div key={point.icon} className="flex items-center gap-2">
+                  <Icon name={point.icon} className="text-brand-lime text-base" />
+                  <span>{point.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="lg:col-span-7 p-8 md:p-10 rounded-3xl bg-surface-container-low border border-white/[0.08] shadow-2xl">
-            <form action="https://formspree.io/f/placeholder" method="POST" className="flex flex-col gap-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label className={labelClass} htmlFor="contact-name">Nom complet *</label>
-                  <input className={inputClass} id="contact-name" name="name" placeholder="Claire Dupont" required type="text" />
+          <div className="lg:col-span-7">
+            {!submitted ? (
+              <form
+                className="space-y-4"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  setSubmitted(true);
+                }}
+              >
+                <div>
+                  <label className={labelClass} htmlFor="url">
+                    Adresse de votre site (ou nouveau projet) *
+                  </label>
+                  <input className={inputClass} id="url" placeholder="ex: www.monentreprise.fr" required type="text" />
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className={labelClass} htmlFor="contact-email">Email professionnel *</label>
-                  <input className={inputClass} id="contact-email" name="email" placeholder="claire@entreprise.com" required type="email" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass} htmlFor="activity">
+                      Secteur d&apos;activité *
+                    </label>
+                    <input className={inputClass} id="activity" placeholder="ex: Rénovation, Avocat, BTP" required type="text" />
+                  </div>
+                  <div>
+                    <label className={labelClass} htmlFor="city">
+                      Ville ou Rayon géographique *
+                    </label>
+                    <input className={inputClass} id="city" placeholder="ex: Nantes & région" required type="text" />
+                  </div>
                 </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label className={labelClass} htmlFor="contact-website">Site web actuel (si existant)</label>
-                  <input className={inputClass} id="contact-website" name="website" placeholder="https://votresite.com" type="url" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass} htmlFor="email">
+                      Votre Email Pro *
+                    </label>
+                    <input className={inputClass} id="email" placeholder="contact@entreprise.fr" required type="email" />
+                  </div>
+                  <div>
+                    <label className={labelClass} htmlFor="phone">
+                      Téléphone direct *
+                    </label>
+                    <input className={inputClass} id="phone" placeholder="06 00 00 00 00" required type="tel" />
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className={labelClass} htmlFor="contact-service">Type de projet *</label>
-                  <select className={inputClass} id="contact-service" name="service" required>
-                    <option value="creation">Création complète de site</option>
-                    <option value="refonte">Refonte stratégique &amp; CRO</option>
-                    <option value="optimisation">Optimisation SEO &amp; Vitesse</option>
-                    <option value="autre">Autre demande spécifique</option>
-                  </select>
+                <button
+                  className="w-full py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight hover:scale-[1.02] hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 mt-2 shadow-[0_4px_20px_rgba(217,249,68,0.3)]"
+                  type="submit"
+                >
+                  <Icon name="rocket_launch" className="text-base" />
+                  <span>Demander mon Audit Gratuit (30 min)</span>
+                </button>
+              </form>
+            ) : (
+              <div className="p-8 rounded-2xl bg-white/10 border border-white/20 text-center">
+                <div className="w-12 h-12 rounded-full bg-brand-lime text-brand-black flex items-center justify-center mx-auto mb-3">
+                  <Icon name="check" className="text-2xl" />
                 </div>
+                <h3 className="text-lg font-bold text-white mb-2">Demande bien reçue !</h3>
+                <p className="text-xs text-gray-300 max-w-sm mx-auto">
+                  Merci. J&apos;analyse votre secteur sous 24h et je vous envoie personnellement mon lien de calendrier
+                  pour notre session stratégique.
+                </p>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <label className={labelClass} htmlFor="contact-message">Message &amp; objectifs prioritaires *</label>
-                <textarea
-                  className={`${inputClass} resize-none`}
-                  id="contact-message"
-                  name="message"
-                  placeholder="Expliquez brièvement vos besoins, délais souhaités et objectifs..."
-                  required
-                  rows={4}
-                />
-              </div>
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <Button type="submit" icon="send" className="w-full sm:w-auto justify-center gap-2.5 px-8 py-3.5 text-xs shadow-lg shadow-primary/25 hover:scale-105">
-                  Envoyer ma demande
-                </Button>
-                <span className="text-[11px] font-body text-on-surface-variant text-center sm:text-right">Réponse garantie sous 24h ouvrées.</span>
-              </div>
-            </form>
+            )}
           </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
