@@ -1,18 +1,18 @@
 export type NavLink = { label: string; href: string };
 
 export const navLinks: NavLink[] = [
-  { label: "La Méthode", href: "#methode" },
-  { label: "Le Diagnostic", href: "#probleme" },
+  { label: "La Méthode", href: "/methode" },
+  { label: "Le Diagnostic", href: "/diagnostic" },
   { label: "Résultats", href: "#resultats" },
-  { label: "Offre & Tarifs", href: "#offre" },
+  { label: "Offre & Tarifs", href: "/offres" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export const footerLinks: NavLink[] = [
-  { label: "La Méthode", href: "#methode" },
-  { label: "Le Diagnostic", href: "#probleme" },
+  { label: "La Méthode", href: "/methode" },
+  { label: "Le Diagnostic", href: "/diagnostic" },
   { label: "Résultats", href: "#resultats" },
-  { label: "Offre & Tarifs", href: "#offre" },
+  { label: "Offre & Tarifs", href: "/offres" },
   { label: "Réserver un créneau", href: "#contact" },
 ];
 

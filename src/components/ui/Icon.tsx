@@ -1,9 +1,13 @@
-type IconProps = { name: string; className?: string };
+type IconProps = { name: string; className?: string; filled?: boolean };
 
-/** Material Symbols Outlined glyph (same icon set as the Stitch design). */
-export function Icon({ name, className = "" }: IconProps) {
+/** Material Symbols Outlined glyph (same icon set as the Stitch design). `filled` = FILL axis 1. */
+export function Icon({ name, className = "", filled = false }: IconProps) {
   return (
-    <span className={`material-symbols-outlined ${className}`} aria-hidden="true">
+    <span
+      className={`material-symbols-outlined ${className}`}
+      style={filled ? { fontVariationSettings: "'FILL' 1" } : undefined}
+      aria-hidden="true"
+    >
       {name}
     </span>
   );
