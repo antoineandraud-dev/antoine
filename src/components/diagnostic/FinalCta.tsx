@@ -9,7 +9,7 @@ export function DiagnosticFinalCta() {
           <Image
             className="w-full h-full object-cover"
             src="/images/antoine-portrait-cta.jpg"
-            alt="Portrait authentique d'Antoine Andraud, créateur et artisan web"
+            alt="Portrait d'Antoine Andraud, créateur de sites web et spécialiste SEO"
             width={80}
             height={80}
           />

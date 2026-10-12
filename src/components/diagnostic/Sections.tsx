@@ -62,11 +62,11 @@ export function Errors() {
           Constat terrain récurrent
         </div>
         <h2 className="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface tracking-tight">
-          Ce que nous découvrons presque toujours
+          3 raisons pour lesquelles vos clients appellent vos concurrents
         </h2>
         <p className="font-body-lg text-secondary mt-2">
-          La majorité des entreprises perdent des clients locaux non pas à cause de leur réputation, mais à cause
-          d&apos;erreurs structurelles invisibles.
+          Ce n&apos;est pas la qualité de votre travail qui est en cause. Ce sont des défauts que vous ne voyez pas,
+          mais qui envoient vos clients ailleurs.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
@@ -102,7 +102,7 @@ export function QuoteBand() {
           années avec une agence classique. »
         </blockquote>
         <div className="mt-space-md font-label-md text-label-md uppercase tracking-widest text-on-primary-fixed-variant font-bold">
-          Antoine A. — Artisan SEO &amp; Fondateur APEX
+          Antoine A. — Fondateur APEX
         </div>
       </div>
     </section>

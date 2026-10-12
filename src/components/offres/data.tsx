@@ -46,7 +46,7 @@ export const plans: PricingPlan[] = [
     pill: "Stratégie Complète",
     note: "6 mois d'impact",
     title: "Pack Première Page",
-    description: "Le site premium et le travail SEO d'artisan pour viser et verrouiller la première page Google.",
+    description: "Le site premium et un travail SEO sur mesure pour viser et verrouiller la première page Google.",
     price: "2 200 €",
     priceSuffix: "+ 600 € / mois",
     priceSuffixClass: "font-headline-sm text-headline-sm font-bold text-on-surface",

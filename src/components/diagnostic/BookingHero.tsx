@@ -34,7 +34,7 @@ export function BookingHero() {
               <Image
                 className="w-full h-full object-cover"
                 src="/images/antoine-portrait-booking.jpg"
-                alt="Portrait professionnel d'Antoine Andraud, expert SEO et artisan web"
+                alt="Portrait professionnel d'Antoine Andraud, expert SEO et créateur de sites web"
                 width={48}
                 height={48}
               />

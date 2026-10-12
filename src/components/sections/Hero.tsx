@@ -10,7 +10,7 @@ export function Hero() {
       <div className="relative mb-6">
         <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden p-1 bg-gradient-to-b from-brand-border to-transparent shadow-md">
           <Image
-            alt="Antoine Andraud - Artisan SEO"
+            alt="Antoine Andraud - SEO et création de sites web"
             className="w-full h-full object-cover rounded-full"
             src="/images/antoine-andraud.jpg"
             width={144}
