@@ -110,16 +110,16 @@ export const agencyPoints: { strong: string; text: string }[] = [
 
 export const artisanPoints: { strong: string; text: string }[] = [
   {
-    strong: "Site rapide :",
-    text: "architecture épurée, objectif plus de 90 sur mobile (PageSpeed).",
+    strong: "Je comprends les enjeux de votre site :",
+    text: "je pars de votre activité et de vos clients, pas d'un modèle de site tout fait.",
   },
   {
-    strong: "Une page par service et par ville :",
-    text: "pour apparaître quand on cherche exactement ce que vous vendez.",
+    strong: "Je vous place sur Google :",
+    text: "une page par service et par ville, pour apparaître quand on cherche exactement ce que vous vendez.",
   },
   {
-    strong: "Des textes qui rassurent :",
-    text: "ils lèvent les doutes et mènent l'internaute jusqu'à l'appel ou au devis.",
+    strong: "Je pense le site pour convertir :",
+    text: "rapide sur mobile (objectif plus de 90), des textes qui lèvent les doutes et un parcours qui mène à l'appel ou au devis.",
   },
   {
     strong: "Accès direct :",
