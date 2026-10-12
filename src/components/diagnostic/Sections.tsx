@@ -1,5 +1,5 @@
 import { Icon } from "@/components/ui/Icon";
-import { agencyPoints, apexPoints, errors, faqs, timeline } from "./data";
+import { agencyPoints, apexBenefit, apexPoints, errors, faqs, timeline } from "./data";
 
 export function Timeline() {
   return (
@@ -114,7 +114,7 @@ export function FaceToFace() {
     <section className="w-full max-w-[1180px] mx-auto px-gutter-mobile lg:px-gutter py-space-2xl">
       <div className="max-w-[720px] mx-auto text-center mb-space-2xl">
         <div className="inline-block px-3 py-1 bg-surface-container-highest text-secondary rounded-full font-label-pill text-label-pill font-bold uppercase mb-space-xs">
-          Face à face
+          Deux façons de faire
         </div>
         <h2 className="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface">
           Un audit franc vs un pitch commercial
@@ -153,6 +153,12 @@ export function FaceToFace() {
               <h3 className="font-headline-sm text-headline-sm text-on-surface font-extrabold">
                 Le diagnostic APEX avec Antoine
               </h3>
+            </div>
+            <div className="flex items-start gap-space-xs bg-primary-container/25 rounded-ds p-4 mb-space-md">
+              <Icon name="task_alt" className="text-primary text-[24px] shrink-0 mt-0.5" />
+              <p className="font-body-md text-on-surface">
+                <strong className="font-extrabold">{apexBenefit.title}</strong> {apexBenefit.text}
+              </p>
             </div>
             <ul className="space-y-space-md font-body-md text-on-surface">
               {apexPoints.map((point) => (

@@ -24,6 +24,11 @@ export const agencyPoints = [
   "Pression immédiate pour signer un contrat de 12 à 24 mois fermes.",
 ];
 
+export const apexBenefit = {
+  title: "Il y a un avant et un après cet appel.",
+  text: "Vous repartez avec du concret : ce qu'il faut corriger, dans quel ordre, et comment, pour agir dès le lendemain.",
+};
+
 export const apexPoints = [
   { strong: "Partage d'écran en direct :", text: " nous testons vos vrais mots-clés devant vous." },
   { strong: "Interlocuteur unique :", text: " c'est moi qui conçois et référence votre site, sans intermédiaire." },
