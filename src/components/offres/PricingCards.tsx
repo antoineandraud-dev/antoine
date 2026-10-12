@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BookingLink } from "@/components/ui/BookingLink";
 import { Icon } from "@/components/ui/Icon";
 import { plans, type PricingPlan } from "./data";
 
@@ -91,16 +91,15 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
           ))}
         </div>
       </div>
-      <Link
-        href="#audit-contact"
+      <BookingLink
         className={`w-full px-space-lg rounded-full text-on-surface font-label-md text-label-md text-center block ${
           featured
             ? "py-4 bg-primary-container font-bold tracking-tight transition-transform hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(217,249,68,0.5)]"
             : "py-3.5 bg-surface-container transition-all hover:bg-surface-container-high active:scale-95 shadow-sm"
         }`}
       >
-        Demander un audit gratuit
-      </Link>
+        Réserver mon audit gratuit (30 min)
+      </BookingLink>
     </div>
   );
 }

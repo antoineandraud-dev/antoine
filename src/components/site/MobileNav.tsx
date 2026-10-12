@@ -9,7 +9,7 @@ export type MobileNavLink = { label: string; href: string; active?: boolean };
  * Hamburger + dropdown shown below `lg`, where the inline nav is hidden.
  * The panel is positioned against the (relative) header pill that contains it.
  */
-export function MobileNav({ links, cta }: { links: MobileNavLink[]; cta?: { label: string; href: string } }) {
+export function MobileNav({ links, cta }: { links: MobileNavLink[]; cta?: { label: string; href: string; external?: boolean } }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -52,13 +52,14 @@ export function MobileNav({ links, cta }: { links: MobileNavLink[]; cta?: { labe
             </Link>
           ))}
           {cta && (
-            <Link
+            <a
               href={cta.href}
               onClick={() => setOpen(false)}
+              {...(cta.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="sm:hidden mt-2 px-4 py-3 rounded-full bg-brand-lime text-brand-black text-sm font-bold text-center"
             >
               {cta.label}
-            </Link>
+            </a>
           )}
         </nav>
       )}

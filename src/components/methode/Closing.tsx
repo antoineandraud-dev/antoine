@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BookingLink } from "@/components/ui/BookingLink";
 import { Icon } from "@/components/ui/Icon";
 import { deliverables } from "./data";
 
@@ -63,13 +63,12 @@ export function MethodeFinalCta() {
           qu&apos;il faudrait pour que ce soit vous.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-space-md mb-space-lg">
-          <Link
-            href="/diagnostic#reserver-form"
+          <BookingLink
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary-container text-on-primary-container font-label-lg text-label-lg font-extrabold shadow-[0_8px_30px_rgba(217,249,68,0.4)] hover:scale-[1.02] transition-transform"
           >
-            <span>Réserver mon audit gratuit</span>
+            <span>Réserver mon audit gratuit (30 min)</span>
             <Icon name="arrow_forward" className="text-[20px]" />
-          </Link>
+          </BookingLink>
         </div>
         <p className="font-body-sm text-body-sm text-secondary max-w-[500px]">
           Sans engagement. Vous repartez avec une vision claire, même si vous ne travaillez pas avec moi.

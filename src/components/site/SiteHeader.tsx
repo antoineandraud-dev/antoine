@@ -1,13 +1,14 @@
 import Link from "next/link";
+import { BookingLink } from "@/components/ui/BookingLink";
+import { booking } from "@/config/site";
 import { MobileNav } from "./MobileNav";
 
-export type SitePage = "accueil" | "methode" | "diagnostic" | "resultats" | "offres" | "faq";
+export type SitePage = "accueil" | "methode" | "diagnostic" | "offres" | "faq";
 
 const links: { page: SitePage; label: string; href: string }[] = [
   { page: "accueil", label: "Accueil", href: "/" },
   { page: "methode", label: "La Méthode", href: "/methode" },
   { page: "diagnostic", label: "Le Diagnostic", href: "/diagnostic" },
-  { page: "resultats", label: "Résultats", href: "/#resultats" },
   { page: "offres", label: "Offres & Tarifs", href: "/offres" },
   { page: "faq", label: "FAQ", href: "/#faq" },
 ];
@@ -39,15 +40,14 @@ export function SiteHeader({ active }: { active: SitePage }) {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <Link
-            href="/diagnostic#reserver-form"
+          <BookingLink
             className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-5 py-2 rounded-full bg-primary-container text-on-surface font-label-md text-label-md font-bold tracking-tight shadow-sm hover:brightness-105 hover:scale-[1.02] transition-all"
           >
             Réserver un Appel
-          </Link>
+          </BookingLink>
           <MobileNav
             links={links.map((link) => ({ label: link.label, href: link.href, active: link.page === active }))}
-            cta={{ label: "Réserver un Appel", href: "/diagnostic#reserver-form" }}
+            cta={{ label: "Réserver un Appel", href: booking.href, external: booking.external }}
           />
         </div>
       </div>

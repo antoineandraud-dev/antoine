@@ -7,7 +7,7 @@ export function Diagnostic() {
       <div className="bg-brand-cardBg border border-brand-border rounded-3xl p-8 sm:p-12 md:p-16">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <span className="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold uppercase tracking-wider bg-red-50 text-red-700 border border-red-200 mb-3">
-            Le Diagnostic Brutal
+            Pourquoi votre site ne vous rapporte rien
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-black tracking-tight">
             La réalité qui vous coûte des dizaines de milliers d&apos;euros chaque mois.

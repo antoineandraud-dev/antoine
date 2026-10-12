@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { Icon } from "@/components/ui/Icon";
+import { BookingLink } from "@/components/ui/BookingLink";
+import { LinkedInLink } from "@/components/ui/LinkedInLink";
 
 const links = [
   { label: "Accueil", href: "/" },
   { label: "Méthode", href: "/methode" },
   { label: "Offres & Tarifs", href: "/offres" },
-  { label: "Résultats", href: "/#resultats" },
-  { label: "Réserver un créneau", href: "/diagnostic#reserver-form" },
 ];
 
-const socialIcons = ["share", "mail", "alternate_email"];
+const linkClass = "font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors";
 
 export function SiteFooter() {
   return (
@@ -23,24 +22,12 @@ export function SiteFooter() {
         </div>
         <div className="flex flex-wrap justify-center gap-space-lg">
           {links.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
-            >
+            <Link key={link.label} href={link.href} className={linkClass}>
               {link.label}
             </Link>
           ))}
-        </div>
-        <div className="flex items-center gap-space-sm">
-          {socialIcons.map((name) => (
-            <div
-              key={name}
-              className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors"
-            >
-              <Icon name={name} className="text-[20px]" />
-            </div>
-          ))}
+          <BookingLink className={linkClass}>Réserver un créneau</BookingLink>
+          <LinkedInLink className={`inline-flex items-center gap-1.5 ${linkClass}`} />
         </div>
         <p className="font-body-sm text-body-sm text-secondary">
           © 2024 Antoine Andraud / APEX.SEO. Tous droits réservés. Artisan Web &amp; Domination SEO local à la

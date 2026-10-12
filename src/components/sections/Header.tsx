@@ -1,4 +1,6 @@
 import { MobileNav } from "@/components/site/MobileNav";
+import { BookingLink } from "@/components/ui/BookingLink";
+import { booking } from "@/config/site";
 import { navLinks } from "@/data/content";
 
 export function Header() {
@@ -21,13 +23,12 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-3">
           <span className="hidden xl:inline-block text-xs font-medium text-brand-muted">Prêt à dominer Google ?</span>
-          <a
+          <BookingLink
             className="hidden sm:inline-flex items-center justify-center whitespace-nowrap px-7 py-2 rounded-full bg-brand-lime text-brand-black font-semibold text-xs leading-5 tracking-tight shadow-sm hover:brightness-105 hover:scale-[1.02] transition-all"
-            href="#contact"
           >
             Réserver un Appel
-          </a>
-          <MobileNav links={navLinks} cta={{ label: "Réserver un Appel", href: "#contact" }} />
+          </BookingLink>
+          <MobileNav links={navLinks} cta={{ label: "Réserver un Appel", href: booking.href, external: booking.external }} />
         </div>
       </div>
     </header>

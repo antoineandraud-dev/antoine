@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BookingLink } from "@/components/ui/BookingLink";
 import { Icon } from "@/components/ui/Icon";
 
 const reassurances = ["Gratuit & sans engagement", "Pas de pitch commercial agressif", "Analyse concrète sur votre écran"];
@@ -19,12 +19,11 @@ export function OffresFinalCta() {
           les opportunités immédiates.
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center max-w-[480px]">
-          <Link
-            href="/diagnostic#reserver-form"
+          <BookingLink
             className="w-full sm:w-auto px-space-xl py-4 rounded-full bg-primary-container text-on-surface font-label-md text-label-md font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_6px_24px_rgba(217,249,68,0.6)] text-center"
           >
-            Demander mon audit gratuit de 30 min
-          </Link>
+            Réserver mon audit gratuit (30 min)
+          </BookingLink>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-space-md text-secondary font-body-sm text-body-sm mt-space-lg">
           {reassurances.map((label) => (

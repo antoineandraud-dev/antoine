@@ -1,5 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import { SectionTag } from "@/components/ui/Badge";
+import { BookingLink } from "@/components/ui/BookingLink";
 
 type Offer = {
   tag: string;
@@ -116,16 +117,15 @@ function OfferCard({ offer }: { offer: Offer }) {
         )}
       </div>
       <div>
-        <a
+        <BookingLink
           className={
             highlighted
               ? "w-full py-3.5 rounded-full bg-brand-lime text-brand-black font-bold text-xs leading-5 tracking-tight shadow-[0_4px_20px_rgba(217,249,68,0.45)] hover:scale-105 hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 text-center"
               : "w-full py-3.5 rounded-full bg-white border border-brand-border text-brand-black font-semibold text-xs leading-5 hover:bg-gray-50 transition-all flex items-center justify-center gap-2 text-center"
           }
-          href="#contact"
         >
-          Demander un audit gratuit
-        </a>
+          Réserver mon audit gratuit (30 min)
+        </BookingLink>
       </div>
     </div>
   );

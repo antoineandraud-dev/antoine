@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { BookingLink } from "@/components/ui/BookingLink";
 
 export function Reassurance() {
   return (
@@ -27,12 +27,11 @@ export function Reassurance() {
             </p>
           </div>
         </div>
-        <Link
-          href="#audit-contact"
+        <BookingLink
           className="shrink-0 px-space-xl py-3.5 rounded-full bg-on-surface text-surface-container-lowest font-label-md text-label-md font-bold transition-all hover:bg-surface-tint active:scale-95 shadow-sm"
         >
-          Réserver mon créneau de 30 min
-        </Link>
+          Réserver mon audit gratuit (30 min)
+        </BookingLink>
       </div>
     </section>
   );

@@ -1,16 +1,8 @@
-"use client";
-
-import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { BookingLink } from "@/components/ui/BookingLink";
 import { contactPoints } from "@/data/content";
 
-const inputClass =
-  "w-full px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-white text-sm placeholder-white focus:bg-white/15 focus:border-brand-lime focus:outline-none transition-all";
-const labelClass = "block text-xs uppercase font-mono tracking-wider text-gray-300 mb-1";
-
 export function Contact() {
-  const [submitted, setSubmitted] = useState(false);
-
   return (
     <section className="max-w-4xl mx-auto px-6 py-16" id="contact">
       <div className="bg-brand-black text-white rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden">
@@ -38,68 +30,15 @@ export function Contact() {
           </div>
 
           <div className="lg:col-span-7">
-            {!submitted ? (
-              <form
-                className="space-y-4"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setSubmitted(true);
-                }}
-              >
-                <div>
-                  <label className={labelClass} htmlFor="url">
-                    Adresse de votre site (ou nouveau projet) *
-                  </label>
-                  <input className={inputClass} id="url" placeholder="ex: www.monentreprise.fr" required type="text" />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className={labelClass} htmlFor="activity">
-                      Secteur d&apos;activité *
-                    </label>
-                    <input className={inputClass} id="activity" placeholder="ex: Rénovation, Avocat, BTP" required type="text" />
-                  </div>
-                  <div>
-                    <label className={labelClass} htmlFor="city">
-                      Ville ou Rayon géographique *
-                    </label>
-                    <input className={inputClass} id="city" placeholder="ex: Nantes & région" required type="text" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className={labelClass} htmlFor="email">
-                      Votre Email Pro *
-                    </label>
-                    <input className={inputClass} id="email" placeholder="contact@entreprise.fr" required type="email" />
-                  </div>
-                  <div>
-                    <label className={labelClass} htmlFor="phone">
-                      Téléphone direct *
-                    </label>
-                    <input className={inputClass} id="phone" placeholder="06 00 00 00 00" required type="tel" />
-                  </div>
-                </div>
-                <button
-                  className="w-full py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight hover:scale-[1.02] hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 mt-2 shadow-[0_4px_20px_rgba(217,249,68,0.3)]"
-                  type="submit"
-                >
-                  <Icon name="rocket_launch" className="text-base" />
-                  <span>Demander mon Audit Gratuit (30 min)</span>
-                </button>
-              </form>
-            ) : (
-              <div className="p-8 rounded-2xl bg-white/10 border border-white/20 text-center">
-                <div className="w-12 h-12 rounded-full bg-brand-lime text-brand-black flex items-center justify-center mx-auto mb-3">
-                  <Icon name="check" className="text-2xl" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Demande bien reçue !</h3>
-                <p className="text-xs text-gray-300 max-w-sm mx-auto">
-                  Merci. J&apos;analyse votre secteur sous 24h et je vous envoie personnellement mon lien de calendrier
-                  pour notre session stratégique.
-                </p>
-              </div>
-            )}
+            <div className="p-8 rounded-2xl bg-white/10 border border-white/15 text-center">
+              <p className="text-sm text-gray-300 leading-relaxed mb-6">
+                Choisissez directement un créneau dans mon agenda. La réservation est confirmée par email.
+              </p>
+              <BookingLink className="w-full py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight hover:scale-[1.02] hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(217,249,68,0.3)]">
+                <Icon name="rocket_launch" className="text-base" />
+                <span>Réserver mon audit gratuit (30 min)</span>
+              </BookingLink>
+            </div>
           </div>
         </div>
       </div>

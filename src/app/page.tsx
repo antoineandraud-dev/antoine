@@ -7,7 +7,6 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Methode } from "@/components/sections/Methode";
 import { Offres } from "@/components/sections/Offres";
-import { Resultats } from "@/components/sections/Resultats";
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
         <Methode />
         <Diagnostic />
         <Comparatif />
-        <Resultats />
         <Offres />
         <Faq />
         <Contact />

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { Icon } from "@/components/ui/Icon";
 import { HeroPill } from "@/components/ui/Badge";
-import { heroPills, socials } from "@/data/content";
+import { BookingLink } from "@/components/ui/BookingLink";
+import { heroPills } from "@/data/content";
 
 export function Hero() {
   return (
@@ -43,26 +44,11 @@ export function Hero() {
         </span>
       </h1>
 
-      <p className="text-base sm:text-lg text-brand-muted max-w-2xl font-normal leading-relaxed mb-8">
+      <p className="text-base sm:text-lg text-brand-muted max-w-2xl font-normal leading-relaxed mb-10">
         Le premier site que Google montre est celui qu&apos;on appelle.{" "}
         <strong className="font-semibold text-brand-black">Votre concurrent y est déjà. Pas vous.</strong>{" "}
         <span className="text-brand-black font-semibold">Ça se corrige.</span>
       </p>
-
-      <div className="flex items-center justify-center gap-5 mb-10 text-brand-black">
-        {socials.map((social) => (
-          <a
-            key={social.label}
-            aria-label={social.label}
-            className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-brand-pillBg transition-colors"
-            href="#contact"
-          >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-              <path d={social.path} />
-            </svg>
-          </a>
-        ))}
-      </div>
 
       <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
         {heroPills.map((pill) => (
@@ -73,13 +59,12 @@ export function Hero() {
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-        <a
+        <BookingLink
           className="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight shadow-[0_4px_20px_rgba(217,249,68,0.45)] hover:scale-105 hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2"
-          href="#contact"
         >
-          <span>Recevoir mon audit Google offert</span>
+          <span>Réserver mon audit gratuit (30 min)</span>
           <Icon name="arrow_forward" className="text-base" />
-        </a>
+        </BookingLink>
         <a
           className="w-full sm:w-auto px-6 py-4 rounded-full bg-white border border-brand-border text-brand-black font-semibold text-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
           href="#methode"

@@ -9,7 +9,7 @@ export function Methode() {
       <SectionHeading
         title="Le Système de Domination APEX"
         titleClass="mb-3"
-        subtitle="Chaque site est bâti sur une architecture chirurgicale alliant vélocité extrême, pertinence sémantique et psychologie d'achat."
+        subtitle="Trois étapes pour transformer une recherche sur Google en appel de client."
         subtitleClass="text-base max-w-xl mx-auto"
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

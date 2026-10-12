@@ -13,14 +13,6 @@ export function MetricBadge({ tone, children }: { tone: Tone; children: React.Re
   );
 }
 
-export function RegionBadge({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-xs font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
-      {children}
-    </span>
-  );
-}
-
 const pillTone: Record<Tone, string> = {
   teal: "border-teal-500/70 text-teal-800 bg-teal-50/50",
   lime: "border-lime-500/80 text-lime-900 bg-lime-50/60",
