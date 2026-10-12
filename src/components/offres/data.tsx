@@ -94,7 +94,7 @@ export const comparisonRows: [string, Cell, Cell, Cell][] = [
   ["Rédaction de contenus & cocons sémantiques mensuels", { content: "Lancement initial", className: "text-secondary" }, { content: "2 contenus / mois", className: "font-bold" }, { content: "—", className: "text-secondary" }],
   ["Netlinking & acquisition de citations locales", { content: "—", className: "text-secondary" }, { content: "check", className: "font-bold" }, { content: "Citations Maps", className: "text-secondary" }],
   ["Rapport de positions mensuel vidéo Loom", { content: "—", className: "text-secondary" }, { content: "check", className: "font-bold" }, { content: "Stats mensuelles PDF" }],
-  ["Ligne directe WhatsApp / Téléphone avec votre artisan", { content: "Durant le projet" }, { content: "Illimité 6 mois", className: "font-bold" }, { content: "WhatsApp dédié" }],
+  ["Ligne directe WhatsApp / Téléphone avec moi", { content: "Durant le projet" }, { content: "Illimité 6 mois", className: "font-bold" }, { content: "WhatsApp dédié" }],
   ["Délai moyen de mise en production", { content: "3 à 4 semaines", className: "font-bold" }, { content: "Site en 3 sem. + 6 mois SEO", className: "font-bold" }, { content: "7 jours ouvrés", className: "font-bold" }],
 ];
 

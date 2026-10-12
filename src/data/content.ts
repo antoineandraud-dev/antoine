@@ -123,7 +123,7 @@ export const artisanPoints: { strong: string; text: string }[] = [
   },
   {
     strong: "Accès direct :",
-    text: "un canal WhatsApp / ligne directe avec la personne qui conçoit votre site.",
+    text: "vous échangez directement avec moi, par WhatsApp ou par téléphone, du début à la fin du projet.",
   },
 ];
 
