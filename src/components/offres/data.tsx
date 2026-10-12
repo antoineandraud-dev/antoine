@@ -4,7 +4,7 @@ export const trustItems = [
   { icon: "check_circle", label: "100% sans frais cachés" },
   { icon: "verified_user", label: "Propriété totale de votre site" },
   { icon: "schedule", label: "Livraison en 3 à 4 semaines" },
-  { icon: "person_pin", label: "Artisan solopreneur dédié" },
+  { icon: "person_pin", label: "Un seul interlocuteur : moi" },
 ];
 
 export type PricingPlan = {

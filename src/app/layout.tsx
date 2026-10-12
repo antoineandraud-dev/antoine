@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Antoine A. — Artisan Web & Domination SEO pour TPE/PME",
+  title: "Antoine Andraud — SEO & création de sites web pour TPE/PME",
   description:
     "Sites web conçus pour apparaître en haut de Google : vitesse, architecture sémantique et copywriting orienté vente pour TPE/PME.",
 };

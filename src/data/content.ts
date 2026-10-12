@@ -136,7 +136,7 @@ export const faqs: { question: string; answer: string }[] = [
   {
     question: "Pourquoi choisir un solopreneur plutôt qu'une grosse agence web ?",
     answer:
-      "Une agence facture ses locaux, ses commerciaux et sa hiérarchie lourde, ce qui se traduit par des coûts élevés et un travail souvent sous-traité. Avec moi, vous êtes en contact direct avec l'expert qui code votre site, optimise le référencement et rédige vos pages. Réactivité garantie sous 2h et engagement personnel sur vos résultats.",
+      "Une agence facture ses locaux, ses commerciaux et sa hiérarchie lourde, ce qui se traduit par des coûts élevés et un travail souvent sous-traité. Avec moi, vous parlez directement à la personne qui code votre site, optimise le référencement et rédige vos pages. Réactivité garantie sous 2h et engagement personnel sur vos résultats.",
   },
   {
     question: "Et si j'ai déjà un site existant ?",

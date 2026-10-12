@@ -30,8 +30,7 @@ export function SiteFooter() {
           <LinkedInLink className={`inline-flex items-center gap-1.5 ${linkClass}`} />
         </div>
         <p className="font-body-sm text-body-sm text-secondary">
-          © 2024 Antoine Andraud / APEX.SEO. Tous droits réservés. Artisan Web &amp; Domination SEO local à la
-          performance.
+          © 2024 Antoine Andraud / APEX.SEO. Tous droits réservés. SEO local &amp; création de sites web.
         </p>
       </div>
     </footer>

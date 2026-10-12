@@ -11,7 +11,7 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-brand-lime" />
             <span className="font-extrabold text-brand-black tracking-tight text-base">Antoine A. / APEX.SEO</span>
-            <span className="text-xs text-brand-muted font-medium">Artisan Web &amp; Domination SEO</span>
+            <span className="text-xs text-brand-muted font-medium">SEO &amp; création de sites web</span>
           </div>
           <div className="flex flex-wrap items-center gap-6 text-xs text-brand-muted font-medium">
             {footerLinks.map((link) => (
