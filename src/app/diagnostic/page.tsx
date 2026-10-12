@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BookingForm } from "@/components/diagnostic/BookingForm";
+import { DiagnosticFinalCta } from "@/components/diagnostic/FinalCta";
 import { BookingHero } from "@/components/diagnostic/BookingHero";
 import { DiagnosticFaq, Errors, FaceToFace, QuoteBand, Timeline } from "@/components/diagnostic/Sections";
 import { PageShell } from "@/components/site/PageShell";
@@ -19,7 +19,7 @@ export default function DiagnosticPage() {
       <QuoteBand />
       <FaceToFace />
       <DiagnosticFaq />
-      <BookingForm />
+      <DiagnosticFinalCta />
     </PageShell>
   );
 }

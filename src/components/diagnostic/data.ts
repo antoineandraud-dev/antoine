@@ -1,13 +1,3 @@
-export const days = [
-  { key: "Aujourd'hui", short: "AUJ.", date: "24 Oct" },
-  { key: "Demain", short: "DEM.", date: "25 Oct" },
-  { key: "Lundi", short: "LUN.", date: "28 Oct" },
-  { key: "Mardi", short: "MAR.", date: "29 Oct" },
-  { key: "Mercredi", short: "MER.", date: "30 Oct" },
-];
-
-export const slots = ["09:30 - 09:45", "11:15 - 11:30", "14:00 - 14:15", "16:45 - 17:00"];
-
 export const reassurances = [
   { icon: "verified", label: "100% gratuit & sans engagement" },
   { icon: "map", label: "Feuille de route actionnable" },

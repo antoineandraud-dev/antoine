@@ -4,7 +4,7 @@
  *  - linkedinUrl : profil LinkedIn affiché dans le footer
  */
 export const siteConfig = {
-  bookingUrl: "",
+  bookingUrl: "https://calendly.com/antoine-andraud/appelstrategique",
   linkedinUrl: "https://www.linkedin.com/in/antoine-andraud/",
 };
 
