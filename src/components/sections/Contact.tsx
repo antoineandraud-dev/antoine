@@ -1,6 +1,10 @@
 import { Icon } from "@/components/ui/Icon";
 import { BookingLink } from "@/components/ui/BookingLink";
+import { booking, siteConfig } from "@/config/site";
 import { contactPoints } from "@/data/content";
+
+const buttonClass =
+  "w-full py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight hover:scale-[1.02] hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(217,249,68,0.3)]";
 
 export function Contact() {
   return (
@@ -31,13 +35,27 @@ export function Contact() {
 
           <div className="lg:col-span-7">
             <div className="p-8 rounded-2xl bg-white/10 border border-white/15 text-center">
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
-                Choisissez directement un créneau dans mon agenda. La réservation est confirmée par email.
-              </p>
-              <BookingLink className="w-full py-4 rounded-full bg-brand-lime text-brand-black font-bold text-sm tracking-tight hover:scale-[1.02] hover:bg-[#d0f230] transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(217,249,68,0.3)]">
-                <Icon name="rocket_launch" className="text-base" />
-                <span>Réserver mon audit gratuit (30 min)</span>
-              </BookingLink>
+              {booking.external ? (
+                <>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-6">
+                    Choisissez directement un créneau dans mon agenda. La réservation est confirmée par email.
+                  </p>
+                  <BookingLink className={buttonClass}>
+                    <Icon name="rocket_launch" className="text-base" />
+                    <span>Réserver mon audit gratuit (30 min)</span>
+                  </BookingLink>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-6">
+                    Écrivez-moi sur LinkedIn pour fixer ensemble un créneau de 30 minutes.
+                  </p>
+                  <a className={buttonClass} href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                    <Icon name="rocket_launch" className="text-base" />
+                    <span>Me contacter sur LinkedIn</span>
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
