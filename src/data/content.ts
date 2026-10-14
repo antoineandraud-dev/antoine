@@ -90,35 +90,6 @@ export const traps: {
   },
 ];
 
-export const agencyPoints: { strong: string; text: string }[] = [
-  { strong: "Site lent :", text: "plugins inutiles, styles CSS redondants, lourdeur mobile." },
-  { strong: "Textes génériques :", text: "jargon d'entreprise sans étude de mots-clés ni analyse d'intention d'achat." },
-  {
-    strong: "Zéro stratégie de conversion :",
-    text: "un formulaire austère à rallonge qui fait fuir les visiteurs.",
-  },
-  { strong: "Intermédiaire multiple :", text: "chefs de projet juniors et délais d'attente interminables." },
-];
-
-export const artisanPoints: { strong: string; text: string }[] = [
-  {
-    strong: "Je comprends les enjeux de votre site :",
-    text: "je pars de votre activité et de vos clients, pas d'un modèle de site tout fait.",
-  },
-  {
-    strong: "Je vous place sur Google :",
-    text: "une page par service et par ville, pour apparaître quand on cherche exactement ce que vous vendez.",
-  },
-  {
-    strong: "Je pense le site pour convertir :",
-    text: "rapide sur mobile (objectif plus de 90), des textes qui lèvent les doutes et un parcours qui mène à l'appel ou au devis.",
-  },
-  {
-    strong: "Accès direct :",
-    text: "vous échangez directement avec moi, par WhatsApp ou par téléphone, du début à la fin du projet.",
-  },
-];
-
 export const faqs: { question: string; answer: string }[] = [
   {
     question: "Combien de temps faut-il pour atteindre la première page Google ?",
