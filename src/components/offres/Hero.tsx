@@ -18,7 +18,9 @@ export function OffresHero() {
           Des tarifs clairs, sans frais cachés. Vous savez exactement ce que vous payez et le retour sur
           investissement que vous obtenez. Aucun engagement au-delà de ce qui est prévu.
         </p>
-        <div className="inline-flex flex-wrap items-center justify-center gap-space-sm md:gap-space-md bg-surface-container-lowest shadow-sm rounded-full px-space-lg py-space-sm text-on-surface mx-auto">
+      </div>
+      <div className="flex justify-center">
+        <div className="inline-flex flex-wrap lg:flex-nowrap items-center justify-center gap-space-sm md:gap-space-md bg-surface-container-lowest shadow-sm rounded-full px-space-lg py-space-sm text-on-surface">
           {trustItems.map((item, index) => (
             <div key={item.label} className="contents">
               {index > 0 && (
