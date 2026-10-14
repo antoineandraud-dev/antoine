@@ -22,11 +22,11 @@ const offers: Offer[] = [
     price: <>2 200 €</>,
     priceNote: "Paiement unique",
     features: [
-      "5 pages qui font appeler",
-      "Textes rédigés pour vous",
-      "Visible sur Google près de chez vous",
-      "Rapide sur mobile",
-      "Le site vous appartient",
+      "5 pages conçues pour le SEO et la conversion",
+      "Textes rédigés par moi-même",
+      "Optimisé mobile : vitesse et affichage",
+      "Pensé pour vous faire apparaître sur Google",
+      "Un site 100 % à vous",
     ],
   },
   {
@@ -44,10 +44,10 @@ const offers: Offer[] = [
       <strong key="all" className="font-bold">
         Tout le Site Vitrine SEO, plus :
       </strong>,
-      "SEO chaque mois",
-      "Fiche Google offerte",
-      "Rapport mensuel clair",
-      "Point de 15 min par mois",
+      "SEO chaque mois : articles, backlinks, optimisations",
+      "Objectif clair : prendre la première page Google",
+      "Suivi mensuel de vos positions",
+      "Fiche Google Business offerte (valeur 300 €/mois)",
     ],
     highlighted: true,
   },
@@ -63,10 +63,11 @@ const offers: Offer[] = [
     ),
     priceNote: "Engagement minimum 3 mois",
     features: [
-      "Fiche optimisée de A à Z",
-      "Publications et avis gérés",
-      "Suivi mensuel",
-      "Vous ne touchez à rien",
+      "Optimisation complète de votre fiche",
+      "4 publications par mois",
+      "Suivi mensuel de votre visibilité locale",
+      "Stratégie ajustée chaque mois",
+      "Objectif clair : prendre la première page Google",
     ],
   },
 ];
