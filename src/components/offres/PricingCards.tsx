@@ -14,7 +14,7 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
     >
       {featured && (
         <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-primary-container text-on-surface font-label-pill text-label-pill font-extrabold uppercase tracking-wide shadow-md whitespace-nowrap">
-          ★ Le plus choisi — Résultats rapides
+          ★ Le plus choisi
         </div>
       )}
       <div>
@@ -67,7 +67,7 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
           <div className="bg-primary-container/30 rounded-2xl p-space-sm mb-space-md flex items-center gap-space-xs">
             <Icon name="verified" className="text-primary text-[20px] shrink-0" />
             <p className="font-body-sm text-body-sm text-on-surface font-bold leading-tight">
-              Fiche Google Maps offerte durant tout le pack (valeur 1 800 € économisée)
+              Fiche Google Business offerte pendant les 6 mois (valeur 1 800 €)
             </p>
           </div>
         )}
@@ -81,10 +81,10 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
 
         <div className="space-y-space-sm mb-space-xl">
           {plan.features.map((feature) => (
-            <div key={feature.bold} className="flex items-start gap-space-sm">
+            <div key={feature.text} className="flex items-start gap-space-sm">
               <Icon name="check_circle" filled className="text-primary text-[20px] shrink-0 mt-0.5" />
               <p className="font-body-sm text-body-sm text-on-surface">
-                <span className="font-bold">{feature.bold}</span>
+                {feature.bold && <span className="font-bold">{feature.bold}</span>}
                 {feature.text}
               </p>
             </div>

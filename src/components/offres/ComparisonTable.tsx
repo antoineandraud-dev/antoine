@@ -31,10 +31,10 @@ export function ComparisonTable() {
                 Site Vitrine SEO
               </th>
               <th className="py-space-md px-space-md font-label-md text-label-md text-on-surface text-center bg-primary-container/20">
-                Pack Première Page
+                Pack Visibilité
               </th>
               <th className="py-space-md px-space-md font-label-md text-label-md text-on-surface text-center rounded-r-ds-xl">
-                Domination Fiche Google
+                Fiche Google Business
               </th>
             </tr>
           </thead>

@@ -16,22 +16,22 @@ const offers: Offer[] = [
   {
     tag: "Offre #1",
     title: "Site Vitrine SEO",
-    subtitle: "Le site qui pose les bases pour être trouvé.",
-    price: (
-      <>2 200 €</>
-    ),
+    subtitle: "Le site qui travaille pour vous dès le premier jour.",
+    price: <>2 200 €</>,
     priceNote: "Paiement unique",
     features: [
-      "Site vitrine de 5 pages",
-      "Structure et contenu optimisés pour le SEO local",
-      "Pensé pour la conversion (appels, formulaires de devis)",
-      "Site rapide et adapté mobile",
+      "5 pages construites pour une seule chose : vous faire appeler",
+      "Textes rédigés pour vous après un échange de 30 min : vous n'écrivez rien",
+      "Chaque page répond à une recherche précise de vos clients dans votre zone",
+      "Rapide et confortable sur mobile, là où vos clients vous cherchent",
+      "Calendrier annoncé dès le départ : vous savez quand c'est en ligne",
+      "Le site vous appartient, sans abonnement imposé",
     ],
   },
   {
-    tag: "Pack Recommandé",
-    title: "Pack Première Page",
-    subtitle: "Le site et le travail SEO pour viser la première page.",
+    tag: "Offre #2",
+    title: "Pack Visibilité",
+    subtitle: "Le site, puis 6 mois de travail SEO pour être mieux trouvé.",
     price: (
       <>
         2 200 € + 600 €<span className="text-sm font-normal text-brand-muted">/mois</span>
@@ -39,32 +39,30 @@ const offers: Offer[] = [
     ),
     priceNote: "Pendant 6 mois",
     features: [
-      "Tout le site vitrine SEO (5 pages)",
-      "6 mois de travail SEO suivi chaque mois",
-      <>
-        Fiche Google Business Profile optimisée et gérée{" "}
-        <span className="text-xs font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200 ml-1">
-          valeur 300 €/mois, offerte
-        </span>
-      </>,
-      "Suivi de vos positions",
+      "Le site vitrine SEO complet",
+      "Chaque mois, des pages et des optimisations ciblées sur vos recherches clés",
+      "Fiche Google Business optimisée et gérée pendant les 6 mois, offerte",
+      "Rapport mensuel clair : positions, visites, appels reçus",
+      "Un point de 15 min chaque mois pour décider de la suite ensemble",
+      "Un seul interlocuteur, moi, du début à la fin",
     ],
     highlighted: true,
   },
   {
-    tag: "Offre Locale",
+    tag: "Offre #3",
     title: "Fiche Google Business",
-    subtitle: "Dominez la carte Google de votre ville.",
+    subtitle: "Soyez visible quand on cherche près de chez vous.",
     price: (
       <>
         300 € <span className="text-sm font-normal text-brand-muted">/ mois</span>
       </>
     ),
-    priceNote: "Sans engagement",
+    priceNote: "Engagement minimum 3 mois",
     features: [
-      "Optimisation complète de votre fiche Google Business Profile",
-      "Gestion et mise à jour régulières",
-      "Suivi de votre visibilité locale",
+      "Fiche optimisée de A à Z : catégories, services, description, photos",
+      "Publications et réponses aux avis gérées pour vous",
+      "Suivi mensuel : vues, appels, demandes d'itinéraire",
+      "Vous ne touchez à rien, je m'occupe de tout",
     ],
   },
 ];
@@ -100,7 +98,7 @@ function OfferCard({ offer }: { offer: Offer }) {
           <div className="text-3xl font-extrabold text-brand-black tracking-tight">{offer.price}</div>
           <div className="text-xs text-brand-muted mt-1">{offer.priceNote}</div>
         </div>
-        <ul className={`space-y-3.5 text-xs sm:text-sm text-brand-black ${highlighted ? "mb-6" : "mb-8"}`}>
+        <ul className={`space-y-3.5 text-xs sm:text-sm text-brand-black mb-8`}>
           {offer.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-2.5">
               <Icon name="check_circle" className="text-base text-brand-black shrink-0 mt-0.5" />
@@ -108,11 +106,6 @@ function OfferCard({ offer }: { offer: Offer }) {
             </li>
           ))}
         </ul>
-        {highlighted && (
-          <div className="p-3 rounded-xl bg-lime-50/60 border border-lime-300 text-xs text-lime-900 font-medium mb-6 text-center">
-            Fiche Google offerte pendant toute la durée du pack
-          </div>
-        )}
       </div>
       <div>
         <BookingLink

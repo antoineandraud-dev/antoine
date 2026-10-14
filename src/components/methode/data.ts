@@ -20,7 +20,7 @@ export const steps: Step[] = [
   { number: "02", title: "Je choisis les recherches qui rapportent", subtitle: "Ciblage de rentabilité", doIcon: "filter_alt", doText: "Je cible les requêtes de clients prêts à demander un devis.", gainIcon: "payments", gainText: "Vous ne visez pas la visibilité pour le plaisir, mais celle qui remplit le carnet." },
   { number: "03", title: "Je construis votre site autour de ces recherches", subtitle: "Architecture conversion", doIcon: "construction", doText: "Chaque page répond à une recherche précise et pousse à l'appel ou au devis.", gainIcon: "speed", gainText: "Un site rapide, clair sur mobile, que Google comprend du premier coup." },
   { number: "04", title: "Je renforce votre fiche Google", subtitle: "Domination Google Map", doIcon: "pin_drop", doText: "J'optimise votre fiche, celle qui apparaît sur la carte avant les sites.", gainIcon: "star", gainText: "Vous êtes visible là où les clients regardent en premier." },
-  { number: "05", title: "Je fais monter votre position, mois après mois", badge: "Étape incluse dans le Pack Première Page", doIcon: "tune", doText: "J'ajuste, je renforce, je suis vos positions.", gainIcon: "military_tech", gainText: "Vous montez, puis vous restez devant." },
+  { number: "05", title: "Je fais monter votre position, mois après mois", badge: "Étape incluse dans le Pack Visibilité", doIcon: "tune", doText: "J'ajuste, je renforce, je suis vos positions.", gainIcon: "military_tech", gainText: "Vous montez, puis vous restez devant." },
 ];
 
 export const classicPoints = [

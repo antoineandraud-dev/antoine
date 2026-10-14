@@ -92,9 +92,9 @@ export const traps: {
 
 export const faqs: { question: string; answer: string }[] = [
   {
-    question: "Combien de temps faut-il pour voir des résultats sur Google ?",
+    question: "Combien de temps faut-il pour atteindre la première page Google ?",
     answer:
-      "Le référencement est un travail de fond : il faut compter plusieurs mois. Les premiers signes peuvent apparaître assez vite, puis les résultats progressent un peu plus chaque mois. C'est ce qui rend votre visibilité solide : plus votre site et votre fiche Google gagnent en crédibilité, mieux ils résistent face à vos concurrents. Le délai exact dépend de votre métier et de votre zone.",
+      "Le SEO est un levier d'acquisition durable. En moyenne, les premiers gains de positions sont visibles entre 30 et 45 jours après la mise en ligne. Pour atteindre le Top 3 et la 1ère place sur des mots-clés transactionnels locaux ou régionaux, comptez entre 60 et 120 jours selon la concurrence du secteur.",
   },
   {
     question: "Pourquoi choisir un solopreneur plutôt qu'une grosse agence web ?",
@@ -104,7 +104,7 @@ export const faqs: { question: string; answer: string }[] = [
   {
     question: "Et si j'ai déjà un site existant ?",
     answer:
-      "Aucun problème : on part de ce que vous avez déjà. Je refais votre site en veillant à ne rien perdre de votre visibilité actuelle : vos pages importantes sont conservées et vos anciennes adresses continuent de fonctionner. Résultat : un site plus rapide et plus clair, sans repartir de zéro sur Google.",
+      "C'est un excellent point de départ ! Nous conservons l'autorité historique de votre domaine via un plan de redirection 301 strict (zéro perte de trafic, zéro erreur 404). Nous remplaçons simplement l'ancienne structure lente par un moteur moderne haute vitesse.",
   },
   {
     question: "Suis-je propriétaire à 100% de mon site et de mon nom de domaine ?",

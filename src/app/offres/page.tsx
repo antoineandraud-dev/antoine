@@ -11,7 +11,7 @@ import { PageShell } from "@/components/site/PageShell";
 export const metadata: Metadata = {
   title: "Offres & Tarifs — Antoine A. / APEX",
   description:
-    "Trois façons de passer devant vos concurrents sur Google : site vitrine SEO, pack première page et fiche Google Business.",
+    "Trois façons de passer devant vos concurrents sur Google : site vitrine SEO, pack visibilité et fiche Google Business.",
 };
 
 export default function OffresPage() {
