@@ -87,15 +87,17 @@ export const plans: PricingPlan[] = [
 export type Cell = { content: ReactNode | "check"; className?: string };
 
 export const comparisonRows: [string, Cell, Cell, Cell][] = [
-  ["Nombre de pages créées sur-mesure", { content: "5 pages" }, { content: "5 pages + articles réguliers", className: "font-bold" }, { content: "—", className: "text-secondary" }],
-  ["Architecture technique < 1s (Core Web Vitals)", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
-  ["Recherche approfondie des mots-clés de votre zone", { content: "check" }, { content: "check", className: "font-bold" }, { content: "Ciblage basique", className: "text-secondary" }],
-  ["Optimisation Google Business Profile (Maps)", { content: "En option (+300 €)", className: "text-secondary" }, { content: "Inclus & Offert (6 mois)", className: "font-bold text-primary" }, { content: "check" }],
-  ["Rédaction de contenus & cocons sémantiques mensuels", { content: "Lancement initial", className: "text-secondary" }, { content: "2 contenus / mois", className: "font-bold" }, { content: "—", className: "text-secondary" }],
-  ["Netlinking & acquisition de citations locales", { content: "—", className: "text-secondary" }, { content: "check", className: "font-bold" }, { content: "Citations Maps", className: "text-secondary" }],
-  ["Rapport de positions mensuel vidéo Loom", { content: "—", className: "text-secondary" }, { content: "check", className: "font-bold" }, { content: "Stats mensuelles PDF" }],
-  ["Ligne directe WhatsApp / Téléphone avec moi", { content: "Durant le projet" }, { content: "Illimité 6 mois", className: "font-bold" }, { content: "WhatsApp dédié" }],
-  ["Délai moyen de mise en production", { content: "3 à 4 semaines", className: "font-bold" }, { content: "Site en 3 sem. + 6 mois SEO", className: "font-bold" }, { content: "7 jours ouvrés", className: "font-bold" }],
+  ["Site de 5 pages conçu pour le SEO et la conversion", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["Textes rédigés par moi", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["Optimisé mobile : vitesse et affichage", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["Un site 100 % à vous", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["SEO chaque mois : articles, backlinks, optimisations", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["Fiche Google Business optimisée", { content: "En option (300 €/mois)", className: "text-secondary" }, { content: "Offerte pendant 6 mois", className: "font-bold text-primary" }, { content: "check" }],
+  ["4 publications par mois sur votre fiche", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "check" }],
+  ["Suivi mensuel", { content: "—", className: "text-secondary" }, { content: "Vos positions", className: "font-bold" }, { content: "Votre visibilité locale" }],
+  ["Stratégie ajustée chaque mois", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "check" }],
+  ["Objectif : la première page Google", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "check" }],
+  ["Durée", { content: "Paiement unique", className: "font-bold" }, { content: "6 mois", className: "font-bold" }, { content: "3 mois minimum", className: "font-bold" }],
 ];
 
 export const steps = [

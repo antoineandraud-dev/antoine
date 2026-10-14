@@ -14,10 +14,10 @@ export function ComparisonTable() {
     <section className="w-full max-w-[1180px] mx-auto px-gutter-mobile lg:px-gutter pb-space-2xl">
       <div className="flex flex-col items-center text-center mb-space-xl">
         <span className="font-label-pill text-label-pill uppercase text-secondary font-bold tracking-wider">
-          Détail technique
+          En un coup d'œil
         </span>
         <h2 className="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight mt-1">
-          Comparatif exhaustif des prestations
+          Comparatif des offres
         </h2>
       </div>
       <div className="w-full bg-surface-container-lowest rounded-3xl p-space-md md:p-space-lg shadow-sm overflow-x-auto">
