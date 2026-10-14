@@ -29,7 +29,7 @@ export const plans: PricingPlan[] = [
     title: "Site Vitrine SEO",
     description: "Le site qui pose les bases saines pour être trouvé et convertir immédiatement vos visiteurs.",
     price: "2 200 €",
-    priceSuffix: "HT",
+    priceSuffix: "",
     priceSuffixClass: "font-body-sm text-body-sm text-secondary font-semibold",
     priceRowClass: "gap-1.5",
     priceNote: "Facilités de paiement disponibles en 2x ou 3x sans frais.",

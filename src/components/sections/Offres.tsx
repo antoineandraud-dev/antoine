@@ -18,9 +18,7 @@ const offers: Offer[] = [
     title: "Site Vitrine SEO",
     subtitle: "Le site qui pose les bases pour être trouvé.",
     price: (
-      <>
-        2 200 € <span className="text-sm font-normal text-brand-muted">HT</span>
-      </>
+      <>2 200 €</>
     ),
     priceNote: "Paiement unique",
     features: [

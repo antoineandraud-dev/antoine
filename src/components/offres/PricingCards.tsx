@@ -52,7 +52,7 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
             <span className="font-display-hero text-display-hero font-extrabold text-on-surface leading-none">
               {plan.price}
             </span>
-            <span className={plan.priceSuffixClass}>{plan.priceSuffix}</span>
+            {plan.priceSuffix && <span className={plan.priceSuffixClass}>{plan.priceSuffix}</span>}
           </div>
           <p
             className={`font-body-sm text-body-sm mt-1.5 ${
