@@ -67,7 +67,7 @@ export function Hero() {
         </BookingLink>
         <a
           className="w-full sm:w-auto px-6 py-4 rounded-full bg-white border border-brand-border text-brand-black font-semibold text-sm hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
-          href="#methode"
+          href="#serp-demo"
         >
           <span>Voir comment je travaille</span>
           <Icon name="south" className="text-base text-brand-muted" />

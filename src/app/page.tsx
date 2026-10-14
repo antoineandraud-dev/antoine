@@ -7,6 +7,7 @@ import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { Methode } from "@/components/sections/Methode";
 import { Offres } from "@/components/sections/Offres";
+import { SerpDemo } from "@/components/sections/SerpDemo";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main className="w-full pt-32 pb-20">
         <Hero />
+        <SerpDemo />
         <Methode />
         <Diagnostic />
         <Comparatif />

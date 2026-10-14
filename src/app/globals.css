@@ -29,6 +29,15 @@
 }
 
 @layer components {
+  .serp-card-transition {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .serp-card-transition {
+      transition: none;
+    }
+  }
+
   .material-symbols-outlined {
     font-family: "Material Symbols Outlined";
     font-weight: normal;
