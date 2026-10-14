@@ -87,12 +87,9 @@ export const plans: PricingPlan[] = [
 export type Cell = { content: ReactNode | "check"; className?: string };
 
 export const comparisonRows: [string, Cell, Cell, Cell][] = [
-  ["Site de 5 pages conçu pour le SEO et la conversion", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
-  ["Textes rédigés par moi", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
-  ["Optimisé mobile : vitesse et affichage", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
-  ["Un site 100 % à vous", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
+  ["Site de 5 pages : SEO, conversion, textes rédigés par moi, rapide sur mobile, 100 % à vous", { content: "check" }, { content: "check" }, { content: "—", className: "text-secondary" }],
   ["SEO chaque mois : articles, backlinks, optimisations", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "—", className: "text-secondary" }],
-  ["Fiche Google Business optimisée", { content: "En option (300 €/mois)", className: "text-secondary" }, { content: "Offerte pendant 6 mois", className: "font-bold text-primary" }, { content: "check" }],
+  ["Fiche Google Business optimisée", { content: "En option (300 €/mois)", className: "text-secondary" }, { content: "Offerte 6 mois", className: "font-bold text-primary" }, { content: "check" }],
   ["4 publications par mois sur votre fiche", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "check" }],
   ["Suivi mensuel", { content: "—", className: "text-secondary" }, { content: "Vos positions", className: "font-bold" }, { content: "Votre visibilité locale" }],
   ["Stratégie ajustée chaque mois", { content: "—", className: "text-secondary" }, { content: "check" }, { content: "check" }],

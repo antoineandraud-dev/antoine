@@ -24,7 +24,7 @@ export function ComparisonTable() {
         <table className="w-full text-left border-collapse min-w-[720px]">
           <thead>
             <tr className="bg-surface-container-low rounded-xl">
-              <th className="py-space-md px-space-md font-label-md text-label-md text-on-surface uppercase rounded-l-ds-xl">
+              <th className="w-[34%] py-space-md px-space-md font-label-md text-label-md text-on-surface uppercase rounded-l-ds-xl">
                 Fonctionnalité clé
               </th>
               <th className="py-space-md px-space-md font-label-md text-label-md text-on-surface text-center">
@@ -49,14 +49,14 @@ export function ComparisonTable() {
                   }`}
                 >
                   <td className={`py-space-md px-space-md font-semibold ${last ? "rounded-bl-ds-xl" : ""}`}>{label}</td>
-                  <td className={`py-space-md px-space-md text-center ${a.className ?? ""}`}>
+                  <td className={`whitespace-nowrap py-space-md px-space-md text-center ${a.className ?? ""}`}>
                     <CellContent cell={a} />
                   </td>
-                  <td className={`py-space-md px-space-md text-center bg-primary-container/10 ${b.className ?? ""}`}>
+                  <td className={`whitespace-nowrap py-space-md px-space-md text-center bg-primary-container/10 ${b.className ?? ""}`}>
                     <CellContent cell={b} />
                   </td>
                   <td
-                    className={`py-space-md px-space-md text-center ${c.className ?? ""} ${
+                    className={`whitespace-nowrap py-space-md px-space-md text-center ${c.className ?? ""} ${
                       last ? "rounded-br-ds-xl" : ""
                     }`}
                   >
