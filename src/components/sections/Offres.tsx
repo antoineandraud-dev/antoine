@@ -17,24 +17,23 @@ const offers: Offer[] = [
   {
     tag: "Offre #1",
     title: "Site Vitrine SEO",
-    subtitle: "Le site qui travaille pour vous dès le premier jour.",
-    audience: "Vous n'avez pas de site, ou il est dépassé.",
+    subtitle: "Un site qui travaille pour vous dès le premier jour.",
+    audience: "Sans site, ou site dépassé",
     price: <>2 200 €</>,
     priceNote: "Paiement unique",
     features: [
-      "5 pages pensées pour vous faire appeler",
+      "5 pages qui font appeler",
       "Textes rédigés pour vous",
-      "Visible sur Google dans votre zone",
-      "Rapide et lisible sur mobile",
-      "Planning annoncé dès le départ",
+      "Visible sur Google près de chez vous",
+      "Rapide sur mobile",
       "Le site vous appartient",
     ],
   },
   {
     tag: "Offre #2",
     title: "Pack Visibilité",
-    subtitle: "Le site, puis 6 mois de SEO pour être mieux trouvé.",
-    audience: "Vous voulez être trouvé, mois après mois.",
+    subtitle: "Le site, puis 6 mois de SEO.",
+    audience: "Être trouvé, mois après mois",
     price: (
       <>
         2 200 € + 600 €<span className="text-sm font-normal text-brand-muted">/mois</span>
@@ -45,18 +44,18 @@ const offers: Offer[] = [
       <strong key="all" className="font-bold">
         Tout le Site Vitrine SEO, plus :
       </strong>,
-      "Du SEO chaque mois sur vos recherches clés",
-      "Fiche Google Business gérée, offerte",
-      "Rapport mensuel : positions, visites, appels",
-      "Un point de 15 min chaque mois",
+      "SEO chaque mois",
+      "Fiche Google offerte",
+      "Rapport mensuel clair",
+      "Point de 15 min par mois",
     ],
     highlighted: true,
   },
   {
     tag: "Offre #3",
     title: "Fiche Google Business",
-    subtitle: "Soyez visible quand on cherche près de chez vous.",
-    audience: "Vous avez un site, mais peu de visibilité locale.",
+    subtitle: "Soyez visible près de chez vous.",
+    audience: "Un site, mais peu visible localement",
     price: (
       <>
         300 € <span className="text-sm font-normal text-brand-muted">/ mois</span>
@@ -65,8 +64,8 @@ const offers: Offer[] = [
     priceNote: "Engagement minimum 3 mois",
     features: [
       "Fiche optimisée de A à Z",
-      "Publications et avis gérés pour vous",
-      "Suivi mensuel : vues, appels, itinéraires",
+      "Publications et avis gérés",
+      "Suivi mensuel",
       "Vous ne touchez à rien",
     ],
   },
@@ -100,7 +99,7 @@ function OfferCard({ offer }: { offer: Offer }) {
           <p className="text-xs sm:text-sm text-brand-muted mt-2">{offer.subtitle}</p>
           <div className="mt-4 rounded-xl bg-brand-pillBg px-3 py-2.5">
             <span className="block text-[10px] font-mono font-bold uppercase tracking-wider text-brand-muted">
-              Pour vous si
+              Pour qui ?
             </span>
             <span className="text-xs sm:text-sm font-semibold text-brand-black">{offer.audience}</span>
           </div>

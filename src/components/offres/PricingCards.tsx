@@ -63,18 +63,9 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
           </p>
         </div>
 
-        {featured && (
-          <div className="bg-primary-container/30 rounded-2xl p-space-sm mb-space-md flex items-center gap-space-xs">
-            <Icon name="verified" className="text-primary text-[20px] shrink-0" />
-            <p className="font-body-sm text-body-sm text-on-surface font-bold leading-tight">
-              Fiche Google Business offerte pendant les 6 mois (valeur 1 800 €)
-            </p>
-          </div>
-        )}
-
         <div className="bg-surface-container-low/70 rounded-2xl p-space-md mb-space-lg">
           <span className="font-label-pill text-[11px] uppercase text-secondary font-bold tracking-wider block mb-1">
-            Pour vous si :
+            Pour qui ?
           </span>
           <p className="font-body-sm text-body-sm text-on-surface font-medium leading-relaxed">{plan.persona}</p>
         </div>
