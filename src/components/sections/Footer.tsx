@@ -22,7 +22,7 @@ export function Footer() {
           </div>
         </div>
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-muted gap-4">
-          <div>© 2024 Antoine Andraud — APEX.SEO. Tous droits réservés.</div>
+          <div>© 2026 Antoine Andraud — APEX.SEO. Tous droits réservés.</div>
           <div className="flex items-center gap-4">
             <LinkedInLink className="inline-flex items-center gap-1.5 hover:text-brand-black transition-colors" />
             {legalLinks.map((label) => (
