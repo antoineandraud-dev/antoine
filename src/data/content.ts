@@ -62,39 +62,31 @@ export const pillars: {
 
 export const traps: {
   icon: string;
+  tag: string;
   title: string;
-  text: { before: string; strong?: string; after: string };
-  result: string;
+  text: string;
+  consequence: string;
 }[] = [
   {
     icon: "visibility_off",
-    title: "Piège #01 : Le site fantôme",
-    text: {
-      before: "Vous avez payé une agence 4 000€ à 6 000€. Le design est « joli », mais vous enregistrez ",
-      strong: "zéro appel entrant",
-      after: ". Personne ne vous trouve sans taper votre nom exact.",
-    },
-    result: "Résultat : 0 contact intentionnel / semaine",
+    tag: "Problème 01",
+    title: "Un site invisible sur Google",
+    text: "Votre site existe, mais vos futurs clients ne le trouvent pas lorsqu'ils recherchent vos services. Sans visibilité sur les bonnes requêtes locales, vous laissez la place à vos concurrents.",
+    consequence: "Des prospects qui ne vous trouvent jamais",
   },
   {
     icon: "hourglass_empty",
-    title: "Piège #02 : L'usine à gaz lente",
-    text: {
-      before: "Un template surchargé qui met ",
-      strong: "6 secondes à s'afficher",
-      after: ". Google pénalise impitoyablement ces classements, et 53% des visiteurs mobiles quittent la page avant le premier mot.",
-    },
-    result: "Score Mobile moyen : 34/100 (Rejeté par Google)",
+    tag: "Problème 02",
+    title: "Un site qui fait fuir les visiteurs",
+    text: "Chargement lent, navigation confuse, informations essentielles introuvables : chaque friction complique le parcours de vos visiteurs et peut les pousser à chercher ailleurs.",
+    consequence: "Des visites qui ne se transforment pas en contacts",
   },
   {
-    icon: "groups_2",
-    title: "Piège #03 : L'agence impersonnelle",
-    text: {
-      before:
-        "Vous signez avec un commercial senior, puis votre dossier est confié à un stagiaire. À la moindre modification, on vous facture des frais opaques sans garantie de rentabilité.",
-      after: "",
-    },
-    result: "Responsabilité client : Diluée & sans garantie",
+    icon: "contact_support",
+    tag: "Problème 03",
+    title: "Un site qui ne convainc pas",
+    text: "Vos visiteurs ne comprennent pas immédiatement ce qui vous distingue, pourquoi vous faire confiance ou comment vous contacter. Même intéressés, ils peuvent repartir sans vous appeler.",
+    consequence: "Des demandes de devis qui vous échappent",
   },
 ];
 
