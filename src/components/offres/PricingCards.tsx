@@ -74,7 +74,7 @@ function PricingCard({ plan }: { plan: PricingPlan }) {
 
         <div className="bg-surface-container-low/70 rounded-2xl p-space-md mb-space-lg">
           <span className="font-label-pill text-[11px] uppercase text-secondary font-bold tracking-wider block mb-1">
-            Idéal pour :
+            Pour vous si :
           </span>
           <p className="font-body-sm text-body-sm text-on-surface font-medium leading-relaxed">{plan.persona}</p>
         </div>
