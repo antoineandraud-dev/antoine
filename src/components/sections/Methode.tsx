@@ -7,10 +7,15 @@ export function Methode() {
   return (
     <section className="max-w-6xl mx-auto px-6 py-12" id="methode">
       <SectionHeading
-        title="Le Système de Domination APEX"
-        titleClass="mb-3"
-        subtitle="Trois étapes pour transformer une recherche sur Google en appel de client."
-        subtitleClass="text-base max-w-xl mx-auto"
+        eyebrow={
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-brand-muted">
+            La Méthode APEX
+          </span>
+        }
+        title="De Google au client, en 3 étapes."
+        titleClass="mt-2 mb-3"
+        subtitle="Une stratégie conçue pour vous rendre visible localement, convaincre vos visiteurs et transformer leur recherche en demande de devis."
+        subtitleClass="text-base max-w-2xl mx-auto"
       />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {pillars.map((pillar) => (
@@ -28,7 +33,7 @@ export function Methode() {
               <h3 className="text-xl font-bold text-brand-black mt-2 mb-3">{pillar.title}</h3>
               <p className="text-sm text-brand-muted leading-relaxed">{pillar.text}</p>
             </div>
-            <div className="mt-6 pt-4 border-t border-brand-border flex items-center justify-between text-xs font-medium text-brand-black">
+            <div className="mt-6 pt-4 border-t border-brand-border flex flex-wrap items-center justify-between gap-x-3 gap-y-2 text-xs font-medium text-brand-black">
               <span>{pillar.metric}</span>
               <MetricBadge tone={pillar.tone}>{pillar.badge}</MetricBadge>
             </div>
